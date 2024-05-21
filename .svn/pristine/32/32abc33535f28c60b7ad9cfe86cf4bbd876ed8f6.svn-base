@@ -1,0 +1,83 @@
+package ngo.friendship.satellite.constants;
+
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DBTable.
+ */
+public class DBTable {
+	
+	/** The Constant BENEFICIARY. */
+	public static final String BENEFICIARY = "beneficiary";
+	
+	/** The Constant QUESTIONNAIRE_CATEGORY. */
+	public static final String QUESTIONNAIRE_CATEGORY = "questionnaire_category";
+	
+	/** The Constant QUESTIONNAIRE. */
+	public static final String QUESTIONNAIRE = "questionnaire";
+	
+	/** The Constant MEDICINE. */
+	public static final String MEDICINE = "medicine";
+	public static final String MEDICINE_STOCK = "medicine_stock";
+	
+	/** The Constant USER_SCHEDULE. */
+	public static final String USER_SCHEDULE = "user_schedule";
+	
+	/** The Constant USER_INFO. */
+	public static final String USER_INFO = "user_info";
+	/** The Constant USER_INFO. */
+	public static final String DIAGNOSIS_INFO = "diagnosis_info";
+	
+	public static final String GROWTH_MEASUREMENT_PARAM = "growth_measurement_param";
+	
+	public static final String COURTYARD_MEETING_TARGET = "courtyard_meeting_target";
+	public static final String COURTYARD_MEETING = "courtyard_meeting";
+	
+	/** The Constant REFERRAL_CENTER. */
+	public static final String REFERRAL_CENTER = "referral_center";
+	
+	
+	public static final String IMMUNIZABLE_BENEFICIARY="immunizable_beneficiary";
+	public static final String IMMUNIZATION_FOLLOWUP="immunization_followup";
+	public static final String IMMUNIZATION_INFO="immunization_info";
+	public static final String IMMUNIZATION_SERVICE="immunization_service";
+	public static final String IMMUNIZATION_TARGET="immunization_target";
+	
+	public static final String EVENT_INFO="event_info";
+	public static final String CCS_STATUS="ccs_status";
+	public static final String TEXT_REF="text_ref";
+
+	public static final String MATERNAL_INFO="maternal_info";
+	public static final String MATERNAL_CARE_INFO="maternal_care_info";
+	public static final String HOUSEHOLD="household";
+	
+	public static final String CCS_TEREATMENT="ccs_treatment";
+	public static final String CCS_ELIGIBLE="ccs_eligible";
+	
+	public static final String COURTYARD_MEETING_TOPIC_MONTH="courtyard_meeting_topic_month";
+	public static final String TOPIC_INFO="topic_info";
+
+	public static final String QUESTIONNAIRE_FOLLOWUP_RELATION="questionnaire_followup_relation";
+	
+	public static final String PATIENT_INTERVIEW_MASTER="patient_interview_master";
+	public static final String MATERNAL_ABORTION="maternal_abortion";
+	public static final String MATERNAL_BABY_INFO="maternal_baby_info";
+	public static final String MATERNAL_DELIVERY="maternal_delivery";
+	public static final String MATERNAL_SERVICE="maternal_service";
+	
+	public static final String REFERRAL_CENTER_CATEGORY="referral_center_category";
+	public static final String DEATH_REGISTRATION="death_registration";
+	
+	public static final String SUGGESTION_TEXT="suggestion_text";
+	
+    public static final String REPORT_ASST = "report_asst";
+    public static final String QUESTIONNAIRE_SERVICE_CATEGORY = "questionnaire_service_category";
+    public static final String QUESTIONNAIRE_BROAD_CATEGORY = "questionnaire_broad_category";
+    public static final String APP_VERSION_HISTORY="app_version_history";
+
+    public static final String DATA_VERSION="data_version";
+
+	public static final String PATIENT_INTERVIEW_DOCTOR_FEEDBACK="patient_interview_doctor_feedback";
+
+	public static final String NOTIFICATION_MASTER="notification_master";
+}

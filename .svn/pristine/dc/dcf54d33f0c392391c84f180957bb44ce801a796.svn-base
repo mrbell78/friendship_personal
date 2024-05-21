@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mHealth="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_color"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tvProductTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="@string/select_beneficiary"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        mHealth:layout_constraintBottom_toBottomOf="parent"
+        mHealth:layout_constraintEnd_toEndOf="parent"
+        mHealth:layout_constraintHorizontal_bias="0.51"
+        mHealth:layout_constraintRight_toRightOf="parent"
+        mHealth:layout_constraintStart_toStartOf="parent"
+        mHealth:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

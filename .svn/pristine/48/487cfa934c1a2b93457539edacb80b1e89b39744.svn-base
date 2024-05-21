@@ -1,0 +1,407 @@
+package ngo.friendship.satellite.ui.product_management.activity;
+
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Message;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import ngo.friendship.satellite.App;
+import ngo.friendship.satellite.LanguageContextWrapper;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.asynctask.CommiunicationTask;
+import ngo.friendship.satellite.asynctask.TaskKey;
+import ngo.friendship.satellite.communication.RequestData;
+import ngo.friendship.satellite.communication.ResponseData;
+import ngo.friendship.satellite.constants.ActivityDataKey;
+import ngo.friendship.satellite.constants.Constants;
+import ngo.friendship.satellite.constants.KEY;
+import ngo.friendship.satellite.constants.RequestName;
+import ngo.friendship.satellite.constants.RequestType;
+import ngo.friendship.satellite.databinding.ActivityRiseListBinding;
+import ngo.friendship.satellite.error.MhealthException;
+import ngo.friendship.satellite.interfaces.OnCompleteListener;
+import ngo.friendship.satellite.interfaces.OnDialogButtonClick;
+import ngo.friendship.satellite.jsonoperation.JSONParser;
+import ngo.friendship.satellite.model.AppSettings;
+import ngo.friendship.satellite.model.RequisitionInfo;
+import ngo.friendship.satellite.ui.my_service.ServicesFragment;
+import ngo.friendship.satellite.ui.product_management.Products_model.ProductItemsInvoice;
+import ngo.friendship.satellite.ui.product_management.adapter.ProductItemsInvoiceAdapter;
+import ngo.friendship.satellite.utility.AppPreference;
+import ngo.friendship.satellite.utility.SystemUtility;
+import ngo.friendship.satellite.utility.TextUtility;
+import ngo.friendship.satellite.views.AppButton;
+import ngo.friendship.satellite.views.DialogView;
+
+public class RiseListActivity extends AppCompatActivity implements View.OnClickListener {
+    ActivityRiseListBinding binding;
+    private ProductItemsInvoiceAdapter adapter;
+    private List<ProductItemsInvoice> exampleList;
+    Dialog dialog;
+    PopupMenu popupmenu;
+    private Toolbar toolbar;
+    AppButton btn_back;
+
+    LinearLayout llRowContainer;
+    ProgressDialog dlog;
+    String activityPath;
+    long requisitionId=-1;
+    RequisitionInfo reqInfo;
+    ArrayList<RequisitionInfo> requisitionList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityRiseListBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        dialog = new Dialog(this);
+        binding.initeatedItems.setOnClickListener(this);
+        binding.approvedItem.setOnClickListener(this);
+        binding.discgpachItem.setOnClickListener(this);
+        binding.canceledItem.setOnClickListener(this);
+        binding.waitforReceivedItem.setOnClickListener(this);
+
+        binding.initeatedItems2.setOnClickListener(this);
+        binding.approvedItem2.setOnClickListener(this);
+        binding.discgpachItem2.setOnClickListener(this);
+        binding.canceledItem2.setOnClickListener(this);
+        binding.waitforReceivedItem2.setOnClickListener(this);
+        llRowContainer = findViewById(R.id.ll_requisition_row_container);
+
+//        View v = findViewById(R.id.btn_close);
+//        v.setOnClickListener(this);
+//
+//        v = findViewById(R.id.btn_retrieve_data);
+//        v.setOnClickListener(this);
+
+
+        reqInfo = App.getContext().getDB().getRequisitionMedicineInfo(requisitionId);
+
+        retrieveRequisitionList();
+
+//        requisitionList = App.getContext().getDB().getLast7Requisition();
+//        TextView tv_status= findViewById(R.id.tv_requisition_request_status);
+//        tv_status.setText(reqInfo.getRequisitionStatus()+(reqInfo.getRequisitionNo()>0?":"+reqInfo.getRequisitionNo():""));
+
+        showData();
+
+        getSupportActionBar().setTitle("Product Stock");
+//        fillExampleList();
+//        setUpRecyclerView();
+
+//        binding.initeatedList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getApplicationContext(), InitiatedActivity.class));
+//
+//            }
+//        });
+        binding.viewStock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), CurrentStockActivity.class));
+
+            }
+        });
+
+//        binding.waitingForReceivedList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getApplicationContext(), DispatchActivity.class));
+//
+//            }
+//        });
+
+        binding.fabProductStock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ProductRiseActivity.class));
+            }
+        });
+        binding.btnRetrieveData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(SystemUtility.isConnectedToInternet(RiseListActivity.this))
+                {
+
+                    showDataRetrieveConfirmationPrompt(getResources().getString(R.string.retrieve_data_confirmation));
+                }
+                else
+                    SystemUtility.openInternetSettingsActivity(RiseListActivity.this);
+
+            }
+        });
+
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            // NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
+            switch (id) {
+                case R.id.nav_bottom_my_service:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, ServicesFragment.Companion.newInstance()).commit();
+                    item.setChecked(true);
+//                    Intent dataActivity = new Intent(MainActivity.this, MyServiceActivity.class);
+//                    startActivity(dataActivity);
+//                    //  getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, Myser.newInstance()).commit();
+//                    item.setChecked(true);
+//                    binding.appBarMain.contentMain.btnHome.setImageResource(R.drawable.ic_home);
+//                    binding.appBarMain.contentMain.tvHome.setTextColor(getResources().getColor(R.color.ash_gray));
+                    return true;
+                case R.id.nav_bottom_home:
+                    startActivity(new Intent(this, ProductsHomeActivity.class));
+                    return true;
+                case R.id.nav_product_adjust:
+                    startActivity(new Intent(this, ProductAdjustmentActivity.class));
+                    return true;
+                //check id
+            }
+            return true;
+        });
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        if( App.getContext().getAppSettings()==null)
+            App.getContext().readAppSettings(this);
+
+//        activityPath= Utility.setActivityPath(this,R.string.last_seven_requisition);
+
+        if(!SystemUtility.isAutoTimeEnabled(this)){
+            SystemUtility.openDateTimeSettingsActivity(this);
+        }
+
+
+    }
+
+    private void showData() {
+
+        llRowContainer.removeAllViews();
+        if(requisitionList == null || requisitionList.size()==0)
+        {
+//            AppToast.showToast(this, R.string.data_not_available);
+            return;
+        }
+
+        for(int i=0;i<requisitionList.size();i++)
+        {
+            View view = View.inflate(this, R.layout.requisition_list_row, null);
+            llRowContainer.addView(view);
+
+            RequisitionInfo requisitionInfo = requisitionList.get(i);
+            TextView tvDate = view.findViewById(R.id.tv_date);
+            tvDate.setText(requisitionInfo.getRequisitionDate());
+
+            TextView reqNo = view.findViewById(R.id.tv_req_no);
+            reqNo.setText(requisitionInfo.getRequisitionNo()+"");
+
+
+            TextView tvRequisitionPrice = view.findViewById(R.id.tv_requisition_price);
+            tvRequisitionPrice.setText(TextUtility.format("%.2f", requisitionInfo.getRequisitionMedicinePrice()));
+
+            TextView tvReceivePrice  = view.findViewById(R.id.tv_receive_price);
+            tvReceivePrice.setText(TextUtility.format("%.2f",requisitionInfo.getReceiveMedicinePrice()));
+
+            view.setTag(i);
+            view.setOnClickListener(this);
+
+        }
+    }
+    private void showDataRetrieveConfirmationPrompt(String msg) {
+        HashMap<Integer ,Object> buttonMap =new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_yes);
+        buttonMap.put(2, R.string.btn_no);
+        DialogView dialog= new DialogView(this,R.string.dialog_title,msg, R.drawable.information, buttonMap);
+        dialog.setOnDialogButtonClick(new OnDialogButtonClick() {
+
+            @Override
+            public void onDialogButtonClick(View view) {
+                switch (view.getId()) {
+                    case 1:
+                        retrieveRequisitionList();
+                        break;
+                }
+
+            }
+        });
+        dialog.show();
+    }
+
+    private void retrieveRequisitionList(){
+
+        RequestData request =new RequestData(RequestType.STOCK_INVENTORY, RequestName.LAST7_REQUISITION, Constants.MODULE_DATA_GET);
+
+        CommiunicationTask commiunicationTask= new CommiunicationTask(this, request,getResources().getString(R.string.retrieving_data), getResources().getString(R.string.please_wait));
+        commiunicationTask.setCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(Message msg) {
+                if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+                    showOneButtonDialog(getResources().getString(R.string.network_error)+"\n"+msg.getData().getString(TaskKey.ERROR_MSG), R.drawable.error, Color.RED);
+                } else {
+                    ResponseData response=(ResponseData) msg.getData().getSerializable(TaskKey.DATA0);
+                    if(response.getResponseCode().equalsIgnoreCase("00")){
+                        showOneButtonDialog(response.getErrorCode()+"-"+response.getErrorDesc(), R.drawable.error, Color.RED);
+                    }else{
+
+                        try {
+                            ArrayList<RequisitionInfo> requisitionList = JSONParser.pasreRequisitionListJSON(response.getData());
+                            App.getContext().getDB().saveRequisitionList(requisitionList, App.getContext().getUserInfo().getUserId());
+                            RiseListActivity.this.requisitionList = App.getContext().getDB().getLast7Requisition();
+
+                        } catch (MhealthException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        showData();
+                    }
+                }
+
+            }
+        });
+        commiunicationTask.execute();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if(v.getTag() != null)
+        {
+            int rowIndex = (Integer) v.getTag();
+            Intent intent = new Intent(this, RequisitionDetailActivity.class);
+            intent.putExtra(ActivityDataKey.REQUISITION_ID, requisitionList.get(rowIndex).getRequisitionId());
+            intent.putExtra(ActivityDataKey.REQUISITION_NO, requisitionList.get(rowIndex).getRequisitionNo());
+            intent.putExtra(ActivityDataKey.ACTIVITY_PATH, activityPath);
+            startActivity(intent);
+            return;
+        }
+
+        switch (v.getId()) {
+            case R.id.btn_close:
+                finish();
+                break;
+            case R.id.btn_retrieve_data:
+                if(SystemUtility.isConnectedToInternet(this))
+                {
+
+                    showDataRetrieveConfirmationPrompt(getResources().getString(R.string.retrieve_data_confirmation));
+                }
+                else
+                    SystemUtility.openInternetSettingsActivity(this);
+                break;
+            case R.id.initeated_items:
+                if(v.getTag() != null){
+                int rowIndex = (Integer) v.getTag();
+                Intent intent = new Intent(this, RequisitionDetailActivity.class);
+                intent.putExtra(ActivityDataKey.REQUISITION_ID, requisitionList.get(rowIndex).getRequisitionId());
+                intent.putExtra(ActivityDataKey.REQUISITION_NO, requisitionList.get(rowIndex).getRequisitionNo());
+                intent.putExtra(ActivityDataKey.ACTIVITY_PATH, activityPath);
+                startActivity(intent);
+                break;}
+
+            default:
+                break;
+        }
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    /**
+     * Display alert dialog with one button.
+     *
+     * @param msg will be displayed in the message section of the dialog
+     * @param imageId is the image drawable id which will be displayed at the dialog's title
+     * @param messageColor is the color id of the dialog's message
+     */
+    private void showOneButtonDialog(String msg, final int imageId, int messageColor){
+
+        HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_close);
+        DialogView dialog = new DialogView(this, R.string.dialog_title, msg,messageColor, imageId, buttonMap);
+        dialog.show();
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        App.getContext().onStartActivity(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        App.getContext().onStartActivity(this);
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(LanguageContextWrapper.wrap(context, AppPreference.getString(context, KEY.LANGUAGE, AppSettings.DEFAULT_LANGUAGE)));
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.common_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+//        else if (id == R.id.product_rise) {
+//            // finish the activity
+//
+//            startActivity(new Intent(this, ProductRiseActivity.class));
+//        }
+//        else if (id == R.id.product_adjust) {
+//            startActivity(new Intent(this, ProductAdjustmentActivity.class));
+//            return true;
+//        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void fillExampleList() {
+        exampleList = new ArrayList<>();
+        exampleList.add(new ProductItemsInvoice("1669654-6136", "15-Dec-22,  3:35 PM", "Initiated"));
+        exampleList.add(new ProductItemsInvoice("1669654-6136", "15-Dec-22,  3:35 PM", "Approved"));
+        exampleList.add(new ProductItemsInvoice("1669654-6136", "15-Dec-22,  3:35 PM", "Dispatch"));
+        exampleList.add(new ProductItemsInvoice("1669654-6136", "15-Dec-22,  3:35 PM", "Cancelled"));
+
+
+    }
+
+
+
+}

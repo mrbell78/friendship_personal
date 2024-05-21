@@ -1,0 +1,21 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BeneficiaryType.
+ */
+public class BeneficiaryType {
+	
+	/** The Constant CCS. */
+	public static final String CCS = "CCS";
+	
+	/** The Constant EPI. */
+	public static final String EPI = "EPI";
+	
+	/** The Constant TT. */
+	public static final String TT = "TT";
+	//Mother
+	public static final String MOTHER = "MOTHER";
+	public static final String GENERAL = "GENERAL";
+
+}

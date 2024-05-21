@@ -1,0 +1,18 @@
+package ngo.friendship.satellite.model.bus;
+
+/**
+ * Created by Yeasin Ali on 4/14/2023.
+ * friendship.ngo
+ * yeasinali@friendship.ngo
+ */
+public class FcmEvent {
+    private String value;
+
+    public FcmEvent(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+}

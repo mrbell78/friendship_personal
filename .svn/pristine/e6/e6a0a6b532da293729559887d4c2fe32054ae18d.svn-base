@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config>
+        <device id="_device_class_tablet" />
+        <device id="_device_class_phone" />
+        <device id="pixel_6" />
+        <device id="Nexus 7 2013" />
+        <device id="Nexus 9" />
+        <device id="Nexus 10" />
+        <device id="pixel_c" />
+      </config>
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="695f2d30-22d8-40ef-84d2-9b2765aced57" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[R8KR50010GW]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+        <option value="resourceFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2NtiwoWwfkEE7dlWspOB0Po8IOA" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "PROJECT_TRUSTED_KEY": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WORKMANAGER_INSPECTOR_NOTIFICATION_DISMISSED": "true",
+    "android-custom-viewD:/apps/office/satelliteClinic/satelliteClinic_andr/app/src/main/java/ngo/friendship/satellite/adapter/MultiSelectionFcmSpinner.java_SELECTED": "MultiSelectionFcmSpinner",
+    "android-custom-viewD:/apps/office/satelliteClinic/satelliteClinic_andr/app/src/main/java/ngo/friendship/satellite/adapter/MultiSelectionLocationSpinner.java_SELECTED": "MultiSelectionLocationSpinner",
+    "android-custom-viewD:/apps/office/satelliteClinic/satelliteClinic_andr/app/src/main/java/ngo/friendship/satellite/adapter/MultiSelectionSpinner.java_SELECTED": "MultiSelectionSpinner",
+    "android-custom-viewD:/apps/office/satelliteClinic/satelliteClinic_andr/app/src/main/java/ngo/friendship/satellite/adapter/MultipleSelectionSpinner.java_SELECTED": "MultipleSelectionSpinner",
+    "android-custom-viewD:/apps/office/satelliteClinic/satelliteClinic_andr/app/src/main/java/ngo/friendship/satellite/views/AppButton.java_SELECTED": "AppButton",
+    "android-custom-viewD:/gradle/gradle-7.5/bin/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.2.1/f0f93e67af3f7417bdd560d5142f6dec4fe629c3/recyclerview-1.2.1-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_SELECTED": "RecyclerView",
+    "android-custom-viewE:/Android/Sdk/sources/android-33/android/view/View.java_SELECTED": "View",
+    "android-custom-viewE:/Android/Sdk/sources/android-33/android/widget/AbsSpinner.java_SELECTED": "AbsSpinner",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "last_directory_selection": "D:/apps/office/satelliteClinic/satelliteClinic_andr/app/src/main/res/drawable",
+    "last_opened_file_path": "D:/apps/office/satelliteClinic/satelliteClinic_andr/app/src/main/res/layout",
+    "show.migrate.to.gradle.popup": "false"
+  },
+  "keyToStringList": {
+    "com.android.tools.idea.sqlite.queryhistory": [
+      " SELECT MAX(SUBSTR(BENEF_CODE, 5, 14)) AS max_benef_code   FROM beneficiary   WHERE HH_NUMBER IS NULL",
+      "SELECT COALESCE(   CASE     WHEN max_benef_code IS NULL THEN '0102' ||'0000000001'     ELSE '0102' || SUBSTR((10000000000 + CAST(SUBSTR(max_benef_code, 5, 14) AS INTEGER) + 1), 2, 11)   END,   '0000000001' ) AS BENEF_CODE FROM (   SELECT MAX(SUBSTR(BENEF_CODE, 5, 14)) AS max_benef_code   FROM beneficiary   WHERE HH_NUMBER IS NULL ) ;",
+      "select * from beneficiary where USER_ID=784\n",
+      "delete from beneficiary",
+      "INSERT INTO beneficiary (\n    NATIONAL_ID, \n    GUARDIAN_NAME_LOCAL, \n    OCCUPATION_HER_HUSBAND, \n    GUARDIAN_NAME, \n    EDU_LEVEL, \n    ADDRESS, \n    BIRTH_REG_NUMBER, \n    DOB, \n    HH_ID, \n    STATE, \n    AGREED_MOBILE_COMM, \n    RELIGION, \n    BENEF_NAME_LOCAL, \n    HH_NUMBER, \n    RELIGION_OTHER_SPECIFIC, \n    REF_DATA_ID, \n    USER_ID, \n    MOBILE_COMM_LANG, \n    MOBILE_COMM, \n    MARITAL_STATUS, \n    FAMILY_HEAD, \n    BENEF_CODE, \n    BENEF_NAME, \n    RELATION_GUARDIAN, \n    MOBILE_NUMBER, \n    CREATE_DATE, \n    GENDER, \n    OCCUPATION\n) VALUES (\n    null, \n    null, \n    null, \n    null, \n    null, \n    'Dhaka', \n    null, \n    '2023-05-03', \n    0, \n    1, \n    null, \n    'Buddhism', \n    null, \n    null, \n    null, \n    0, \n    784, \n    null, \n    null, \n    'Married', \n    0, \n    '01020000000001', \n    'Ugg', \n    'Vvg', \n    '01733928438', \n    '2023-06-22', \n    'M', \n    'Small_businessman'\n);\n"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\apps\office\satelliteClinic\satelliteClinic_andr\app\src\main\res\layout" />
+      <recent name="D:\apps\office\satelliteClinic\satelliteClinic_andr\app\src\main\res\menu" />
+      <recent name="D:\apps\office\satelliteClinic\satelliteClinic_andr\app\src\main\java\ngo\friendship\satellite\ui\service_category" />
+      <recent name="D:\apps\office\satelliteClinic\satelliteClinic_andr\app\src\main\res\drawable" />
+      <recent name="D:\apps\office\satelliteClinic\satelliteClinic_andr\app\src\main\assets" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\apps\office\satelliteClinic\satelliteClinic_andr\app\src\main\java\ngo\friendship\satellite\api" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="ngo.friendship.satellite.ui.beneficiary.profile" />
+    </key>
+    <key name="android.template.-1875326903">
+      <recent name="ngo.friendship.satellite.ui.earlier_services" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ngo.friendship.satellite.interfaces" />
+      <recent name="ngo.friendship.satellite.adapter" />
+      <recent name="ngo.friendship.satellite.ui.earlier_services" />
+      <recent name="ngo.friendship.satellite.ui" />
+      <recent name="ngo.friendship.satellite.model.bus" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="G" />
+      <command value="fi" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="mHealthEntFCM.app.main" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\Tonmoy Pramanik\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="695f2d30-22d8-40ef-84d2-9b2765aced57" name="Changes" comment="" />
+      <created>1680490020178</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1680490020178</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/LauncherActivity.java</url>
+          <line>303</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/model/ModelProvider.java</url>
+          <line>1033</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/model/ModelProvider.java</url>
+          <line>1034</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/model/ModelProvider.java</url>
+          <line>1037</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/service/AutoSyncService.java</url>
+          <line>981</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/service/AutoSyncService.java</url>
+          <line>982</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/service/AutoSyncService.java</url>
+          <line>962</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/service/AutoSyncService.java</url>
+          <line>97</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/service/AutoSyncService.java</url>
+          <line>107</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/service/AutoSyncService.java</url>
+          <line>96</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/service/ManualSyncService.java</url>
+          <line>754</line>
+          <option name="timeStamp" value="86" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/service/ManualSyncService.java</url>
+          <line>755</line>
+          <option name="timeStamp" value="87" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/service/ManualSyncService.java</url>
+          <line>756</line>
+          <option name="timeStamp" value="88" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/jsonoperation/JSONParser.java</url>
+          <line>1376</line>
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/InterviewActivity.java</url>
+          <line>393</line>
+          <option name="timeStamp" value="188" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/InterviewActivity.java</url>
+          <line>392</line>
+          <option name="timeStamp" value="189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/InterviewActivity.java</url>
+          <line>379</line>
+          <option name="timeStamp" value="191" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/storage/MHealthDatabaseManager.java</url>
+          <line>8185</line>
+          <option name="timeStamp" value="245" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/InterviewActivity.java</url>
+          <line>401</line>
+          <option name="timeStamp" value="260" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/InterviewActivity.java</url>
+          <line>402</line>
+          <option name="timeStamp" value="261" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/storage/MHealthDatabaseManager.java</url>
+          <line>427</line>
+          <option name="timeStamp" value="274" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/storage/MHealthDatabaseManager.java</url>
+          <line>428</line>
+          <option name="timeStamp" value="275" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/utility/Utility.java</url>
+          <line>1584</line>
+          <option name="timeStamp" value="315" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/utility/Utility.java</url>
+          <line>1635</line>
+          <option name="timeStamp" value="316" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/utility/Utility.java</url>
+          <line>1631</line>
+          <option name="timeStamp" value="317" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/service_category/ServiceCategoryActivity.java</url>
+          <line>80</line>
+          <option name="timeStamp" value="324" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/service_category/ServiceCategoryActivity.java</url>
+          <line>81</line>
+          <option name="timeStamp" value="325" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/service_category/AllServicesActivity.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="328" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/InterviewActivity.java</url>
+          <line>2852</line>
+          <option name="timeStamp" value="336" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/InterviewActivity.java</url>
+          <line>2867</line>
+          <option name="timeStamp" value="337" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/InterviewActivity.java</url>
+          <line>3000</line>
+          <option name="timeStamp" value="339" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/model/ModelProvider.java</url>
+          <line>147</line>
+          <option name="timeStamp" value="340" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/MainActivity.java</url>
+          <line>661</line>
+          <option name="timeStamp" value="345" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/MainActivity.java</url>
+          <line>657</line>
+          <option name="timeStamp" value="346" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/MainActivity.java</url>
+          <line>675</line>
+          <option name="timeStamp" value="347" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/MainActivity.java</url>
+          <line>678</line>
+          <option name="timeStamp" value="348" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/InterviewActivity.java</url>
+          <line>2884</line>
+          <option name="timeStamp" value="356" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/InterviewActivity.java</url>
+          <line>2883</line>
+          <option name="timeStamp" value="357" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/model/Beneficiary.java</url>
+          <line>644</line>
+          <option name="timeStamp" value="359" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/storage/MHealthDatabaseManager.java</url>
+          <line>3186</line>
+          <option name="timeStamp" value="377" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/MainActivity.java</url>
+          <line>832</line>
+          <option name="timeStamp" value="383" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/MainActivity.java</url>
+          <line>821</line>
+          <option name="timeStamp" value="384" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/MainActivity.java</url>
+          <line>841</line>
+          <option name="timeStamp" value="386" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/MainActivity.java</url>
+          <line>840</line>
+          <option name="timeStamp" value="387" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/asynctask/MHealthTask.java</url>
+          <line>341</line>
+          <option name="timeStamp" value="389" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/beneficiary/BeneficiaryPersonalInfoFragment.kt</url>
+          <line>34</line>
+          <option name="timeStamp" value="288" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/beneficiary/BeneficiaryPersonalInfoFragment.kt</url>
+          <line>35</line>
+          <option name="timeStamp" value="289" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/beneficiary/profile/PreviousServiceFragment.kt</url>
+          <line>154</line>
+          <option name="timeStamp" value="381" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ngo/friendship/satellite/ui/beneficiary/profile/PreviousServiceFragment.kt</url>
+          <line>155</line>
+          <option name="timeStamp" value="382" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

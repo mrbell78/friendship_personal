@@ -1,0 +1,135 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ActivityDataKey.
+ */
+public class ActivityDataKey {
+	public static final String FROM = "FROM";
+	public static final String TO = "TO";
+
+	public static final String ACTIVITY = "ACTIVITY";
+	/** The Constant ACTIVITY_PATH. */
+	public static final String ACTIVITY_PATH = "ACTIVITY_PATH";
+	
+	/** The Constant REFERRAL_CENTER_NAME. */
+	public static final String REFERRAL_CENTER_NAME = "REFERRAL_CENTER_NAME";
+	
+	/** The Constant REFERRAL_CENTER_ADDRESS. */
+	public static final String REFERRAL_CENTER_ADDRESS = "REFERRAL_CENTER_ADDRESS";
+	
+	/** The Constant REFERRAL_CENTER_DESCRIPTION. */
+	public static final String REFERRAL_CENTER_DESCRIPTION = "REFERRAL_CENTER_DESCRIPTION";
+	
+	/** The Constant REFERRAL_CENTER_CONTACT_NUMBER. */
+	public static final String REFERRAL_CENTER_CONTACT_NUMBER = "REFERRAL_CENTER_CONTACT_NUMBER";
+	
+	/** The Constant QUESTIONNAIRE_JSON. */
+	public static final String QUESTIONNAIRE_JSON = "QUESTIONNAIRE_JSON"; 
+	
+	/** The Constant QUESTIONNAIRE_ID. */
+	public static final String QUESTIONNAIRE_ID = "QUESTIONNAIRE_ID"; 
+	
+	/** The Constant QUESTIONNAIRE_TITLE. */
+	public static final String QUESTIONNAIRE_TITLE = "QUESTIONNAIRE_TITLE"; 
+	
+	/** The Constant QUESTIONNAIRE_NAME. */
+	public static final String QUESTIONNAIRE_NAME = "QUESTIONNAIRE_NAME"; 
+	
+	/** The Constant HOUSEHOLD_NUMBER. */
+	public static final String HOUSEHOLD_NUMBER = "HOUSEHOLD_NUMBER";
+	public static final String HOUSEHOLD_MONTHLY_FAMILY_EXPENDITURE = "HOUSEHOLD_MONTHLY_FAMILY_EXPENDITURE";
+	
+	/** The Constant HOUSEHOLD_MEMBER */
+	public static final String HOUSEHOLD_MEMBER = "HOUSEHOLD_MEMBER"; 
+	public static final String PARAMS= "PARAMS"; 
+	public static final String IS_GUST="IS_GUST";
+	/** The Constant HOUSEHOLD_NAME. */
+	public static final String HOUSEHOLD_NAME = "HOUSEHOLD_NAME"; 
+	
+	/** The Constant QUESTIONNAIRE_CATEGORY_ID. */
+	public static final String QUESTIONNAIRE_CATEGORY_ID = "QUESTIONNAIRE_CATEGORY_ID"; 
+	
+	/** The Constant QUESTIONNAIRE_CATEGORY_CAPTION. */
+	public static final String QUESTIONNAIRE_CATEGORY_CAPTION = "QUESTIONNAIRE_CATEGORY_CAPTION"; 
+	
+	/** The Constant QUESTIONNAIRE_CATEGORY_NAME. */
+	public static final String QUESTIONNAIRE_CATEGORY_NAME = "QUESTIONNAIRE_CATEGORY_NAME"; 
+
+
+	/** The Constant BENEFICIARY_CODE. */
+	public static final String BENEFICIARY_CODE = "BENEFICIARY_CODE"; 
+	
+	
+	public static final String INTERVIEW_TYPE = "INTERVIEW_TYPE"; 
+	public static final String NEW_HOUSEHOLD_BENEFICIARY_REG = "NEW_HOUSEHOLD_BENEFICIARY_REG";
+
+	/** The Constant BENEFICIARY_NAME. */
+	public static final String BENEFICIARY_NAME = "BENEFICIARY_NAME"; 
+	
+	/** The Constant BENEFICIARY_ID. */
+	public static final String BENEFICIARY_ID = "BENEFICIARY_ID"; 
+
+	public static final String MATERNAL_ID = "MATERNAL_ID"; 
+	public static final String MATERNAL_SERVICE_ID = "MATERNAL_SERVICE_ID"; 
+	public static final String CREATE_DATE = "CREATE_DATE"; 
+	
+	/** The Constant REQUISITION_ID. */
+	public static final String REQUISITION_ID = "REQUISITION_ID"; 
+	public static final String REQUISITION_NO = "REQUISITION_NO"; 
+	
+	/** The Constant PARENT_INTERVIEW_ID. */
+	public static final String PARENT_INTERVIEW_ID = "PARENT_INTERVIEW_ID"; 
+	
+	/** The Constant HOUSEHOLD_IMAGE_PATH. */
+	public static final String HOUSEHOLD_IMAGE_PATH = "HOUSEHOLD_IMAGE_PATH"; 
+	
+	/** The Constant HOUSEHOLD_AGE. */
+	public static final String HOUSEHOLD_AGE = "HOUSEHOLD_AGE"; 
+	
+	/** The Constant HOUSEHOLD_GENDER. */
+	public static final String HOUSEHOLD_GENDER = "HOUSEHOLD_GENDER"; 
+	
+	/** The Constant WEB_URL. */
+	public static final String WEB_URL = "WEB_URL"; 
+	
+	/** The Constant TYPE */
+	public static final String TYPE = "TYPE"; 
+	public static final String IS_SAVED = "IS_SAVED"; 
+	
+	public static final String FOLLOW_UP = "FOLLOW_UP"; 
+	public static final String UPDATE = "UPDATE"; 
+	public static final String NEW = "NEW"; 
+	public static final String UPDATE_BENEF = "UPDATE_BENEF"; 
+	
+	public static final String TRANS_REF = "TRANS_REF"; 
+	
+	public static final String REPORT = "REPORT";
+
+	public static final String DATA = "DATA";
+	public static final String PARENT_NAME = "PARENT_NAME";
+	public static final String IS_FORCE = "IS_FORCE";
+	public static final String MANUAL_SYNC = "MANUAL_SYNC";
+
+	public static final String IS_EDITABLE = "IS_EDITABLE";
+
+	/** The Constant HOUSEHOLD_NUMBER. */
+	public static final String MONTHLY_FAMILY_EXPENDITURE = "MONTHLY_FAMILY_EXPENDITURE";
+	public static final String HH_CHARACTER = "HH_CHARACTER";
+	public static final String HH_ADULT_WOMEN = "HH_ADULT_WOMEN";
+	public static final String HH_LONGITUDE = "HH_LONGITUDE";
+	public static final String HH_LATITUDE = "HH_LATITUDE";
+	/** The Constant HOUSEHOLD_MEMBER */
+	public static final String HOUSEHOLD_PROFILE = "HOUSEHOLD_PROFILE";
+	public static final String INTENT_DATA_PASS = "INTENT_DATA_PASS";
+
+	//intent
+	public static final String BENEFICIARY_TYPE = "BENEFICIARY_TYPE";
+	public static final String HH_HOUSEHOLD = "HH_HOUSEHOLD";
+	public static final String SELECTED_LOCATION_AREA = "SELECTED_LOCATION_AREA";
+	public static final String SELECTED_LOCATION_NAME = "SELECTED_LOCATION_NAME";
+	public static final String SELECTED_FCM = "SELECTED_FCM";
+	public static final String SELECTED_FCM_STRING = "SELECTED_FCM_STRING";
+
+
+}

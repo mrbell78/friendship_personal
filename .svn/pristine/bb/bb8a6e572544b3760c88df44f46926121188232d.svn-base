@@ -1,0 +1,25 @@
+package ngo.friendship.satellite.di
+
+import android.content.Context
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import ngo.friendship.satellite.QuestionManager
+import ngo.friendship.satellite.storage.MHealthDatabaseManager
+import javax.inject.Singleton
+/**
+ * Created by Yeasin Ali on 7/3/2023.
+ * friendship.ngo
+ * yeasinali@friendship.ngo
+ */
+@Module
+@InstallIn(ActivityComponent::class)
+object AppModule {
+//    @Provides
+//    fun provideQuestionManager(): QuestionManager {
+//        return QuestionManager()
+//    }
+}

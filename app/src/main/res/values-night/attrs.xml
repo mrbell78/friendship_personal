@@ -1,0 +1,74 @@
+<resources>
+
+    <!-- note: to re-use an existing Android attribute not already used by the superclass, name should have prefix "android:" and do not define a format -->
+    <declare-styleable name="SeekBarDialogPreference">
+        <attr name="android:max" />
+        <attr name="min" format="integer" />
+        <attr name="progressTextSuffix" format="string" />
+    </declare-styleable>
+    
+    <declare-styleable name="AppButton">
+        <attr name="imageId" format="reference" />
+        <attr name="textId" format="reference" />
+        <attr name="imageToRight" format="boolean" />
+    </declare-styleable>
+    
+    <declare-styleable name="CardButton">
+        <attr name="mdIcon" format="reference|string" />
+        <attr name="mdIcon_color" format="reference" />
+        <attr name="btn_class" format="reference|string" />
+        <attr name="text" format="reference|string" />
+        <attr name="text_color" format="reference" />
+        <attr name="orientation" format="string"/>
+        <attr name="iconToRight" format="boolean" />
+    </declare-styleable>
+    
+     <declare-styleable name="StickyScrollView">
+        <attr name="stuckShadowHeight" format="dimension" />
+        <attr name="stuckShadowDrawable" format="reference" />
+    </declare-styleable>
+
+
+    <declare-styleable name="SearchableSpinner">
+        <attr name="hintText" format="string" />
+    </declare-styleable>
+    <declare-styleable name="DynamicLayout">
+        <attr name="android:verticalSpacing" />
+        <attr name="android:horizontalSpacing" />
+    </declare-styleable>
+    <declare-styleable name="CircularImageView">
+        <attr name="civ_border" format="boolean"/>
+        <attr name="civ_border_width" format="dimension"/>
+        <attr name="civ_border_color" format="color"/>
+        <attr name="civ_shadow" format="boolean"/>
+        <attr name="civ_shadow_color" format="color"/>
+        <attr name="civ_shadow_radius" format="float"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="ProgressWheel">
+        <attr name="matProg_progressIndeterminate" format="boolean" />
+        <attr name="matProg_barColor" format="color" />
+        <attr name="matProg_rimColor" format="color" />
+        <attr name="matProg_rimWidth" format="dimension" />
+        <attr name="matProg_spinSpeed" format="float" />
+        <attr name="matProg_barSpinCycleTime" format="integer" />
+        <attr name="matProg_circleRadius" format="dimension" />
+        <attr name="matProg_fillRadius" format="boolean" />
+        <attr name="matProg_barWidth" format="dimension" />
+        <attr name="matProg_linearProgress" format="boolean" />
+    </declare-styleable>
+
+<!--    <declare-styleable name="Rotate3dAnimation">-->
+<!--        <attr name="rollType" format="enum">-->
+<!--            <enum name="x" value="0"/>-->
+<!--            <enum name="y" value="1"/>-->
+<!--            <enum name="z" value="2"/>-->
+<!--        </attr>-->
+<!--        <attr name="fromDeg" format="float" />-->
+<!--        <attr name="toDeg" format="float" />-->
+<!--        <attr name="pivotX" format="fraction"/>-->
+<!--        <attr name="pivotY" format="fraction" />-->
+<!--    </declare-styleable>-->
+
+</resources>

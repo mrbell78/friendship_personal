@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/medicine"
+        android:gravity="center"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Medicine"/>
+    <item
+        android:id="@+id/bandage"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Bandage"/>
+    <item
+        android:id="@+id/napkins"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Napkins">
+
+    </item>
+    <item
+        android:id="@+id/others_Products"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Others Products"/>
+    <item
+        android:id="@+id/all_Category"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="All Category">
+
+    </item>
+
+</menu>

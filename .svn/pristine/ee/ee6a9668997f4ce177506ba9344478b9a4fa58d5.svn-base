@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
+	<link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="jquery-ui.css">
+        <script src="jquery-1.10.2.js"></script>
+        <script src="jquery-ui.js"></script>
+        <script>
+            $(function() {
+                $("#accordion").accordion({
+                    collapsible: true
+                });
+            });
+        </script>
+  </head>
+  <body>
+  <div id="wrap" style="padding: 10px;">
+<div id="over" >
+<img src="images/mhealth_logo.png" style="display: block; margin: 0 auto;">
+<p style="margin: 0 auto; text-align:Center ; padding:10px;">
+<a href='version.html' style="margin:10px;font-size:20;" >Version: <span id="version">1.1.2</span></a></p>
+<p style="margin: 0 auto; text-align:Center">
+Release date:<span id="rdate">06/Sep/2023</span><br>
+Copyright © 2013 <a href='http://friendship-bd.org'>Friendship</a>. All rights reserved.
+</p>
+</div>
+		   <div class="page_content">
+               <div id="accordion">
+                   <div>Version: 1.1.2<span style="float:right;" >Release Date: 06/Sep/2023</span></div>
+                   <div>
+                       <p> 1. Deactive Benef Open config wise</p>
+                       <p> 2. benef list redesign </p>
+                       <p> 3. Disease Search box design </p>
+                       <p> 4. Guardian add on benef. Profile </p>
+                       <p> 5. Today's stock consumption report bug fix </p>
+                       <p> 6. Last 30 days stock consumption bug fix</p>
+                       <p> 7. Medicine delivery register add</p>
+                   </div>
+
+                   <div>Version: 1.1.1<span style="float:right;" >Release Date: 05/Sep/2023</span></div>
+                   <div>
+                       <p> 1. AutoGen benefCode modify</p>
+                       <p> 2. Medicine Search box design </p>
+                       <p> 3. Disease Search box design </p>
+                       <p> 4. Guardian add on benef. Profile </p>
+                       <p> 5. Today's stock consumption report bug fix </p>
+                       <p> 6. Last 30 days stock consumption bug fix</p>
+                       <p> 7. Medicine delivery register add</p>
+                   </div>
+                   <div>Version: 1.1.0<span style="float:right;" >Release Date: 26/Sep/2023</span></div>
+                   <div>
+                       <p> 1. Disease Name show list wise  list implement </p>
+                   </div>
+                   <div>Version: 1.0.1<span style="float:right;" >Release Date: 25/Sep/2023</span></div>
+                   <div>
+                       <p> 1.Active/Deactive user list bug fix </p>
+                   </div>
+
+
+                   <div>Version: 1.0.0<span style="float:right;" >Release Date: 01/Sep/2023</span></div>
+                   <div>
+                       <p> 1..</p>
+                   </div>
+
+               </div>
+                </div>
+  </div>
+  </body>
+</html>

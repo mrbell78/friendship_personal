@@ -1,0 +1,14 @@
+package ngo.friendship.satellite.ui.product_management.activity.CommonBeneficiaryActivity
+
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import ngo.friendship.satellite.model.Beneficiary
+
+class CommonServiceViewModel : ViewModel() {
+    val selected = MutableLiveData<Beneficiary>()
+
+    fun selectedItem(item: Beneficiary) {
+        selected.value = item
+    }
+
+}

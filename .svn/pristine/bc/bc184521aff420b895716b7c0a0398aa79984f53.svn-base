@@ -1,0 +1,239 @@
+package ngo.friendship.satellite.ui.product_management.fragment;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
+import android.os.Message;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import ngo.friendship.satellite.App;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.asynctask.CommiunicationTask;
+import ngo.friendship.satellite.asynctask.TaskKey;
+import ngo.friendship.satellite.communication.RequestData;
+import ngo.friendship.satellite.communication.ResponseData;
+import ngo.friendship.satellite.constants.ActivityDataKey;
+import ngo.friendship.satellite.constants.Constants;
+import ngo.friendship.satellite.constants.RequestName;
+import ngo.friendship.satellite.constants.RequestType;
+import ngo.friendship.satellite.databinding.FragmentProductAdjustmentBinding;
+
+import ngo.friendship.satellite.error.MhealthException;
+import ngo.friendship.satellite.interfaces.OnCompleteListener;
+import ngo.friendship.satellite.interfaces.OnDialogButtonClick;
+import ngo.friendship.satellite.jsonoperation.JSONParser;
+import ngo.friendship.satellite.model.RequisitionInfo;
+import ngo.friendship.satellite.ui.product_management.activity.ProductAdjustmentActivity;
+import ngo.friendship.satellite.ui.product_management.activity.ProductDamagesActivity;
+import ngo.friendship.satellite.ui.product_management.activity.ProductRiseActivity;
+import ngo.friendship.satellite.ui.product_management.activity.StockReturnActivity;
+import ngo.friendship.satellite.utility.TextUtility;
+import ngo.friendship.satellite.views.AppToast;
+import ngo.friendship.satellite.views.DialogView;
+
+@AndroidEntryPoint
+public class ProductAdjustmentFragment extends Fragment {
+
+    FragmentProductAdjustmentBinding binding;
+    ArrayList<RequisitionInfo> requisitionList;
+
+    Activity ctx;
+    String ACTIVE_TAB = "";
+    int activeColor = 0, deActiveColor = 0;
+
+    public ProductAdjustmentFragment() {
+        // Required empty public constructor
+    }
+
+    // TODO: Rename and change types and number of parameters
+    public static ProductAdjustmentFragment newInstance() {
+        ProductAdjustmentFragment fragment = new ProductAdjustmentFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        ctx = getActivity();
+        activeColor = ContextCompat.getColor(getActivity(), R.color.app_color);
+        deActiveColor = ContextCompat.getColor(getActivity(), R.color.black);
+
+        binding = FragmentProductAdjustmentBinding.inflate(getLayoutInflater(), container, false);
+        binding.toolbar.tvProductTitle.setText(getActivity().getResources().getString(R.string.product_stock_adjust));
+        showData();
+        binding.ivProductAdjust.setColorFilter(activeColor);
+        binding.tvProductAdjust.setTextColor(activeColor);
+        ACTIVE_TAB = Constants.PRODUCT_ADJUST_ADJUST_TAB;
+        binding.llProductAdjust.setOnClickListener(view -> {
+
+            binding.ivProductAdjust.setColorFilter(activeColor);
+            binding.tvProductAdjust.setTextColor(activeColor);
+
+            binding.ivProductReturn.setColorFilter(deActiveColor);
+            binding.tvProductReturn.setTextColor(deActiveColor);
+            binding.ivProductDamages.setColorFilter(deActiveColor);
+            binding.tvProductDamages.setTextColor(deActiveColor);
+
+            ACTIVE_TAB = Constants.PRODUCT_ADJUST_ADJUST_TAB;
+        });
+        binding.llAdjustReturn.setOnClickListener(view -> {
+            binding.ivProductReturn.setColorFilter(activeColor);
+            binding.tvProductReturn.setTextColor(activeColor);
+
+            binding.ivProductAdjust.setColorFilter(deActiveColor);
+            binding.tvProductAdjust.setTextColor(deActiveColor);
+
+            binding.ivProductDamages.setColorFilter(deActiveColor);
+            binding.tvProductDamages.setTextColor(deActiveColor);
+
+            ACTIVE_TAB = Constants.PRODUCT_ADJUST_RETURN_TAB;
+
+        });
+
+        binding.llAdjustDamages.setOnClickListener(view -> {
+            binding.ivProductDamages.setColorFilter(activeColor);
+            binding.tvProductDamages.setTextColor(activeColor);
+
+            binding.ivProductReturn.setColorFilter(deActiveColor);
+            binding.tvProductReturn.setTextColor(deActiveColor);
+
+            binding.ivProductAdjust.setColorFilter(deActiveColor);
+            binding.tvProductAdjust.setTextColor(deActiveColor);
+
+
+            ACTIVE_TAB = Constants.PRODUCT_ADJUST_DAMAGES_TAB;
+
+        });
+
+
+        binding.fabStockAdjustment.setOnClickListener(view -> {
+            if (ACTIVE_TAB.equals(Constants.PRODUCT_ADJUST_ADJUST_TAB)) {
+                Intent i = new Intent(ctx, ProductRiseActivity.class);
+                i.putExtra(ActivityDataKey.PARENT_NAME,""+getResources().getString(R.string.product_adjustment).replace("\n"," "));
+                i.putExtra(ActivityDataKey.ACTIVITY,""+Constants.PRODUCT_ADJUST_ADJUST_TAB);
+                startActivity(i);
+            } else if (ACTIVE_TAB.equals(Constants.PRODUCT_ADJUST_DAMAGES_TAB)) {
+                Intent i = new Intent(ctx, ProductRiseActivity.class);
+                i.putExtra(ActivityDataKey.PARENT_NAME,""+getResources().getString(R.string.product_damages).replace("\n"," "));
+                i.putExtra(ActivityDataKey.ACTIVITY,""+Constants.PRODUCT_ADJUST_DAMAGES_TAB);
+                startActivity(i);
+            } else if (ACTIVE_TAB.equals(Constants.PRODUCT_ADJUST_RETURN_TAB)) {
+                Intent i = new Intent(ctx, ProductRiseActivity.class);
+                i.putExtra(ActivityDataKey.PARENT_NAME,""+getResources().getString(R.string.product_return).replace("\n"," "));
+                i.putExtra(ActivityDataKey.ACTIVITY,""+Constants.PRODUCT_ADJUST_RETURN_TAB);
+                startActivity(i);
+            }
+        });
+
+        return binding.getRoot();
+    }
+
+    private void showData() {
+        binding.llRequisitionRowContainer.removeAllViews();
+        if (requisitionList == null || requisitionList.size() == 0) {
+            AppToast.showToast(ctx, R.string.data_not_available);
+            return;
+        }
+
+        for (int i = 0; i < requisitionList.size(); i++) {
+            View view = View.inflate(ctx, R.layout.requisition_list_row, null);
+            binding.llRequisitionRowContainer.addView(view);
+
+            RequisitionInfo requisitionInfo = requisitionList.get(i);
+            TextView tvDate = view.findViewById(R.id.tv_date);
+            tvDate.setText(requisitionInfo.getRequisitionDate());
+
+            TextView reqNo = view.findViewById(R.id.tv_req_no);
+            reqNo.setText(requisitionInfo.getRequisitionNo() + "");
+
+            TextView tvRequisitionPrice = view.findViewById(R.id.tv_requisition_price);
+            tvRequisitionPrice.setText(TextUtility.format("%.2f", requisitionInfo.getRequisitionMedicinePrice()));
+
+            TextView tvReceivePrice = view.findViewById(R.id.tv_receive_price);
+            tvReceivePrice.setText(TextUtility.format("%.2f", requisitionInfo.getReceiveMedicinePrice()));
+
+            view.setTag(i);
+            //view.setOnClickListener(getActivity());
+        }
+    }
+
+    private void showDataRetrieveConfirmationPrompt(String msg) {
+        HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_yes);
+        buttonMap.put(2, R.string.btn_no);
+        DialogView dialog = new DialogView(getActivity(), R.string.dialog_title, msg, R.drawable.information, buttonMap);
+        dialog.setOnDialogButtonClick(new OnDialogButtonClick() {
+
+            @Override
+            public void onDialogButtonClick(View view) {
+                switch (view.getId()) {
+                    case 1:
+                        retrieveRequisitionList();
+                        break;
+                }
+
+            }
+        });
+        dialog.show();
+    }
+
+    private void retrieveRequisitionList() {
+
+        RequestData request = new RequestData(RequestType.STOCK_INVENTORY, RequestName.LAST7_REQUISITION, Constants.MODULE_DATA_GET);
+
+        CommiunicationTask commiunicationTask = new CommiunicationTask(ctx, request, getResources().getString(R.string.retrieving_data), getResources().getString(R.string.please_wait));
+        commiunicationTask.setCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(Message msg) {
+                if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+                    showOneButtonDialog(getResources().getString(R.string.network_error) + "\n" + msg.getData().getString(TaskKey.ERROR_MSG), R.drawable.error, Color.RED);
+                } else {
+                    ResponseData response = (ResponseData) msg.getData().getSerializable(TaskKey.DATA0);
+                    if (response.getResponseCode().equalsIgnoreCase("00")) {
+                        showOneButtonDialog(response.getErrorCode() + "-" + response.getErrorDesc(), R.drawable.error, Color.RED);
+                    } else {
+
+                        try {
+                            ArrayList<RequisitionInfo> requisitionLists = JSONParser.pasreRequisitionListJSON(response.getData());
+                            App.getContext().getDB().saveRequisitionList(requisitionLists, App.getContext().getUserInfo().getUserId());
+                            requisitionList = App.getContext().getDB().getLast7Requisition();
+
+                        } catch (MhealthException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        showData();
+                    }
+                }
+
+            }
+        });
+        commiunicationTask.execute();
+    }
+
+    private void showOneButtonDialog(String msg, final int imageId, int messageColor) {
+
+        HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_close);
+        DialogView dialog = new DialogView(ctx, R.string.dialog_title, msg, messageColor, imageId, buttonMap);
+        dialog.show();
+    }
+
+
+}

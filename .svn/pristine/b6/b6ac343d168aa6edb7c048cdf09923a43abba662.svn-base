@@ -1,0 +1,27 @@
+package ngo.friendship.satellite.adapter;
+
+/**
+ * Created by Yeasin Ali on 4/18/2023.
+ * friendship.ngo
+ * yeasinali@friendship.ngo
+ */
+public class Item {
+    private String name;
+    private String value;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+}

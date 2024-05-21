@@ -1,0 +1,44 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        android:icon="@drawable/ic_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_update"
+        android:orderInCategory="100"
+        android:title="@string/action_update"
+        android:icon="@drawable/ic_sync"
+        app:showAsAction="never" />
+
+     <item
+        android:id="@+id/menu_switch"
+        android:orderInCategory="100"
+         android:title="@string/switch_user"
+        android:icon="@drawable/ic_switch_account"
+         app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_app_mode_switch"
+        android:orderInCategory="100"
+        android:title="@string/switch_to_training"
+        android:icon="@drawable/ic_arrow_forward"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_about"
+        android:orderInCategory="100"
+        android:title="@string/menu_about"
+        android:icon="@drawable/ic_error_outline"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_my_device"
+        android:orderInCategory="100"
+        android:title="@string/device_id"
+        android:icon="@drawable/ic_device"
+        app:showAsAction="never" />
+
+</menu>

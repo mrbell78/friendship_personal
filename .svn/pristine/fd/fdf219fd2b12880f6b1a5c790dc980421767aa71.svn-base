@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_cart"
+        android:icon="@drawable/ic_card_stock"
+        android:orderInCategory="102"
+        android:title=""
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_amount"
+        android:orderInCategory="102"
+        android:title=" ৳ 68.00"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_profit"
+        android:orderInCategory="102"
+        android:title=" ৳ 8.00"
+        app:showAsAction="always" />
+<!--    <item-->
+<!--        android:id="@+id/action_notification"-->
+<!--        android:icon="@drawable/ic_notification"-->
+<!--        android:orderInCategory="102"-->
+<!--        android:title=""-->
+<!--        app:showAsAction="always" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/product_rise"-->
+<!--        app:showAsAction="never"-->
+<!--        android:gravity="center"-->
+<!--        android:title="Product rise"/>-->
+
+<!--    <item-->
+<!--        android:id="@+id/product_adjust"-->
+<!--        android:icon="@android:drawable/ic_menu_add"-->
+<!--        android:title="Product Adjustment"/>-->
+    <item
+        android:id="@+id/all_invoice"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="All invoice List">
+
+    </item>
+
+
+
+
+</menu>

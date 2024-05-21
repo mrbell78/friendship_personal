@@ -1,0 +1,284 @@
+package ngo.friendship.satellite.ui.beneficiary.profile
+
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.ContentValues.TAG
+import android.graphics.Color
+import android.graphics.drawable.InsetDrawable
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.webkit.WebView
+import android.widget.TableRow
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
+import ngo.friendship.satellite.App
+import ngo.friendship.satellite.R
+import ngo.friendship.satellite.adapter.BasemHealthAdapter
+import ngo.friendship.satellite.constants.Constants
+import ngo.friendship.satellite.databinding.CommonServiceActivityBinding
+import ngo.friendship.satellite.databinding.PreviousServiceFragmentInterviewDetailsBinding
+import ngo.friendship.satellite.databinding.PreviousServiceFragmentRowBinding
+import ngo.friendship.satellite.jsonoperation.JSONParser
+import ngo.friendship.satellite.model.Beneficiary
+import ngo.friendship.satellite.model.SavedInterviewInfo
+import ngo.friendship.satellite.utility.Utility
+import ngo.friendship.satellite.viewmodels.OfflineViewModel
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+
+@AndroidEntryPoint
+class PreviousServiceFragment : Fragment() {
+    private lateinit var beneficiary: Beneficiary
+    private lateinit var binding: CommonServiceActivityBinding;
+    val viewModel: OfflineViewModel by viewModels()
+    lateinit var mAdapter: BasemHealthAdapter<SavedInterviewInfo, PreviousServiceFragmentRowBinding>
+
+    companion object {
+        fun newInstance(data: String): PreviousServiceFragment {
+            val fragment = PreviousServiceFragment()
+            val args = Bundle()
+            args.putString("key", data)
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = CommonServiceActivityBinding.inflate(
+            layoutInflater
+        )
+        itemAdapter
+        val data = arguments?.getString("key")
+        if (data != null) {
+            val gson = Gson()
+            beneficiary = gson.fromJson(data, Beneficiary::class.java)
+            activity?.let {
+                viewModel.getInterviewListByBenefCode(beneficiary.benefCodeFull)
+                    .observe(it) { interviewList ->
+                        if (interviewList.size > 0) {
+                            mAdapter.addItems(interviewList)
+                            binding.serviceItemNotFound.serviceNotFound.visibility = View.GONE
+                        } else {
+                            binding.serviceItemNotFound.serviceNotFound.visibility = View.VISIBLE
+                        }
+
+                    }
+            }
+
+
+        }
+
+        return binding.root
+    }
+
+    private val itemAdapter: Unit
+        private get() {
+            mAdapter =
+                object :
+                    BasemHealthAdapter<SavedInterviewInfo, PreviousServiceFragmentRowBinding>() {
+                    override fun onItemLongClick(
+                        view: View,
+                        model: SavedInterviewInfo,
+                        position: Int
+                    ) {
+                    }
+
+                    override fun onItemClick(
+                        view: View,
+                        userScheduleInfo: SavedInterviewInfo,
+                        position: Int,
+                        dataBinding: PreviousServiceFragmentRowBinding
+                    ) {
+                        showCustomDialog(userScheduleInfo)
+                    }
+
+                    @SuppressLint("SetTextI18n")
+                    override fun onBindData(
+                        model: SavedInterviewInfo,
+                        position: Int,
+                        dataBinding: PreviousServiceFragmentRowBinding
+                    ) {
+
+                    }
+
+                    override val layoutResId: Int
+                        get() = R.layout.previous_service_fragment_row
+                }
+            val ATTRS = intArrayOf(android.R.attr.listDivider)
+            val a = context?.obtainStyledAttributes(ATTRS)
+            val divider = a?.getDrawable(0)
+            val insetDivider = InsetDrawable(divider, 8, 16, 8, 16)
+            if (a != null) {
+                a.recycle()
+            }
+            val itemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+            itemDecoration.setDrawable(insetDivider)
+            binding.rvService.addItemDecoration(itemDecoration)
+            binding.rvService.setHasFixedSize(true)
+            val mLayoutManager = LinearLayoutManager(activity)
+            binding.rvService.layoutManager = mLayoutManager
+            binding.rvService.itemAnimator = DefaultItemAnimator()
+            binding.rvService.adapter = mAdapter
+        }
+
+    private fun showCustomDialog(userScheduleInfo: SavedInterviewInfo) {
+        val inflater = LayoutInflater.from(requireContext())
+        val bindingDig: PreviousServiceFragmentInterviewDetailsBinding =
+            PreviousServiceFragmentInterviewDetailsBinding.inflate(inflater, null, false)
+        try {
+            bindingDig.tvBenefName.setText("" + beneficiary.benefName)
+            bindingDig.tvBeneficiaryCode.setText("" + beneficiary.benefCode)
+            bindingDig.tvServiceType.setText(""+userScheduleInfo.questionnarieTitle +" "+ (activity?.resources?.getString(R.string.services)))
+
+            bindingDig.mobileNo.setText(""+userScheduleInfo.date)
+        }catch (e:Exception){e.printStackTrace()}
+
+        val algoList = ArrayList<String>()
+        algoList.add(userScheduleInfo.getQuestionnarieName())
+
+        var qAnsJson: String = userScheduleInfo.questionAnswerJson
+        var qJson: String = userScheduleInfo.questionJson
+        val qusDataList = JSONParser.getJsonArray(JSONObject(qJson), "questionnaireDetails")
+        val ansDataList = JSONParser.getJsonArray(JSONObject(qAnsJson), "questions")
+//        var d = 1
+        for (i in 0 until ansDataList.length()) {
+            val dataInterviewDetails = ansDataList.getJSONObject(i)
+            val qId = JSONParser.getString(dataInterviewDetails, "qkey").toInt()
+            val isShowAbleQus: Long = getQusShowAbleOutputbyQusId(qusDataList, qId).toLong()
+            val qName: String = getQusNamebyQusId(qusDataList, qId)
+            val qType: String = getQusTypebyQusId(qusDataList, qId)
+            val answer = JSONParser.getString(dataInterviewDetails, "answer")
+            if (isShowAbleQus == 1L && qName != Constants.SYS_SOURCE_INTERVIEW) {
+                if (!answer.isEmpty() || answer != null) {
+                    var outputAnsStr: String
+                    if (qType.toLowerCase().contains(Constants.PRESCRIPTION.toLowerCase())) {
+                        var prescriptionMedicine = ""
+                        if (answer.contains("|")) {
+                            val medicineReplaceSplitCharacter = answer.replace("|", ";")
+                            var prescriptionForMutipleMedicine = ""
+                            val arrayOfMutipleMedicine =
+                                medicineReplaceSplitCharacter.split(";".toRegex())
+                                    .dropLastWhile { it.isEmpty() }
+                                    .toTypedArray()
+                            for (m in arrayOfMutipleMedicine) {
+                                prescriptionForMutipleMedicine += Utility.humanReadablePrescription(
+                                    m
+                                ) + "\n"
+                            }
+                            prescriptionMedicine += prescriptionForMutipleMedicine
+                        } else {
+                            prescriptionMedicine += Utility.humanReadablePrescription(answer)
+                        }
+
+//                                      outputAnsStr=Utility.humanReadablePrescription(JSONParser.getString(dataInterviewDetails,
+//                                              "outputAns"));
+
+                        outputAnsStr = prescriptionMedicine
+                    } else {
+                        outputAnsStr = answer.replace("_", " ")
+                    }
+
+                    val tableRow = LayoutInflater.from(activity)
+                        .inflate(R.layout.row_table_layout, null)
+                    val tvValue1 = tableRow.findViewById<View>(R.id.tvValue1) as TextView
+                    val tvValue2 = tableRow.findViewById<View>(R.id.tvValue2) as TextView
+                    tvValue1.visibility = View.VISIBLE
+                    tvValue2.visibility = View.VISIBLE
+                    //                                  TableRow tableRow = (TableRow) LayoutInflater.from(this).inflate(R.layout.row_card_table_layout, null);
+//                                  CardButton tvValue1= (CardButton) tableRow.findViewById(R.id.tvValue1);
+//                                  CardButton tvValue2= (CardButton) tableRow.findViewById(R.id.tvValue2);
+//                                  tvValue1.setVisibility(View.VISIBLE);
+//                                  tvValue2.setVisibility(View.VISIBLE);
+                    tvValue1.text = qName.replace("_", " ")
+                    if (qName.equals("REFERRAL_CENTER", ignoreCase = true)) {
+                        val referId = outputAnsStr.toLong()
+                        val refCenterName: String =
+                            App.getContext().getDB().getRefcenterNameById(referId, "en")
+                       tvValue2.text = refCenterName
+                    }else if(qName.equals("Medicine")){
+                        tvValue2.visibility= View.GONE
+                        Log.d(TAG, "showCustomDialog: .......the output string "+outputAnsStr)
+                    } else {
+                       tvValue2.text = outputAnsStr
+                    }
+//                    if (d % 2 != 0) {
+//                        tvValue1.setBackgroundColor(Color.parseColor("#e0e0e0"))
+//                        tvValue2.setBackgroundColor(Color.parseColor("#e0e0e0"))
+//                    }
+                    bindingDig.llContainer.addView(tableRow)
+                   // d++
+                }
+            }
+        }
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setView(bindingDig.root)
+
+
+        val dialog = builder.create()
+        dialog.show()
+
+        bindingDig.tvClear.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    fun getQusShowAbleOutputbyQusId(qusArray: JSONArray, qusId: Int): Int {
+        for (i in 0 until qusArray.length()) {
+            try {
+                val singleQus = qusArray.getJSONObject(i)
+                val qustionId: Int = JSONParser.getInt(singleQus, "QUESTION_ID")
+                if (qustionId == qusId) {
+                    return JSONParser.getInt(singleQus, "SHOWABLE_OUTPUT")
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+        return 0
+    }
+
+    fun getQusNamebyQusId(qusArray: JSONArray, qusId: Int): String {
+        for (i in 0 until qusArray.length()) {
+            try {
+                val singleQus = qusArray.getJSONObject(i)
+                val qustionId = JSONParser.getInt(singleQus, "QUESTION_ID")
+                if (qustionId == qusId) {
+                    return JSONParser.getString(singleQus, "Q_NAME")
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+        return ""
+    }
+
+    fun getQusTypebyQusId(qusArray: JSONArray, qusId: Int): String {
+        for (i in 0 until qusArray.length()) {
+            try {
+                val singleQus = qusArray.getJSONObject(i)
+                val qustionId = JSONParser.getInt(singleQus, "QUESTION_ID")
+                if (qustionId == qusId) {
+                    return JSONParser.getString(singleQus, "Q_NAME")
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+        return ""
+    }
+
+}

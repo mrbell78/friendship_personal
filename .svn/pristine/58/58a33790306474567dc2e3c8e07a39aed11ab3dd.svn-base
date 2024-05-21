@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">@color/app_color</color>
+    <color name="colorPrimaryVariant">#2C62BB</color>
+    <color name="colorOnPrimary">#2171AB</color>
+
+    <color name="colorPrimaryDark">#4586F3</color>
+
+    <color name="app_color_light">#e4f2fd</color>
+    <color name="app_color_mid">#6bb3f3</color>
+    <color name="app_color_dark">#3686e0</color> <!-- 750 -->
+
+    <color name="app_color">#2171AB</color>
+    <color name="app_color_50">#e4f2fd</color>
+    <color name="app_color_100">#bdddfa</color>
+    <color name="app_color_200">#94c9f7</color>
+    <color name="app_color_300">#6bb3f3</color>
+    <color name="app_color_400">#4fa3f1</color>
+    <color name="app_color_500">#3a94ee</color>
+    <color name="app_color_600">#3686e0</color>
+    <color name="app_color_700">#3174cd</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="app_color_common_actionbar">#2C62BB</color>
+
+
+
+
+
+    <color name="white">#FFFFFF</color>
+    <color name="ash_gray">#BDBDBD</color>
+    <color name="female">#EF5E50</color>
+    <color name="black">#2D2D2D</color>
+    <color name="black_transparent">#B52D2D2D</color>
+    <color name="hilight">#f9cc70</color>
+    <color name="greenStart">#ff33dd44</color>
+    <color name="greenMid">#ff0A8815</color>
+    <color name="greenEnd">#ff1da130</color>
+    <color name="loghi_gray">#aeaeae</color>
+    <color name="button_color">#3E7DB5</color>
+    <color name="gray">#979797</color>
+    <color name="red">#DC3545</color>
+    <color name="red_dark">#6b0610</color>
+
+    <color name="yellow">#ffc107</color>
+    <color name="yellow_dark">#c69709</color>
+
+    <color name="offline">#DC3545</color>
+    <color name="online">#28A745</color>
+
+
+    <color name="teal_200">#FF03DAC5</color>
+    <!--    <color name="app_color">#FF03DAC5</color>-->
+    <color name="teal_700">#FF018786</color>
+    <color name="ase">#444444</color>
+
+    <color name="colorActivIndicator">#D81B60</color>
+    <color name="colorInActivIndicator">#1B1819</color>
+    <color name="colorButtonShape">#AA00FF</color>
+
+    <color name="text_deep">#454545</color>
+    <color name="text_mid">#A1A1A1</color>
+    <color name="text_light">#FEFEFE</color>
+    <color name="text_primary">#2C62BB</color>
+    <color name="text_red">#EF5E50</color>
+    <color name="text_ash">#7B7B7B</color>
+    <color name="text_black">#444444</color>
+
+    <color name="color_female">#FFD9F6</color>
+    <color name="color_male">#FFD9F6</color>
+
+    <color name="group_header">#ffa0a0a0</color>
+    <color name="separetor">#ff8d8d8d</color>
+    <color name="detail_title">#ff676767</color>
+    <color name="warning">#f76565</color>
+
+
+    <color name="float_transparent">#00000000</color>
+    <color name="success_stroke_color">#A5DC86</color>
+    <color name="trans_success_stroke_color">#33A5DC86</color>
+    <color name="sweet_dialog_bg_color">#FFFFFF</color>
+    <color name="green">#11FF00</color>
+    <color name="bootstrap_primary">#007bff</color>
+    <color name="bootstrap_secondary_press">#B1B3B5</color>
+    <color name="bootstrap_secondary">#6c757d</color>
+    <color name="bootstrap_success">#28a745</color>
+    <color name="bootstrap_success_press">#097722</color>
+    <color name="bootstrap_warning">#ffc107</color>
+    <color name="bootstrap_warning_press">#f5d882</color>
+    <color name="bootstrap_info">#17a2b8</color>
+    <color name="bootstrap_danger">#dc3545</color>
+    <color name="bootstrap_danger_press">#f9828e</color>
+    <color name="bootstrap_dark">#1d2124</color>
+    <color name="error_stroke_color">#F27474</color>
+    <color name="warning_stroke_color">#F8BB86</color>
+    <color name="question_bg">#E0F2F1</color>
+    <color name="white_light">#F8F8F8</color>
+    <color name="black_light">#383838</color>
+    <color name="button_text_color">#FFFFFF</color>
+    <color name="light_blue_400">#FF29B6F6</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="gray_400">#FFBDBDBD</color>
+    <color name="gray_600">#FF757575</color>
+    <color name="app_black">#454545</color>
+    <color name="app_black_alpha">#403F51B5</color>
+
+
+    <!-- indigo -->
+    <color name="md_indigo_500">#2C62BB</color>
+    <color name="md_light_green_500">#8CC14A</color>
+    <color name="md_yellow_500">#FFC811</color>
+    <color name="md_deep_orange_500">#EF5E50</color>
+    <color name="image_backround_color">#E0F2F1</color>
+
+    <string name="mdi_home">&#xF02DC;</string>
+
+    <!--blue grey-->
+    <color name="md_blue_grey_50">#ECEFF1</color>
+    <color name="md_blue_grey_500">#607D8B</color>
+    <integer-array name="menu_color_500">
+        <item>@color/md_indigo_500</item>
+        <item>@color/md_light_green_500</item>
+        <item>@color/md_yellow_500</item>
+        <item>@color/md_deep_orange_500</item>
+    </integer-array>
+    <color name="ash_gray2">#777575</color>
+    <color name="bottom_navigation_color_active">#2171AB</color>
+    <color name="bottom_navigation_color_deactive">#FF757575</color>
+
+
+
+</resources>

@@ -1,0 +1,1005 @@
+{
+	"CATEGORY_ID": 31,
+	"SERVICE_CATEGORY_ID": 9,
+	"STATE": 1,
+	"P_F_B": 1,
+	"NAME": "DIABETES_SCREENING",
+	"BENEF_SELECTION_CRITERIA": "{\"benefSelectionCriteria\":{\"ageRange\":{\"start\":\"30\",\"end\":\"100\",\"ageType\":\"year\"},\"guestBenefAllowed\":\"1\"}}",
+	"QUESTIONNAIRE_DATA": {
+		"parent": "question21",
+		"questionnaire": {
+			"question11": {
+				"qtitle": "",
+				"expression": "",
+				"hidden": false,
+				"showable": true,
+				"qtype": "referralCenter",
+				"fvisible": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "চিকিৎসার জন্য পাঠান (Refer for treatment)",
+				"branches": [
+					{
+						"nextq": "disconnect",
+						"rule": "any",
+						"calcValue": ""
+					}
+				],
+				"required": true,
+				"branchItems": [
+					1,
+					2
+				],
+				"defaultval": "",
+				"readonly": false,
+				"pos": {
+					"top": "639px",
+					"left": "375px"
+				},
+				"lvisible": true,
+				"qname": "REFERAL_CENTER",
+				"hint": "",
+				"uinput": "",
+				"options": [
+					{
+						"caption": "0",
+						"id": "1",
+						"value": "0"
+					},
+					{
+						"caption": "0",
+						"id": "2",
+						"value": "0"
+					}
+				],
+				"comment": "",
+				"savable": true
+			},
+			"question12": {
+				"hidden": true,
+				"showable": false,
+				"qtype": "string",
+				"fvisible": false,
+				"multiLine": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "SYS_Diag Decision",
+				"required": false,
+				"suggestionType": "",
+				"readonly": false,
+				"pos": {
+					"top": "223px",
+					"left": "381px"
+				},
+				"lvisible": false,
+				"qname": "SYS_DIAG_DECISION___1",
+				"uinput": "",
+				"validations": [],
+				"savable": true,
+				"fromSuggestion": false,
+				"qtitle": "",
+				"expression": "",
+				"suggestion": false,
+				"branches": [
+					{
+						"nextq": "question8",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"defaultval": "Identified case of Diabetes",
+				"hint": "",
+				"comment": "Identified case of Diabetes"
+			},
+			"question10": {
+				"qtitle": "",
+				"expression": "",
+				"hidden": false,
+				"showable": true,
+				"qtype": "list",
+				"fvisible": false,
+				"mlvisible": true,
+				"dumpable": false,
+				"caption": "উপদেশ (Advice)",
+				"branches": [
+					{
+						"nextq": "question16",
+						"rule": "any",
+						"value": "",
+						"calcValue": ""
+					}
+				],
+				"required": false,
+				"branchItems": [
+					1,
+					2,
+					3
+				],
+				"defaultval": "123",
+				"readonly": true,
+				"pos": {
+					"top": "440px",
+					"left": "497px"
+				},
+				"lvisible": true,
+				"qname": "Advice_3",
+				"hint": "",
+				"uinput": "",
+				"options": [
+					{
+						"caption": "আপনার ডায়েবেটিস হবার ঝুঁকি/ উপসর্গ পাওয়া যায় নি (You are not at risk of diabetes/no diabetes symptoms present.)",
+						"id": "1",
+						"value": "1"
+					},
+					{
+						"caption": "ওজন  নিয়ন্ত্রনে রাখুন / কায়িক পরিশ্রম করুন (Keep the weight in control/do regular physical labour.)",
+						"id": "2",
+						"value": "2"
+					},
+					{
+						"caption": "ধূমপান অথবা তামাক জাতীয় খাবার থেকে বিরত থাকুন (Avoid smoking or tobacco.)",
+						"id": "3",
+						"value": "3"
+					}
+				],
+				"comment": "Advice-3",
+				"savable": false
+			},
+			"question21": {
+				"hidden": false,
+				"showable": true,
+				"qtype": "string",
+				"fvisible": true,
+				"multiLine": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "",
+				"required": false,
+				"suggestionType": "",
+				"readonly": false,
+				"pos": {
+					"top": "46px",
+					"left": "65px"
+				},
+				"lvisible": false,
+				"qname": "rrrr",
+				"uinput": "",
+				"validations": [],
+				"savable": true,
+				"fromSuggestion": false,
+				"qtitle": "",
+				"expression": "ReflectionUtility.addComponent(image, top, url:http://google.com/testimg.jpg, fileName:ReflectionUtility.addComponent(image, url:http://google.com/testimg.jpg, fileName:ReflectionUtility.addComponent(image, url:http://google.com/testimg.jpg, fileName:DIABETES_SCREENING_partner.jpg)",
+				"suggestion": false,
+				"branches": [
+					{
+						"nextq": "question1",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"defaultval": "",
+				"hint": "",
+				"comment": ""
+			},
+			"question3": {
+				"qtitle": "",
+				"expression": "Beneficiary.getAgeInDay()",
+				"hidden": true,
+				"showable": false,
+				"qtype": "int",
+				"fvisible": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "SYS_AGE_IN_DAY",
+				"branches": [
+					{
+						"nextq": "question4",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"required": false,
+				"defaultval": "",
+				"readonly": false,
+				"pos": {
+					"top": "161px",
+					"left": "201px"
+				},
+				"lvisible": false,
+				"qname": "SYS_AGE_IN_DAY",
+				"hint": "",
+				"uinput": "",
+				"comment": "",
+				"validations": [],
+				"numType": "int",
+				"savable": true
+			},
+			"question15": {
+				"hidden": true,
+				"showable": false,
+				"qtype": "string",
+				"fvisible": false,
+				"multiLine": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "SYS_Diag Decision",
+				"required": false,
+				"suggestionType": "",
+				"readonly": false,
+				"pos": {
+					"top": "431px",
+					"left": "774px"
+				},
+				"lvisible": false,
+				"qname": "SYS_DIAG_DECISION___4",
+				"uinput": "",
+				"validations": [],
+				"savable": false,
+				"fromSuggestion": false,
+				"qtitle": "",
+				"expression": "",
+				"suggestion": false,
+				"branches": [
+					{
+						"nextq": "question9",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"defaultval": "Suspected case of Diabetes",
+				"hint": "",
+				"comment": "Suspected case of Diabetes"
+			},
+			"question2": {
+				"qtitle": "",
+				"expression": "Beneficiary.getDob()",
+				"validationMsg": "",
+				"hidden": true,
+				"showable": false,
+				"qtype": "date",
+				"fvisible": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "SYS_DOB",
+				"branches": [
+					{
+						"nextq": "question3",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"required": false,
+				"defaultval": "",
+				"readonly": false,
+				"pos": {
+					"top": "103px",
+					"left": "201px"
+				},
+				"lvisible": false,
+				"qname": "SYS_DOB",
+				"hint": "",
+				"uinput": "",
+				"comment": "",
+				"validations": [
+					{
+						"baseDate": "",
+						"validationType": "range",
+						"value": ""
+					}
+				],
+				"savable": true
+			},
+			"question16": {
+				"qtitle": "",
+				"expression": "",
+				"validationMsg": "",
+				"hidden": true,
+				"showable": true,
+				"qtype": "date",
+				"fvisible": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "NEXT FOLLOWUP DATE",
+				"branches": [
+					{
+						"nextq": "question17",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"required": false,
+				"defaultval": "<CURRENT_DATE>+14",
+				"readonly": false,
+				"pos": {
+					"top": "639px",
+					"left": "490px"
+				},
+				"lvisible": false,
+				"qname": "NEXT_FOLLOWUP_DATE",
+				"hint": "",
+				"uinput": "",
+				"comment": "",
+				"validations": [
+					{
+						"baseDate": "",
+						"validationType": "range",
+						"value": ""
+					}
+				],
+				"savable": true
+			},
+			"question13": {
+				"hidden": true,
+				"showable": false,
+				"qtype": "string",
+				"fvisible": false,
+				"multiLine": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "SYS_Diag Decision",
+				"required": false,
+				"suggestionType": "",
+				"readonly": false,
+				"pos": {
+					"top": "224px",
+					"left": "504px"
+				},
+				"lvisible": false,
+				"qname": "SYS_DIAG_DECISION___2",
+				"uinput": "",
+				"validations": [],
+				"savable": false,
+				"fromSuggestion": false,
+				"qtitle": "",
+				"expression": "",
+				"suggestion": false,
+				"branches": [
+					{
+						"nextq": "question10",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"defaultval": "No Diabetes related complication",
+				"hint": "",
+				"comment": "No Diabetes related complication"
+			},
+			"question5": {
+				"qtitle": "",
+				"expression": "",
+				"hidden": false,
+				"showable": true,
+				"qtype": "select1",
+				"fvisible": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "উপকারভোগীর বর্তমান অবস্থা (Current Status of the Beneficiary:)",
+				"branches": [
+					{
+						"nextq": "question6",
+						"rule": "any",
+						"calcValue": ""
+					},
+					{
+						"nextq": "question12",
+						"rule": "option1",
+						"value": "History_of_Diabetes",
+						"calcValue": ""
+					}
+				],
+				"required": true,
+				"branchItems": [
+					1,
+					2
+				],
+				"defaultval": "",
+				"readonly": false,
+				"pos": {
+					"top": "48px",
+					"left": "465px"
+				},
+				"lvisible": false,
+				"qname": "Current_status_of_beneficiaries",
+				"hint": "",
+				"uinput": "",
+				"options": [
+					{
+						"caption": "ডায়েবেটিসের ইতিহাস আছে (History of Diabetes)",
+						"id": "1",
+						"value": "History_of_Diabetes"
+					},
+					{
+						"caption": "ঝুঁকিপূর্ণ শ্রেণী নির্ণয় (Risk group assessment)",
+						"id": "2",
+						"value": "Risk_group_assessment"
+					}
+				],
+				"comment": "",
+				"savable": true
+			},
+			"question14": {
+				"hidden": true,
+				"showable": false,
+				"qtype": "string",
+				"fvisible": false,
+				"multiLine": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "SYS_Diag Decision",
+				"required": false,
+				"suggestionType": "",
+				"readonly": false,
+				"pos": {
+					"top": "224px",
+					"left": "630px"
+				},
+				"lvisible": false,
+				"qname": "SYS_DIAG_DECISION___3",
+				"uinput": "",
+				"validations": [],
+				"savable": false,
+				"fromSuggestion": false,
+				"qtitle": "",
+				"expression": "",
+				"suggestion": false,
+				"branches": [
+					{
+						"nextq": "question7",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"defaultval": "Diabetes related complication",
+				"hint": "",
+				"comment": "Diabetes related complication"
+			},
+			"question4": {
+				"qtitle": "",
+				"expression": "",
+				"hidden": false,
+				"showable": true,
+				"qtype": "list",
+				"fvisible": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "সেবাদানকারীর নিজস্ব সুরক্ষার প্রস্তুতিঃ (Service provider own safety measurement:)",
+				"branches": [
+					{
+						"nextq": "question5",
+						"rule": "any",
+						"value": "",
+						"calcValue": ""
+					}
+				],
+				"required": false,
+				"branchItems": [
+					1
+				],
+				"defaultval": "none",
+				"readonly": false,
+				"pos": {
+					"top": "48px",
+					"left": "352px"
+				},
+				"lvisible": false,
+				"qname": "COVID_19_safety_measurement_and_consent",
+				"hint": "",
+				"uinput": "",
+				"options": [
+					{
+						"caption": "COVID 19 স্বাস্থ্যসেবার জন্য চিকিৎসা সুরক্ষা এবং শারীরিক দূরত্ব বাধ্যতামূলক। আপনার সেবা শুরু করার আগে প্রস্তাবিত সুরক্ষা পরিমাপ বজায় রাখুন। আপনি যদি শুধু মাস্ক এবং গ্লাভস পরিধান করে থাকেন তবে সচেতনা বৃদ্ধির /কাউন্সিলিং এর সেবা প্রদান করতে পারবেন, সেবা প্রদানকালে আপনার ও উপকারভোগীর মধ্যে ন্যুনতম ২ মিটার/ ৬ ফুট দূরত্ব থাকা উচিৎ। উপকারভোগীকে অযথা স্পর্শ করা /হাত মিলানো থেকে বিরত থাকুন; আর যদি আপনি মাস্ক, গাউন, গ্লভস এবং সুরক্ষা-চশমাসহ প্রস্তুত হন তবে mHealth এর অন্যান্য সেবাগুলি আপনি চালিয়ে যেতে পারেন। (Medical safety and physical distance are mandatory for COVID 19 health service. Maintain recommended safety measurement before starting your service. If you are only wearing masks and gloves, then you can provide awareness raising/counseling services, you and the beneficiaries should have a minimum distance of 2 meters/5 feet while providing services. Avoid unnecessarily touching/shaking hands with beneficiaries, and if you are ready with masks, gowns, gloves and safety glasses, other services of mHealth can continue.)",
+						"id": "1",
+						"value": "Service_providers_own_safety_measurement_and_consent"
+					}
+				],
+				"comment": "",
+				"savable": true
+			},
+			"question19": {
+				"qtitle": "",
+				"expression": "ReflectionUtility.getDiagnosisId(q18)",
+				"hidden": true,
+				"showable": false,
+				"qtype": "int",
+				"fvisible": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "SYS_DIAG_ID",
+				"branches": [
+					{
+						"nextq": "disconnect",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"required": false,
+				"defaultval": "",
+				"readonly": false,
+				"pos": {
+					"top": "639px",
+					"left": "827px"
+				},
+				"lvisible": false,
+				"qname": "SYS_DIAG_ID",
+				"hint": "",
+				"uinput": "",
+				"comment": "",
+				"validations": [],
+				"numType": "int",
+				"savable": true
+			},
+			"question1": {
+				"hidden": true,
+				"showable": false,
+				"qtype": "string",
+				"fvisible": false,
+				"multiLine": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "SYS_AGE",
+				"required": false,
+				"suggestionType": "",
+				"readonly": false,
+				"pos": {
+					"top": "40px",
+					"left": "203px"
+				},
+				"lvisible": false,
+				"qname": "SYS_AGE___1",
+				"uinput": "",
+				"validations": [],
+				"savable": true,
+				"fromSuggestion": false,
+				"qtitle": "",
+				"expression": "Beneficiary.getAge()",
+				"suggestion": false,
+				"branches": [
+					{
+						"nextq": "question2",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"defaultval": "",
+				"hint": "",
+				"comment": ""
+			},
+			"question17": {
+				"hidden": true,
+				"showable": true,
+				"qtype": "string",
+				"fvisible": false,
+				"multiLine": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "ADVICE FLAG",
+				"required": false,
+				"suggestionType": "",
+				"readonly": false,
+				"pos": {
+					"top": "638px",
+					"left": "602px"
+				},
+				"lvisible": false,
+				"qname": "ADVICE_FLAG",
+				"uinput": "",
+				"validations": [],
+				"savable": true,
+				"fromSuggestion": false,
+				"qtitle": "",
+				"expression": "ReflectionUtility.getValues(q8,q9,q10)",
+				"suggestion": false,
+				"branches": [
+					{
+						"nextq": "question18",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"defaultval": "",
+				"hint": "",
+				"comment": "count number of advices"
+			},
+			"question18": {
+				"hidden": true,
+				"showable": true,
+				"qtype": "string",
+				"fvisible": false,
+				"multiLine": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "SYS_Diag Decision Final",
+				"required": false,
+				"suggestionType": "",
+				"readonly": false,
+				"pos": {
+					"top": "638px",
+					"left": "712px"
+				},
+				"lvisible": false,
+				"qname": "SYS_DIAG_DECISION___Final",
+				"uinput": "",
+				"validations": [],
+				"savable": true,
+				"fromSuggestion": false,
+				"qtitle": "",
+				"expression": "ReflectionUtility.concat(q12,q13,q14,q15)",
+				"suggestion": false,
+				"branches": [
+					{
+						"nextq": "question19",
+						"rule": "any",
+						"value": ""
+					}
+				],
+				"defaultval": "",
+				"hint": "",
+				"comment": ""
+			},
+			"question7": {
+				"qtitle": "",
+				"expression": "",
+				"hidden": false,
+				"showable": true,
+				"qtype": "int",
+				"fvisible": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "RBS পরীক্ষার মান লিখুন: (Enter Value of RBS test:)",
+				"branches": [
+					{
+						"nextq": "question10",
+						"rule": "any",
+						"value": ""
+					},
+					{
+						"nextq": "question15",
+						"rule": "greater",
+						"value": "11.1"
+					}
+				],
+				"required": true,
+				"defaultval": "",
+				"readonly": false,
+				"pos": {
+					"top": "354px",
+					"left": "630px"
+				},
+				"lvisible": false,
+				"qname": "RBS_Test",
+				"hint": "",
+				"uinput": "",
+				"comment": "",
+				"validations": [],
+				"numType": "dec",
+				"savable": true
+			},
+			"question6": {
+				"qtitle": "",
+				"expression": "",
+				"hidden": false,
+				"showable": true,
+				"qtype": "select",
+				"fvisible": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "ডায়েবেটিসের জটিলতার কোন উপসর্গগুলো আছে? (Which of the following risks and symptoms are present?)",
+				"branches": [
+					{
+						"nextq": "question14",
+						"rule": "any",
+						"value": "",
+						"calcValue": ""
+					},
+					{
+						"nextq": "question13",
+						"rule": "option13",
+						"value": "None",
+						"calcValue": ""
+					}
+				],
+				"required": true,
+				"branchItems": [
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8,
+					9,
+					10,
+					11,
+					12,
+					13
+				],
+				"defaultval": "",
+				"readonly": false,
+				"pos": {
+					"top": "49px",
+					"left": "584px"
+				},
+				"lvisible": false,
+				"qname": "Which_of_the_following_risks_and_symptoms_are_present",
+				"hint": "",
+				"uinput": "",
+				"options": [
+					{
+						"caption": "স্বাভাবিকের চেয়ে বেশি ওজন (Weight more than normal)",
+						"id": "1",
+						"value": "Weight_more_than_normal"
+					},
+					{
+						"caption": "পরিবারের অন্যান্য সদস্যদের ডায়াবেটিসের ইতিহাস -মা, বাবা, ভাই, বোন (History of Diabetes in other family members - mother, father, brother, sister)",
+						"id": "2",
+						"value": "History of Diabetes in other family members"
+					},
+					{
+						"caption": "উচ্চ রক্তচাপ (Hypertension)",
+						"id": "3",
+						"value": "Hypertension"
+					},
+					{
+						"caption": "হাইপারলিপিডেমিয়া (Hyperlipidemia)",
+						"id": "4",
+						"value": "Hyperlipidemia"
+					},
+					{
+						"caption": "রক্তে উচ্চ চিনির স্তর আগে রক্তে পরিমাপ করা হয় (High sugar level measured in blood earlier)",
+						"id": "5",
+						"value": "High_sugar_level_measured_in_blood_earlier"
+					},
+					{
+						"caption": "খুব তৃষ্ণার্ত / শুকনো মুখ (Very thirsty / dry mouth)",
+						"id": "6",
+						"value": "Very_thirsty_dry_mouth"
+					},
+					{
+						"caption": "ঘন ঘন প্রস্রাব -বিশেষ করে রাতে (Frequency of micturition -especially at night)",
+						"id": "7",
+						"value": "Frequency_of_micturition"
+					},
+					{
+						"caption": "খুব ক্লান্তি (Verytiredness)",
+						"id": "8",
+						"value": "Verytiredness"
+					},
+					{
+						"caption": "সাম্প্রতিক ওজন পরিবর্তন (Change in recent weight)",
+						"id": "9",
+						"value": "Change_in_recent_weight"
+					},
+					{
+						"caption": "মিষ্টি খাবারের জন্য আকর্ষণ (Attraction for sweet meal)",
+						"id": "10",
+						"value": "Attraction_for_sweet_meal"
+					},
+					{
+						"caption": "ক্ষুধা / ক্ষুধা বৃদ্ধি (Increased appetite/Hunger)",
+						"id": "11",
+						"value": "Increased_appetite/Hunger"
+					},
+					{
+						"caption": "বিলম্বিত ক্ষত নিরাময় (Delayed wound healing)",
+						"id": "12",
+						"value": "Delayed_wound_healing"
+					},
+					{
+						"caption": "কিছুই না (None)",
+						"id": "13",
+						"value": "None"
+					}
+				],
+				"comment": "",
+				"savable": true
+			},
+			"question9": {
+				"qtitle": "",
+				"expression": "",
+				"hidden": false,
+				"showable": true,
+				"qtype": "list",
+				"fvisible": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "উপদেশ (Advice)",
+				"branches": [
+					{
+						"nextq": "question11",
+						"rule": "any",
+						"value": "",
+						"calcValue": ""
+					}
+				],
+				"required": false,
+				"branchItems": [
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8,
+					9,
+					10
+				],
+				"defaultval": "123",
+				"readonly": true,
+				"pos": {
+					"top": "514px",
+					"left": "626px"
+				},
+				"lvisible": false,
+				"qname": "Advice_2",
+				"hint": "",
+				"uinput": "",
+				"options": [
+					{
+						"caption": "আপনার ডায়াবেটিস / উপসর্গ উপস্থিত হওয়ার ঝুঁকি রয়েছে, যা ডায়াবেটোলজিস্ট দ্বারা নিশ্চিত হওয়া অপরিহার্য (You are at risk of Diabetes/symptoms present, which is essential to be confirmed by the Diabetologist.)",
+						"id": "1",
+						"value": "1"
+					},
+					{
+						"caption": "প্রথম পর্যায়ে ডায়াবেটিস নির্ণয় করা গেলে এটি নিয়ন্ত্রণে রাখা যায় (If the diabeteses can be diagnosed in earlier stage it can be kept control.)",
+						"id": "2",
+						"value": "2"
+					},
+					{
+						"caption": "দয়া করে আপনার নিয়মিত রক্তে শর্করার স্তরটি [ডাক্তারের পরামর্শ অনুসারে] পরীক্ষা করুন এবং এটি নিয়ন্ত্রণে রাখুন (Please check your regular blood sugar level [according to doctors advice] and keep it under control.)",
+						"id": "3",
+						"value": "3"
+					},
+					{
+						"caption": "ওজন নিয়ন্ত্রণে রাখুন / নিয়মিত শারীরিক পরিশ্রম করুন (Keep the weight in control/do regular physical labour.)",
+						"id": "4",
+						"value": "4"
+					},
+					{
+						"caption": "ডাক্তারের পরামর্শ অনুযায়ী ভাত, রুটি , শাক সবজি,মাছ ,মাংস পরিমাণ মত খান (Eat rice, bread, vegetables, fish, meat in adequate amount according to doctors advice.)",
+						"id": "5",
+						"value": "5"
+					},
+					{
+						"caption": "চর্বি ও মিষ্টি জাতীয় খাবার বর্জন করুন (Avoid fatty and sweet meal.)",
+						"id": "6",
+						"value": "6"
+					},
+					{
+						"caption": "পূর্ণ শস্য বা আঁশযুক্ত খাবার বেশি খান (Eat more full-grained or fiber containing foods.)",
+						"id": "7",
+						"value": "7"
+					},
+					{
+						"caption": "উচ্চ রক্তচাপ থাকলে নিয়মিত রক্তচাপ পরীক্ষা করুন। (Check blood pressure regularly if you have hypertension.)",
+						"id": "8",
+						"value": "8"
+					},
+					{
+						"caption": "ধূমপান অথবা তামাক জাতীয় খাবার থেকে বিরত থাকুন (Avoid smoking or tobacco.)",
+						"id": "9",
+						"value": "9"
+					},
+					{
+						"caption": "ডায়েবেটিসের কুফল [চোখ অন্ধ হয়ে যাওয়া, ব্রেইন স্ট্রোক, হার্ট স্ট্রোক, কিডনির সমস্যা, শারীরের বিভিন্ন অংশে ঘা এবং পচন ধরা এমনকি অকালে শরীরের কোন অঙ্গ কেটেও ফেলতে হতে পারে] সম্পর্কে সচেতন হোন (Be aware about adverse effects of diabetes such as Blindness, brain stroke, heart attack, kidney problems, sore and sepsis in different parts of the body and even may need early amputation).",
+						"id": "10",
+						"value": "10"
+					}
+				],
+				"comment": "Advice-2",
+				"savable": false
+			},
+			"question8": {
+				"qtitle": "",
+				"expression": "",
+				"hidden": false,
+				"showable": true,
+				"qtype": "list",
+				"fvisible": false,
+				"mlvisible": false,
+				"dumpable": false,
+				"caption": "উপদেশ (Advice)",
+				"branches": [
+					{
+						"nextq": "question11",
+						"rule": "any",
+						"value": "",
+						"calcValue": ""
+					}
+				],
+				"required": false,
+				"branchItems": [
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8,
+					9,
+					10,
+					11
+				],
+				"defaultval": "123",
+				"readonly": true,
+				"pos": {
+					"top": "440px",
+					"left": "380px"
+				},
+				"lvisible": false,
+				"qname": "Advice_1",
+				"hint": "",
+				"uinput": "",
+				"options": [
+					{
+						"caption": "নিয়মিত ঔষধ খান (Maintain regular medication.)",
+						"id": "1",
+						"value": "1"
+					},
+					{
+						"caption": "দয়া করে আপনার নিয়মিত রক্তে শর্করার স্তরটি [ডাক্তারের পরামর্শ অনুযায়ী] পরীক্ষা করুন এবং এটি নিয়ন্ত্রণে রাখুন। (Please check your regular blood sugar level [according to doctors advice] and keep it under control.)",
+						"id": "2",
+						"value": "2"
+					},
+					{
+						"caption": "নিয়মিত কায়িক পরিশ্রম অথবা ব্যায়াম করুন (Do regular physical work or exercise.)",
+						"id": "3",
+						"value": "3"
+					},
+					{
+						"caption": "ডাক্তারের পরামর্শ অনুযায়ী ভাত, রুটি , শাক সবজি,মাছ ,মাংস পরিমাণ মত খান (Eat rice, bread, vegetables, fish, meat in adequate amount according to doctors advice.)",
+						"id": "4",
+						"value": "4"
+					},
+					{
+						"caption": "পূর্ণ শস্য বা আঁশযুক্ত খাবার বেশি খান (Eat more full-grained or fiber containing foods.)",
+						"id": "5",
+						"value": "5"
+					},
+					{
+						"caption": "ওজন নিয়ন্ত্রনে রাখুন (Keep the weight under control.)",
+						"id": "6",
+						"value": "6"
+					},
+					{
+						"caption": "চর্বি ও মিষ্টি জাতীয় খাবার বর্জন করুন (Avoid fatty and sweet meal.)",
+						"id": "7",
+						"value": "7"
+					},
+					{
+						"caption": "নিয়মিত রক্তচাপ, চোখ, কিডনি  পরীক্ষা করুন (Regular check up your blood pressure, eyes, kidneys etc.)",
+						"id": "8",
+						"value": "8"
+					},
+					{
+						"caption": "ধূমপান অথবা তামাক জাতীয় খাবার থেকে বিরত থাকুন (Avoid smoking or tobacco.)",
+						"id": "9",
+						"value": "9"
+					},
+					{
+						"caption": "সব সময় হাত ও পায়ের পাতার যত্ন নিন। খালি পায়ে থাকবেন না (Take care of your hand and feet. Do not stay in bare feet.)",
+						"id": "10",
+						"value": "10"
+					},
+					{
+						"caption": "ডায়েবেটিসের কুফল যেমন- চোখ অন্ধ হয়ে যাওয়া, ব্রেইন স্ট্রোক, হার্ট স্ট্রোক, কিডনির সমস্যা, শারীরের বিভিন্ন অংশে ঘা এবং পচন ধরা এমনকি অকালে শরীরের কোন অঙ্গ কেটেও ফেলতে হতে পারে এসব সম্পর্কে সচেতন হোন (Be aware about adverse effects of diabetes such as Blindness, brain stroke, heart attack, kidney problems, sore and sepsis in different parts of the body and even may need early  amputation).",
+						"id": "11",
+						"value": "11"
+					}
+				],
+				"comment": "Advice-1",
+				"savable": false
+			}
+		}
+	},
+	"VISIBILE_IN_CATEGORY": 1,
+	"followupQuestionnaires": [],
+	"QUESTIONNAIRE_ID": 3299,
+	"SORT_ORDER": 1,
+	"TITLE": "ডায়েবেটিস স্ক্রিনিং",
+	"LANG_CODE": "bn",
+	"ICON": "ic_diabetes",
+	"VERSION_NO": 91013
+}

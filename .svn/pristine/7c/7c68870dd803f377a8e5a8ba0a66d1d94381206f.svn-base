@@ -1,0 +1,130 @@
+package ngo.friendship.satellite.ui.product_management.activity;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+
+import ngo.friendship.satellite.App;
+import ngo.friendship.satellite.MainActivity;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.base.BaseActivity;
+import ngo.friendship.satellite.constants.ActivityDataKey;
+import ngo.friendship.satellite.constants.KEY;
+import ngo.friendship.satellite.databinding.ActivityMyProductsBinding;
+import ngo.friendship.satellite.interfaces.OnDialogButtonClick;
+import ngo.friendship.satellite.jsonoperation.JSONParser;
+import ngo.friendship.satellite.model.MedicineInfo;
+import ngo.friendship.satellite.ui.notification.NotificationActivity;
+import ngo.friendship.satellite.ui.product_management.fragment.ProductStockFragment;
+import ngo.friendship.satellite.utility.AppPreference;
+import ngo.friendship.satellite.utility.SystemUtility;
+import ngo.friendship.satellite.utility.TextUtility;
+import ngo.friendship.satellite.utility.Utility;
+import ngo.friendship.satellite.views.AppButton;
+import ngo.friendship.satellite.views.DialogView;
+
+public class MyProductsActivity extends BaseActivity  {
+    ActivityMyProductsBinding binding;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityMyProductsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, ProductStockFragment.newInstance()).commit();
+        binding.bottomNavigationView.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, ProductStockFragment.newInstance()).commit();
+            binding.bottomNavigationView.getMenu().getItem(1).setChecked(true);
+        });
+        binding.bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
+
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            // NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
+            switch (id) {
+                case R.id.product_rise:
+                    startActivity(new Intent(this, RiseListActivity.class));
+
+//                    Intent dataActivity = new Intent(MainActivity.this, MyServiceActivity.class);
+//                    startActivity(dataActivity);
+//                    //  getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, Myser.newInstance()).commit();
+//                    item.setChecked(true);
+//                    binding.appBarMain.contentMain.btnHome.setImageResource(R.drawable.ic_home);
+//                    binding.appBarMain.contentMain.tvHome.setTextColor(getResources().getColor(R.color.ash_gray));
+                    return true;
+                case R.id.nav_bottom_home:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, ProductStockFragment.newInstance()).commit();
+
+//                    item.setChecked(true);
+                    return true;
+                case R.id.product_adjust:
+
+                    startActivity(new Intent(this, AdjustmentOpenActivity.class));
+
+                    return true;
+                //check id
+            }
+            return true;
+        });
+
+
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_product_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else if (id == R.id.product_rise) {
+            // finish the activity
+
+            startActivity(new Intent(this, RiseListActivity.class));
+            return true;
+        } else if (id == R.id.product_adjust) {
+            startActivity(new Intent(this, ProductAdjustmentActivity.class));
+            return true;
+        } else if (id == R.id.all_invoice) {
+            startActivity(new Intent(this, InvoiceListActivity.class));
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+}

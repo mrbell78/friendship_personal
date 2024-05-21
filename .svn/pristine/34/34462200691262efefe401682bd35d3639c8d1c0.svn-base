@@ -1,0 +1,99 @@
+package ngo.friendship.satellite.model;
+
+import java.util.ArrayList;
+
+public class MedicineConsumptionInfoModel {
+
+    private long interview_id;
+    private long benef_code;
+    private long med_consump_id;
+    private long location_id;
+    private String consumption_date;
+    private long user_id;
+    private long total_price;
+    private String remarks;
+    private String data_sent;
+
+    ArrayList<ConsumptionDetailsModel> consumptionDetails;
+
+
+    public long getInterview_id() {
+        return interview_id;
+    }
+
+    public void setInterview_id(long interview_id) {
+        this.interview_id = interview_id;
+    }
+
+    public long getBenef_code() {
+        return benef_code;
+    }
+
+    public void setBenef_code(long benef_code) {
+        this.benef_code = benef_code;
+    }
+
+    public long getMed_consump_id() {
+        return med_consump_id;
+    }
+
+    public void setMed_consump_id(long med_consump_id) {
+        this.med_consump_id = med_consump_id;
+    }
+
+    public long getLocation_id() {
+        return location_id;
+    }
+
+    public void setLocation_id(long location_id) {
+        this.location_id = location_id;
+    }
+
+    public String getConsumption_date() {
+        return consumption_date;
+    }
+
+    public void setConsumption_date(String consumption_date) {
+        this.consumption_date = consumption_date;
+    }
+
+    public long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
+    }
+
+    public long getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(long total_price) {
+        this.total_price = total_price;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getData_sent() {
+        return data_sent;
+    }
+
+    public void setData_sent(String data_sent) {
+        this.data_sent = data_sent;
+    }
+
+    public ArrayList<ConsumptionDetailsModel> getConsumptionDetails() {
+        return consumptionDetails;
+    }
+
+    public void setConsumptionDetails(ArrayList<ConsumptionDetailsModel> consumptionDetails) {
+        this.consumptionDetails = consumptionDetails;
+    }
+}

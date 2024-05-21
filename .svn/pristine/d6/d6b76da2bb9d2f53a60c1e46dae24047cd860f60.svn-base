@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context =".ui.product_management.activity.MedicineSaleConfirmActivity"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            tools:context=".ui.product_management.activity.ProductsHomeActivity">
+
+
+            <LinearLayout
+                android:id="@+id/layout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/cancel_invoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="8dp"
+                    android:text="X"
+                    android:textColor="@color/ase"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/month_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:padding="8dp"
+                    android:text="Request to Return"
+                    android:textColor="@color/app_color"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="Date &amp; Time : 15-Dec-22,  3:35 PM"
+                    android:textColor="@color/ash_gray2"
+                    android:textSize="14dp"
+                    android:textStyle="italic" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/medicine_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="16dp"
+                        android:text="Items: 2"
+                        android:textSize="@dimen/font_size_small"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Items:"
+                        android:textColor="@color/app_color"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_total_medicine_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="16dp"
+                        android:text=""
+                        android:textColor="@color/app_color"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout1"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:background="#FFFFFF"
+                    android:paddingRight="10dp"
+
+                    android:text="Beneficiary\nName or ID"
+                    android:textStyle="italic" />
+
+                <LinearLayout
+                    android:id="@+id/beneficiary_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_rounded_corner_white"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="5dp">
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/ic_person"
+                            android:textColor="@color/ase"
+                            android:textSize="16dp" />
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <Spinner
+                        android:id="@+id/beneficiarySpinner"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout2">
+
+                <TextView
+                    android:id="@+id/addMoreItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="@dimen/font_size_small"
+                    android:layout_marginTop="@dimen/font_size_small"
+                    android:layout_marginEnd="@dimen/font_size_small"
+                    android:layout_marginBottom="@dimen/font_size_small"
+                    android:gravity="end"
+                    android:text="@string/add_more_product"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout2"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout2"
+                    android:layout_marginTop="40dp">
+
+                    <LinearLayout
+
+                        android:id="@+id/ll_medicine_row_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </ScrollView>
+                <!--    <androidx.recyclerview.widget.RecyclerView-->
+                <!--        android:id="@+id/chart_RecyclerView"-->
+                <!--        android:layout_width="match_parent"-->
+                <!--        android:layout_height="wrap_content"-->
+                <!--        android:layout_below="@+id/layout2"-->
+                <!--        android:layout_marginTop="16dp"-->
+                <!--        android:divider="#BABABA"-->
+                <!--        android:dividerHeight="2dp"-->
+                <!--        android:paddingTop="16dp"-->
+                <!--        tools:itemCount="2"-->
+                <!--        tools:listitem="@layout/products_items_list" />-->
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_above="@+id/btn_upload_data"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Note">
+                </TextView>
+
+                <EditText
+                    android:background="@drawable/border_rounded_corner_white"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                </EditText>
+            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_upload_data"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+
+                android:layout_marginTop="16dp"
+
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/app_color"
+                app:cardCornerRadius="5dp">
+
+                <TextView
+                    android:id="@+id/btnSale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Confirm"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

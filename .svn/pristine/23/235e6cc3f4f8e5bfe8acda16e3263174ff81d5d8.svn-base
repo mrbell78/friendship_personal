@@ -1,0 +1,24 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FollowupType.
+ */
+public class FollowupType {
+	
+	/** The Constant PATIENT_VISIT. */
+	public static final String PATIENT_VISIT = "PATIENT_VISIT";
+	
+	/** The Constant EPI. */
+	public static final String EPI = "EPI";
+	
+	/** The Constant SATELLITE_CLINIC. */
+	public static final String SATELLITE_CLINIC = "SATELLITE_CLINIC";
+	
+	/** The Constant CCS. */
+	public static final String CCS = "CCS";
+	public static final String IMMUNIZATION="IMMUNIZATION";
+	
+	
+
+}

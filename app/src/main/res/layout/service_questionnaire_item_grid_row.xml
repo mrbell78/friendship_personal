@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mHealth="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="ngo.friendship.satellite.model.QuestionnaireInfo" />
+
+        <variable
+            name="callback"
+            type="ngo.friendship.satellite.adapter.BasemHealthAdapter.OnClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llQView"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="@{(view) -> callback.onClick(view,model)}"
+            android:orientation="vertical"
+            mHealth:layout_constraintBottom_toTopOf="@+id/view2"
+            mHealth:layout_constraintEnd_toEndOf="parent"
+            mHealth:layout_constraintStart_toStartOf="parent"
+            mHealth:layout_constraintTop_toTopOf="parent">
+
+            <ngo.friendship.satellite.views.MdiTextView
+                android:id="@+id/tv_questionnaire_icon"
+                android:layout_width="wrap_content"
+                android:textSize="70dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="dfsdfds"
+                android:layout_marginBottom="@dimen/square_distance"
+                mHealth:mdIcon="@string/mdi_question_comment"
+                mHealth:orientation="HORIZONTAL"
+                android:padding="8dp"
+                android:textColor="@color/text_red"
+                android:paddingTop="8dp"
+                android:scaleType="centerCrop"/>
+<!--            <ngo.friendship.satellite.views.CardButton-->
+<!--                android:id="@+id/tv_questionnaire_icon"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginBottom="@dimen/square_distance"-->
+<!--                mHealth:mdIcon="@string/mdi_question_comment"-->
+<!--                mHealth:orientation="HORIZONTAL" />-->
+            <!--        <ngo.friendship.mhealth.views.CardButton-->
+            <!--            android:id="@+id/btn_notify_icon"-->
+            <!--            android:layout_width="50dp"-->
+            <!--            android:layout_height="50dp"-->
+            <!--            android:layout_centerInParent="true"-->
+            <!--            android:layout_marginTop="5dp"-->
+            <!--            android:layout_marginBottom="5dp"-->
+            <!--            android:minHeight="16dp"-->
+            <!--            android:orientation="horizontal" />-->
+
+
+            <TextView
+                android:id="@+id/tv_questionnaire_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:maxLines="2"
+                android:paddingStart="2dp"
+                android:paddingLeft="2dp"
+                android:paddingEnd="2dp"
+                android:paddingRight="2dp"
+                android:text="@{String.format(model.questionnaireTitle)}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_medium"
+                 />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/ash_gray"
+            mHealth:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

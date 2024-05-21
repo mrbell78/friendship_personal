@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mHealth="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+        <variable
+            name="model"
+            type="ngo.friendship.satellite.model.QuestionnaireInfo" />
+
+        <variable
+            name="callback"
+            type="ngo.friendship.satellite.adapter.BasemHealthAdapter.OnClickListener" />
+
+    </data>
+
+
+    <LinearLayout
+        android:id="@+id/llQView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="@{(view) -> callback.onClick(view,model)}"
+        android:orientation="horizontal"
+        android:padding="5dp">
+<!--        <ngo.friendship.satellite.views.MdiTextView-->
+<!--            android:id="@+id/tv_questionnaire_icon"-->
+<!--            android:layout_width="80dp"-->
+<!--            android:textSize="@dimen/font_size_small"-->
+<!--            android:layout_height="50dp"-->
+<!--            mHealth:mdIcon="@string/mdi_question_comment"-->
+<!--            mHealth:orientation="HORIZONTAL"-->
+<!--            android:background="@drawable/card_shape"-->
+<!--            android:padding="8dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:scaleType="centerCrop" />-->
+
+        <ngo.friendship.satellite.views.MdiTextView
+            android:id="@+id/tv_questionnaire_icon"
+            android:layout_width="wrap_content"
+            android:textSize="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/square_distance"
+            mHealth:mdIcon="@string/mdi_question_comment"
+            mHealth:orientation="HORIZONTAL"
+            android:padding="8dp"
+            android:textColor="@color/app_color"
+            android:paddingTop="8dp"
+            android:scaleType="centerCrop"/>
+        <!--        <ngo.friendship.mhealth.views.CardButton-->
+        <!--            android:id="@+id/btn_notify_icon"-->
+        <!--            android:layout_width="50dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:layout_centerInParent="true"-->
+        <!--            android:layout_marginTop="5dp"-->
+        <!--            android:layout_marginBottom="5dp"-->
+        <!--            android:minHeight="16dp"-->
+        <!--            android:orientation="horizontal" />-->
+
+
+        <TextView
+            android:id="@+id/tv_questionnaire_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:maxLines="2"
+            android:paddingStart="2dp"
+            android:paddingLeft="2dp"
+            android:paddingEnd="2dp"
+            android:paddingRight="2dp"
+            android:text="@{String.format(model.questionnaireTitle)}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_tiny"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</layout>

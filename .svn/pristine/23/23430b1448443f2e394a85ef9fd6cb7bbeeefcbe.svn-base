@@ -1,0 +1,21 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class QuestionnaireCategoryName.
+ */
+public class QuestionnaireCategoryName {
+
+	public static final String REGISTRATION = "REGISTRATION";
+	public static final String TREATMENT = "TREATMENT";
+	public static final String IMMUNIZATION = "IMMUNIZATION";
+	public static final String HEALTH_EDUCATION = "HEALTH_EDUCATION";
+	public static final String EMERGENCY_MANAGEMENT = "EMERGENCY_CARE";
+	public static final String REFERRAL = "REFERRAL";
+	public static final String GYNAECOLOGICAL = "GYNAECOLOGICAL";
+	public static final String NEONATAL_CARE = "NEONATAL_CARE";
+	public static final String OBSTETRICS = "OBSTETRICAL_CARE";
+	public static final String CHILD_HEALTH = "CHILD_HEALTH";
+
+	public static final String NCD_SCREENING = "NCD SCREENING";
+}

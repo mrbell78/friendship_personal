@@ -1,0 +1,132 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RequestName.
+ */
+public class RequestName {
+	
+	/** The Constant LOGIN. */
+	public static final String LOGIN = "LOGIN";
+	
+	/** The Constant PW_CHANGE. */
+	public static final String PW_CHANGE = "PW_CHANGE";
+
+	/** The Constant MY_DATA. */
+	public static final String MY_DATA = "MY_DATA";
+	public static final String MY_DATA_PARAMEDIC = "MY_DATA_PARAMEDIC";
+
+	 public static final String CCS = "CCS";
+	
+	/** The Constant FCM_PROFILE. */
+	public static final String FCM_PROFILE = "FCM_PROFILE";
+
+	/** The Constant BENEFICIARIES. */
+	public static final String BENEFICIARIES = "BENEFICIARIES";
+	
+	/** The Constant MEDICINES. */
+	public static final String MEDICINES = "MEDICINES";
+	
+	 public static final String IMMUNIZATION="IMMUNIZATION";
+	
+	/** The Constant QUESTIONNAIRES. */
+    public static final String QUESTIONNAIRES = "QUESTIONNAIRES";
+	
+	/** The Constant CATEGORIES. */
+	public static final String CATEGORIES = "CATEGORIES";
+
+	/** The Constant CATEGORIES. */
+	public static final String FILE_UPLOAD = "FILE_UPLOAD";
+
+	/** The Constant REFERRAL_CENTERS. */
+	public static final String REFERRAL_CENTERS = "REFERRAL_CENTERS";
+
+	/** The Constant UPCOMING_SCHEDULE. */
+	public static final String UPCOMING_SCHEDULE = "UPCOMING_SCHEDULE";
+	
+	/** The Constant DAYS30_RECEIVE_SALES. */
+	public static final String DAYS30_RECEIVE_SALES = "30DAYS_RECEIVE_SALES";
+
+	/** The Constant CASE_ENTRY. */
+	public static final String CASE_ENTRY = "CASE_ENTRY";
+	
+	/** The Constant CASE_UPDATE. */
+	public static final String CASE_UPDATE = "CASE_UPDATE";
+	
+	/** The Constant DOCTOR_FEEDBACK. */
+	public static final String DOCTOR_FEEDBACK = "DOCTOR_FEEDBACK";
+
+	/** The Constant FCM_STOCK. */
+	public static final String FCM_STOCK = "FCM_STOCK";
+	
+	/** The Constant FCM_STOCK_ADJUST. */
+	public static final String FCM_STOCK_ADJUST = "FCM_STOCK_ADJUST";
+	
+	/** The Constant STOCK_ADJUST_REQ_STATUS. */
+	public static final String STOCK_ADJUST_REQ_STATUS = "STOCK_ADJUST_REQ_STATUS";
+	
+	/** The Constant LAST7_REQUISITION. */
+	public static final String LAST7_REQUISITION = "LAST7_REQUISITION";
+	
+	/** The Constant MEDICINE_RECEIVE. */
+	public static final String MEDICINE_RECEIVE = "MEDICINE_RECEIVE";
+	
+	/** The Constant MEDICINE_REQUISITION. */
+	public static final String MEDICINE_REQUISITION = "MEDICINE_REQUISITION";
+
+	/** The Constant HOUSEHOLD_BASIC_DATA_ENTRY. */
+	public static final String HOUSEHOLD_DATA_ENTRY = "HOUSEHOLD_DATA_ENTRY";
+
+	/** The Constant HOUSEHOLDS. */
+	public static final String HOUSEHOLDS = "HOUSEHOLDS";
+	
+	/** The Constant DIRECT_MEDICINE_SELL. */
+	public static final String DIRECT_MEDICINE_SELL = "DIRECT_MEDICINE_SELL";
+
+	/** The Constant TODAYS_SALES. */
+	public static final String TODAYS_SALES = "TODAYS_SALES";
+	
+	/** The Constant LAST_30_DAYS_SALES_SUMMARY. */
+	public static final String LAST_30_DAYS_SALES_SUMMARY = "LAST_30_DAYS_SALES_SUMMARY";
+	
+	/** The Constant LAST_30_DAYS_RECEIVE_SALES. */
+	public static final String LAST_30_DAYS_RECEIVE_SALES = "LAST_30_DAYS_RECEIVE_SALES";
+	
+	/** The Constant REGISTRATION_STATS. */
+	public static final String REGISTRATION_STATS = "REGISTRATION_STATS";
+	
+	/** The Constant INTERVIEW_STATS. */
+	public static final String INTERVIEW_STATS = "INTERVIEW_STATS";
+
+	/** The Constant MEDICINE_REQUISITION_STATUS. */
+	public static final String MEDICINE_REQUISITION_STATUS ="MEDICINE_REQUISITION_STATUS";
+	
+	/** The Constant GET_FILE. */
+	public static final String GET_FILE ="GET_FILE";
+	
+	/** The Constant UNDONE_SCHEDULE. */
+	public static final String UNDONE_SCHEDULE ="UNDONE_SCHEDULE";
+	public static final String USER_SCHEDULE = "USER_SCHEDULE";
+	
+	public static final String MY_DATA_SYNC = "MY_DATA_SYNC";
+	
+	/** The Constant ALL_SCHEDULE. */
+	//public static final String ALL_SCHEDULE ="ALL_SCHEDULE";
+	
+	/** The Constant UPDATE_SCHEDULE. */
+	public static final String UPDATE_SCHEDULE = "UPDATE_SCHEDULE";
+	
+	/** The Constant  */
+	public static final String APP_VERSION_HISTORY = "APP_VERSION_HISTORY";
+	public static final String UPDATE_APP_VERSION_HISTORY = "UPDATE_APP_VERSION_HISTORY";
+	public static final String INTERVIEW_SENT_STATUS = "INTERVIEW_SENT_STATUS";
+	
+	public static final String MATERNAL_INFO = "MATERNAL_INFO";
+	
+	public static final String COURT_YARD="COURT_YARD";
+	
+	public static final String CURRENT_TIME="CURRENT_TIME";
+
+	public static final String UPDATE_DOCTOR_FEEDBACK = "UPDATE_DOCTOR_FEEDBACK";
+	public static final String UPDATE_NOTIFICATION = "UPDATE_NOTIFICATION";
+}

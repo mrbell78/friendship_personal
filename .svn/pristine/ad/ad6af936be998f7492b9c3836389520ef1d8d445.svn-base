@@ -1,0 +1,383 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DBTableColumnTitle.
+ */
+public class Column {
+
+
+	public static final String ID = "ID";
+	public static final String MED_ID = "MEDICINE_ID";
+	public static final String MED_UNIT_PRICE = "med_unit_price";
+	public static final String MED_EXP_DATE = "med_exp_date";
+	public static final String MED_INPUT_DATE = "med_input_date";
+	public static final String NAME = "name";
+	public static final String MANUFACTURER = "manufacturer";
+	public static final String ACT_CODE = "act_code";
+	public static final String STRANGTH_NAME = "strangth_name";
+	public static final String QUESTIONNAIRE_ID = "QUESTIONNAIRE_ID";
+	public static final String QUESTIONNAIRE_TITLE = "QUESTIONNAIRE_TITLE";
+	public static final String QUESTIONNAIRE_PROMPT_FOR_BENEFICIARY="PROMPT_FOR_BENEFICIARY";
+	public static final String QUESTIONNAIRE_JSON = "QUESTIONNAIRE_JSON";
+	public static final String QUESTIONNAIRE_BENEF_SELECTION_CRITERIA = "BENEF_SELECTION_CRITERIA";
+	public static final String VISIBILE_IN_CATEGORY="VISIBILE_IN_CATEGORY";
+	public static final String QUESTIONNAIRE_NAME = "NAME";
+	public static final String CATEGORY_ID = "CATEGORY_ID";
+	public static final String CATEGORY_CAPTION = "CATEGORY_CAPTION";
+	public static final String CATEGORY_NAME = "CATEGORY_NAME";
+	public static final String SORT_ORDER = "SORT_ORDER";
+	public static final String PRESCRIPTION_ID = "PRESC_ID";
+	public static final String LANG_CODE = "LANG_CODE";
+	public static final String HOUSEHOLD_HH_ID = "HH_ID";
+	public static final String HOUSEHOLD_HH_NUMBER = "HH_NUMBER";
+	public static final String HOUSEHOLD_LOCATION_ID = "LOCATION_ID";
+	public static final String HOUSEHOLD_HH_GRADE = "HH_GRADE";
+	public static final String HOUSEHOLD_CREATE_DATE = "CREATE_DATE";
+	public static final String HOUSEHOLD_REF_DATA_ID = "REF_DATA_ID";
+	public static final String BENEFICIARY_BENEF_ID="BENEF_ID";
+	public static final String BENEFICIARY_HH_ID ="HH_ID";
+	public static final String BENEFICIARY_BENEF_CODE="BENEF_CODE";
+	public static final String BENEFICIARY_BENEF_NAME="BENEF_NAME";
+	public static final String BENEFICIARY_BENEF_NAME_LOCAL="BENEF_NAME_LOCAL";
+	public static final String BENEFICIARY_FAMILY_HEAD ="FAMILY_HEAD";
+	public static final String BENEFICIARY_DOB ="DOB";
+	public static final String BENEFICIARY_GENDER ="GENDER";
+	public static final String BENEFICIARY_BENEF_IMAGE_PATH ="BENEF_IMAGE_PATH";
+	public static final String BENEFICIARY_MOBILE_NUMBER ="MOBILE_NUMBER";
+	public static final String BENEFICIARY_MOBILE_COMM ="MOBILE_COMM";
+	public static final String BENEFICIARY_RELATION_GUARDIAN="RELATION_GUARDIAN";
+	public static final String GUARDIAN_NAME="GUARDIAN_NAME";
+	public static final String GUARDIAN_NAME_LOCAL="GUARDIAN_NAME_LOCAL";
+	public static final String BENEFICIARY_EDU_LEVEL ="EDU_LEVEL";
+	public static final String BENEFICIARY_CREATE_DATE ="CREATE_DATE";
+	public static final String BENEFICIARY_REF_DATA_ID="REF_DATA_ID";
+	public static final String HH_NUMBER="HH_NUMBER";
+	public static final String HH_NAME="HH_NAME";
+	public static final String RELIGION="RELIGION";
+	public static final String MARITAL_STATUS="MARITAL_STATUS";
+	public static final String OCCUPATION="OCCUPATION";
+	public static final String OCCUPATION_HER_HUSBAND="OCCUPATION_HER_HUSBAND";
+	public static final String MONTHLY_FAMILY_EXPENDITURE="MONTHLY_FAMILY_EXPENDITURE";
+	public static final String HH_CHARACTER="HH_CHARACTER";
+	public static final String HH_ADULT_WOMEN="HH_ADULT_WOMEN";
+	public static final String NATIONAL_ID="NATIONAL_ID";
+	public static final String BIRTH_REG_NUMBER="BIRTH_REG_NUMBER";
+	public static final String ADDRESS="ADDRESS";
+	public static final String MEDICINE_ID = "MEDICINE_ID";
+	public static final String QTY = "QTY";
+	public static final String MIN_QUANTITY = "MIN_QTY";
+	public static final String TAKING_RULE = "TAKING_RULE";
+	public static final String DURATION_DAY = "DURATION_DAY";
+	public static final String MEDICINE_TYPE = "TYPE";
+	public static final String BRAND_NAME = "BRAND_NAME";
+	public static final String GENERIC_NAME = "GENERIC_NAME";
+	public static final String UNIT_PURCHASE_PRICE = "UNIT_PURCHASE_PRICE";
+	public static final String UNIT_SALES_PRICE = "UNIT_SALES_PRICE";
+	public static final String STRENGTH = "STRENGTH";
+	public static final String MEASURE_UNIT = "MEASURE_UNIT";
+	public static final String MANUF_ID = "MANUF_ID";
+	public static final String USER_ID = "USER_ID";
+	public static final String FILE_KEY = "FILE_KEY";
+	public static final String FILE_PATH = "FILE_PATH";
+	public static final String QUESTION_ANSWER_JSON = "QUESTION_ANSWER_JSON";
+	public static final String QUESTION_ANSWER_JSON2 = "QUESTION_ANSWER_JSON2";
+	public static final String CREATE_DATE = "CREATE_DATE";
+	public static final String START_TIME = "START_TIME";
+	public static final String PARENT_INTERVIEW_ID = "PARENT_INTERVIEW_ID";
+	public static final String INTERVIEW_ID = "INTERVIEW_ID";
+	public static final String LOCATION_ID = "LOCATION_ID";
+	public static final String LOCATION_CODE = "LOCATION_CODE";
+	public static final String TOTAL_PRICE = "TOTAL_PRICE";
+	public static final String PRICE = "PRICE";
+	public static final String CONSUMP_DATE = "CONSUMP_DATE";
+	public static final String MED_CONSUMP_ID = "MED_CONSUMP_ID";
+	public static final String CURRENT_STOCK_QTY = "CURRENT_STOCK_QTY";
+	public static final String LAST_UPDATE_ON="LAST_UPDATE_ON";
+	public static final String NEXT_FOLLOWUP_DATE = "NEXT_FOLLOWUP_DATE";
+	public static final String REMARKS="REMARKS";
+	public static final String REF_CENTER_ID="REF_CENTER_ID";
+	public static final String REF_CENTER_NAME_CAPTION="REF_CENTER_NAME_CAPTION";
+	public static final String DESCRIPTION="DESCRIPTION";
+	public static final String LATITUDE="LATITUDE";
+	public static final String LONGITUDE="LONGITUDE";
+	public static final String CONTACT_NAME="CONTACT_NAME";
+	public static final String CONTACT_NUMBER="CONTACT_NUMBER";
+	public static final String DISTANCE="DISTANCE";
+	public static final String TIME_NEED="TIME_NEED";
+	public static final String TRANSPORT_WAY="TRANSPORT_WAY";
+	public static final String PROFILE_IMAGE="PROFILE_IMAGE";
+	public static final String USER_LOGIN_ID="USER_LOGIN_ID";
+	public static final String USER_NAME="USER_NAME";
+	public static final String TARGET_HH="TARGET_HH";
+	public static final String LOCATION_NAME="LOCATION_NAME";
+	public static final String SCHED_ID = "SCHED_ID";
+	public static final String SCHED_DESC = "SCHED_DESC";
+	public static final String SCHED_DATE = "SCHED_DATE";
+	public static final String REFERENCE_ID="REFERENCE_ID";
+	public static final String SCHED_STATUS = "SCHED_STATUS";
+	public static final String TYPE = "TYPE";
+	public static final String ATTENDED_DATE = "ATTENDED_DATE";
+	public static final String EVENT_ID = "EVENT_ID";
+	public static final String REQ_ID = "REQ_ID";
+	public static final String REQ_DATE = "REQ_DATE";
+	public static final String REQ_STATUS = "REQ_STATUS";
+	public static final String COMPLETE_DATE = "COMPLETE_DATE";
+	public static final String REQ_USER_ID = "REQ_USER_ID";
+	public static final String REQ_NO = "REQ_NO";
+	public static final String REQ_DTL_ID = "REQ_DTL_ID";
+	public static final String RECEIVED_DATE = "RECEIVED_DATE";
+	public static final String MED_RECEIVED_ID = "MED_RECEIVED_ID";
+	public static final String REQUEST_NUMBER ="REQUEST_NUMBER";
+	public static final String STATE ="STATE";
+	public static final String PRIORITY ="PRIORITY";
+	public static final String DATA_SENT = "DATA_SENT";
+	public static final String CAPACITY_DAILY_CCS = "CAPACITY_DAILY_CCS";
+	public static final String TRANS_REF = "TRANS_REF";
+	public static final String REP_ID="REP_ID";
+	public static final String REP_NAME="REP_NAME";
+	public static final String REP_CAPTION="REP_CAPTION";
+	public static final String REP_DESCRIPTION="REP_DESCRIPTION";
+	public static final String PARENT_ID="PARENT_ID";
+	public static final String SQL_STR="SQL_STR";
+	public static final String REP_PARAMS="REP_PARAMS";
+	public static final String MODULE_ID="MODULE_ID";
+	public static final String ICON="ICON";
+	public static final String BROAD_CAT_ID="BROAD_CAT_ID";
+	public static final String BROAD_CAT_NAME="BROAD_CAT_NAME";
+	public static final String SERVICE_CATEGORY_ID="SERVICE_CATEGORY_ID";
+	public static final String SINGLE_PG_FORM_VIEW="SINGLE_PG_FORM_VIEW";
+	public static final String SERVICE_CATEGORY_NAME="SERVICE_CATEGORY_NAME";
+	public static final String REF_CENTER_CAT_ID="REF_CENTER_CAT_ID";
+	public static final String REF_CENTER_CAT_CODE="REF_CENTER_CAT_CODE";
+	public static final String REF_CENTER_CAT_NAME="REF_CENTER_CAT_NAME";
+	public static final String DEATH_REG_ID="DEATH_REG_ID";
+	public static final String BENEF_ID="BENEF_ID";
+	public static final String BENEF_CODE="BENEF_CODE";
+	public static final String BENEF_NAME="BENEF_NAME";
+	public static final String DATE_OF_DEATH="DATE_OF_DEATH";
+	public static final String AGE_IN_DAY="AGE_IN_DAY";
+	public static final String AGE="AGE";
+	public static final String DEATH_REASON_ID="DEATH_REASON_ID";
+	public static final String REG_DATE="REG_DATE";
+	public static final String CONTACT_EMAIL="CONTACT_EMAIL";
+	public static final String REF_CENTER_CODE="REF_CENTER_CODE";
+	public static final String REF_CENTER_NAME="REF_CENTER_NAME";
+	public static final String REF_CENTER_TYPE="REF_CENTER_TYPE";
+
+
+	public static final String ENG_NAME="ENG_NAME";
+	public static final String LOCAL_NAME="LOCAL_NAME";
+
+
+
+	public static final String ABORT_ID = "ABORT_ID";
+	public static final String MATERNAL_ID = "MATERNAL_ID";
+	public static final String ABORT_DATE = "ABORT_DATE";
+	public static final String PREGNANCY_WEEK = "PREGNANCY_WEEK";
+	public static final String ABORT_PLACE_ID = "ABORT_PLACE_ID";
+	public static final String ABORT_BY_ID = "ABORT_BY_ID";
+	public static final String UNUSUAL_OUTCOME_TYPE ="UNUSUAL_OUTCOME_TYPE";
+
+	public static final String MATERNAL_BABY_ID="MATERNAL_BABY_ID";
+	public static final String BABY_STATE="BABY_STATE";
+	public static final String GENDER="GENDER";
+	public static final String CHILD_BENEF_CODE="CHILD_BENEF_CODE";
+
+	public static final String MATERNAL_CARE_ID = "MATERNAL_CARE_ID";
+	public static final String CARE_NAME = "CARE_NAME";
+	public static final String CARE_DESC = "CARE_DESC";
+	public static final String CARE_TYPE = "CARE_TYPE";
+	public static final String SCHED_RANGE_START_DAY = "SCHED_RANGE_START_DAY";
+	public static final String SCHED_RANGE_END_DAY = "SCHED_RANGE_END_DAY";
+
+	public static final String MATERNAL_DELIVERY_ID="MATERNAL_DELIVERY_ID";
+	public static final String MOTHER_CONDITION="MOTHER_CONDITION";
+	public static final String DELIVERY_DATE="DELIVERY_DATE";
+	public static final String DELIVERY_TIME="DELIVERY_TIME";
+	public static final String DELIVERY_PLACE="DELIVERY_PLACE";
+	public static final String DELIVERED_BY_CSBA="DELIVERED_BY_CSBA";
+	public static final String DELIVERY_TYPE="DELIVERY_TYPE";
+	public static final String PERSON_DELIVERED="PERSON_DELIVERED";
+	public static final String NO_OF_BABY="NO_OF_BABY";
+	public static final String DELIVERY_CARE_INTERVIEW_ID="DELIVERY_CARE_INTERVIEW_ID";
+
+	public static final String EDD ="EDD";
+	public static final String PARA ="PARA";
+	public static final String GRAVIDA ="GRAVIDA";
+	public static final String BMI ="BMI";
+	public static final String BMI_VALUE="BMI_VALUE";
+
+	public static final String NO_OF_RISK_ITEM ="NO_OF_RISK_ITEM";
+	public static final String REG_INTERVIEW_ID ="REG_INTERVIEW_ID";
+	public static final String HIGH_RISK_INTERVIEW_ID ="HIGH_RISK_INTERVIEW_ID";
+
+	public static final String MATERNAL_STATUS ="MATERNAL_STATUS";
+	public static final String CALAULATED_LMP="CALAULATED_LMP";
+	public static final String HEIGHT_IN_CM ="HEIGHT_IN_CM";
+
+	public static final String MATERNAL_COMPLETE_DATE ="MATERNAL_COMPLETE_DATE";
+	public static final String MATERNAL_COMPLETE_SOURCE ="MATERNAL_COMPLETE_SOURCE";
+
+	public static final String MATERNAL_SERVICE_ID = "MATERNAL_SERVICE_ID";
+
+	public static final String PULSE = "PULSE";
+	public static final String PULSE_STATUS = "PULSE_STATUS";
+	public static final String BLOOD_PRESSURE = "BLOOD_PRESSURE";
+	public static final String BLOOD_PRESSURE_TYPE = "BLOOD_PRESSURE_TYPE";
+	public static final String TEMPERATURE = "TEMPERATURE";
+	public static final String TEMPERATURE_TYPE = "TEMPERATURE_TYPE";
+	public static final String WEIGHT = "WEIGHT";
+	public static final String WEEKLY_WEIGHT_GAIN = "WEEKLY_WEIGHT_GAIN";
+	public static final String ANAEMIA = "ANAEMIA";
+	public static final String JAUNDICE = "JAUNDICE";
+	public static final String OEDEMA = "OEDEMA";
+	public static final String VOMITING = "VOMITING";
+	public static final String SUGAR_OF_URINE = "SUGAR_OF_URINE";
+	public static final String PROTEIN_OF_URINE = "PROTEIN_OF_URINE";
+	public static final String HEIGHT_OF_UTERUS = "HEIGHT_OF_UTERUS";
+	public static final String FETAL_MOVEMENT = "FETAL_MOVEMENT";
+	public static final String FETAL_HEART_RATE = "FETAL_HEART_RATE";
+	public static final String FETAL_LIE = "FETAL_LIE";
+	public static final String FETAL_PRESENTATION = "FETAL_PRESENTATION";
+	public static final String BREAST_PROBLEM = "BREAST_PROBLEM";
+	public static final String VITAMIN_A = "VITAMIN_A";
+	public static final String RISK_STATE = "RISK_STATE";
+	public static final String RISK_PROP = "RISK_PROP";
+	public static final String MATERENAL_STATUS = "MATERENAL_STATUS";
+	public static final String LMP = "LMP";
+
+
+	public static final String CODE = "CODE";
+	public static final String DIAG_ID = "DIAG_ID";
+	public static final String CODE_ICD10 = "CODE_ICD10";
+	public static final String CODE_SNOMED = "CODE_SNOMED";
+	public static final String DIAG_NAME = "DIAG_NAME";
+
+
+	public static final String EVENT_NAME="EVENT_NAME";
+	public static final String EVENT_DESC="EVENT_DESC";
+
+	public static final String EVENT_DATE="EVENT_DATE";
+	public static final String CREATED_BY="CREATED_BY";
+	public static final String VERSION_NO="VERSION_NO";
+
+
+	public static final String HH_ID = "HH_ID";
+	public static final String HH_GRADE = "HH_GRADE";
+
+	public static final String REF_DATA_ID = "REF_DATA_ID";
+	public static final String NO_OF_FAMILY_MEMBER="NO_OF_FAMILY_MEMBER";
+	public static final String SENT="SENT";
+
+	public static final String IMMU_BENEF_ID="IMMU_BENEF_ID";
+	public static final String IMMU_TYPE="IMMU_TYPE";
+	public static final String AGE_DAY_WHEN_DETECTED="AGE_DAY_WHEN_DETECTED";
+	public static final String IMMU_COMPLETE_DATE="IMMU_COMPLETE_DATE";
+	public static final String REASON_ID="REASON_ID";
+
+
+	public static final String IMMU_FOLLOWUP_ID = "IMMU_FOLLOWUP_ID";
+	public static final String FOLLOWUP_TYPE = "FOLLOWUP_TYPE";
+	public static final String FOLLOWUP_DATE= "FOLLOWUP_DATE";
+
+	public static final String IMMU_SERV_ID = "IMMU_SERV_ID";
+	public static final String IMMU_DATE = "IMMU_DATE";
+	public static final String AGE_DAY_WHEN_IMMUNIZED = "AGE_DAY_WHEN_IMMUNIZED";
+	public static final String NEXT_IMMU_DATE = "NEXT_IMMU_DATE";
+	public static final String IMMU_ID = "IMMU_ID";
+
+
+	public static final String SESSION_DATE="SESSION_DATE";
+
+	public static final String INTERVIEW_DTL_ID="INTERVIEW_DTL_ID";
+	public static final String Q_ID="Q_ID";
+	public static final String ANSWER="ANSWER";
+
+
+
+	public static final String DURATION = "DURATION";
+	public static final String UPDATED_ON = "UPDATED_ON";
+	public static final String STATUS = "STATUS";
+	public static final String DIAG_DESC = "DIAG_DESC";
+
+
+
+	public static final String QUESTION_ID = "QUESTION_ID";
+	public static final String Q_NAME = "Q_NAME";
+	public static final String Q_TITLE = "Q_TITLE";
+	public static final String Q_JSON = "Q_JSON";
+	public static final String Q_TYPE = "Q_TYPE";
+	public static final String Q_STATUS = "Q_STATUS";
+	public static final String SHOWABLE_OUTPUT = "SHOWABLE_OUTPUT";
+	public static final String LAST_UPDATED_BY = "LAST_UPDATED_BY";
+	public static final String LAST_UPDATED_ON = "LAST_UPDATED_ON";
+	public static final String LAST_LANG_SRC_ID="LAST_LANG_SRC_ID";
+
+
+
+	public static final String ORG_CODE = "ORG_CODE";
+	public static final String ORG_ID="ORG_ID";
+	public static final String ORG_NAME="ORG_NAME";
+	public static final String ORG_DESC="ORG_DESC";
+	public static final String ORG_ADDRESS="ORG_ADDRESS";
+	public static final String ORG_STATE="ORG_STATE";
+	public static final String ORG_COUNTRY="ORG_COUNTRY";
+	public static final String HEADER_SMALL_LOGO_PATH="HEADER_SMALL_LOGO_PATH";
+	public static final String LOGIN_IMAGE_PATH_MOBILE="LOGIN_IMAGE_PATH_MOBILE";
+	public static final String TITLE_LOGO_PATH_MOBILE="TITLE_LOGO_PATH_MOBILE";
+	public static final String APP_TITLE_MOBILE ="APP_TITLE_MOBILE";
+	public static final String OTHER_DETAILS="OTHER_DETAILS";
+
+	public static final String USER_KEY="USER_KEY";
+
+	public static final String UPDATE_HISTORY="UPDATE_HISTORY";
+
+	public static final String DOC_FOLLOWUP_ID="DOC_FOLLOWUP_ID";
+	public static final String FEEDBACK_DATE="FEEDBACK_DATE";
+	public static final String DOCTOR_FINDINGS="DOCTOR_FINDINGS";
+	public static final String PRESCRIBED_MEDICINE="PRESCRIBED_MEDICINE";
+	public static final String MESSAGE_TO_FCM="MESSAGE_TO_FCM";
+	public static final String IS_FEEDBACK_ON_TIME="IS_FEEDBACK_ON_TIME";
+	public static final String FEEDBACK_SOURCE="FEEDBACK_SOURCE";
+	public static final String INVES_ADVICE="INVES_ADVICE";
+	public static final String INVES_RESULT="INVES_RESULT";
+	public static final String INVES_STATUS="INVES_STATUS";
+	public static final String FEEDBACK_RECEIVE_TIME="FEEDBACK_RECEIVE_TIME";
+
+
+	public static final String SEND_STATUS="SEND_STATUS";
+
+
+
+
+	public static final String PARAM_1="PARAM_1";
+	public static final String PARAM_2="PARAM_2";
+
+	public static final String FCM_INTERVIEW_ID="FCM_INTERVIEW_ID";
+
+
+
+	public static final String UPDATE_BY = "UPDATE_BY";
+	public static final String UPDATE_ON = "UPDATE_ON";
+
+	//notification column
+	public static final String S_NOTIFICATION_ID = "S_NOTIFICATION_ID";
+	public static final String TITLE="TITLE";
+	public static final String CONTENT="CONTENT";
+	public static final String VIEW_TIME = "VIEW_TIME";
+	public static final String NOTIFICATION_TYPE = "NOTIFICATION_TYPE";
+	public static final String NOTIFICATION_STATUS = "NOTIFICATION_STATUS";
+	public static final String NOTIFICATION_TIME = "NOTIFICATION_TIME";
+	public static final String UPDATE_SOURCE="UPDATE_SOURCE";
+	public static final String DESTINATION_PATH ="DESTINATION_PATH";
+	public static final String DESTINATION_KEY ="DESTINATION_KEY";
+	public static final String NOTIFICATION_ICON="NOTIFICATION_ICON";
+
+	public static final String NOTIFICATION_ID = "NOTIFICATION_ID";
+
+	public static final String RELIGION_OTHER_SPECIFIC="RELIGION_OTHER_SPECIFIC";
+	public static final String AGREED_MOBILE_COMM="AGREED_MOBILE_COMM";
+	public static final String MOBILE_COMM_LANG="MOBILE_COMM_LANG";
+
+}

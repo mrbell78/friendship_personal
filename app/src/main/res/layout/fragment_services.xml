@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--        <HorizontalScrollView-->
+            <!--            android:id="@+id/hsc_view"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_margin="10dp"-->
+            <!--            android:scrollbars="none"-->
+            <!--            app:layout_constraintBottom_toTopOf="@+id/fl_service_content"-->
+            <!--            app:layout_constraintEnd_toEndOf="parent"-->
+            <!--            app:layout_constraintStart_toStartOf="parent"-->
+            <!--            app:layout_constraintTop_toTopOf="parent">-->
+
+            <LinearLayout
+                android:id="@+id/ll_tab_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/ll_tab_follow_up"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_rounded_corner"
+                    android:gravity="center"
+                    android:padding="5dp">
+
+                    <ngo.friendship.satellite.views.MdiTextView
+                        android:id="@+id/mdi_tab_follow_up_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="@string/mdi_arrow_down_circle_outline"
+                        android:textColor="@color/white"
+                        android:textSize="24dp" />
+
+                    <TextView
+                        android:id="@+id/tv_tab_follow_up"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/todays_schedule"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_size_tiny" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_tab_complete"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_rounded_corner_white"
+                    android:gravity="center"
+                    android:padding="5dp">
+
+                    <ngo.friendship.satellite.views.MdiTextView
+                        android:id="@+id/mdi_tab_complete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="@string/mdi_sync"
+                        android:textColor="@color/ash_gray"
+                        android:textSize="24dp" />
+
+                    <TextView
+                        android:id="@+id/tv_tab_complete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/complete"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_tiny" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llTabmHealthBenef"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/border_rounded_corner_white"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:visibility="gone">
+
+                    <ngo.friendship.satellite.views.MdiTextView
+                        android:id="@+id/mdi_tab_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="@string/mdi_sync"
+                        android:textColor="@color/ash_gray"
+                        android:textSize="24dp" />
+
+                    <TextView
+                        android:id="@+id/tv_tab_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="All(15)"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_tiny" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--        </HorizontalScrollView>-->
+
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fl_service_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_tab_view" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fbServiceAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:srcCompat="@drawable/ic_doctor"
+            app:tint="@color/white" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</layout>

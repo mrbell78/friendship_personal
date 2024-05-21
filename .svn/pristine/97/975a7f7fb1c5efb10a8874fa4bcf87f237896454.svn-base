@@ -1,0 +1,47 @@
+package ngo.friendship.satellite.ui.product_management.Products_model;
+
+public class ProductItemsInvoice {
+    private String mMedicine_name;
+    private String mDateTime;
+    private String mMedicine_price;
+//    private String mMedicine_stock;
+
+    public ProductItemsInvoice(String mMedicine_name, String mDateTime, String mMedicine_price) {
+        this.mMedicine_name = mMedicine_name;
+        this.mDateTime = mDateTime;
+        this.mMedicine_price = mMedicine_price;
+//        this.mMedicine_stock = mMedicine_stock;
+    }
+
+    public String getmMedicine_name() {
+        return mMedicine_name;
+    }
+
+    public void setmMedicine_name(String mMedicine_name) {
+        this.mMedicine_name = mMedicine_name;
+    }
+
+    public String getmMedicine_price() {
+        return mMedicine_price;
+    }
+
+    public void setmMedicine_price(String mMedicine_price) {
+        this.mMedicine_price = mMedicine_price;
+    }
+//
+//    public String getmMedicine_stock() {
+//        return mMedicine_stock;
+//    }
+//
+//    public void setmMedicine_stock(String mMedicine_stock) {
+//        this.mMedicine_stock = mMedicine_stock;
+//    }
+
+    public String getmDateTime() {
+        return mDateTime;
+    }
+
+    public void setmDateTime(String mDateTime) {
+        this.mDateTime = mDateTime;
+    }
+}

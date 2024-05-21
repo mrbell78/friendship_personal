@@ -1,0 +1,169 @@
+package ngo.friendship.satellite.ui.product_management.adapter;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.ui.product_management.Products_model.MedicineInfo;
+import ngo.friendship.satellite.ui.product_management.activity.ProductsHomeActivity;
+
+public class ProductItemsAdapter_test extends RecyclerView.Adapter<ProductItemsAdapter_test.ExampleViewHolder> implements Filterable {
+    //    private List<MedicineInfo> exampleList;
+    private List<MedicineInfo> exampleList;
+    private List<MedicineInfo> exampleListFull;
+    private Context ctx ;
+    private OnPlusListener mOnPlusListener;
+    private OnMinusListener mOnMinusListener;
+
+//    public ProductItemsAdapter_test(List<MedicineInfo> exampleList, Context ctx, OnPlusListener mOnPlusListener, OnMinusListener mOnMinusListener) {
+//        this.ctx=ctx;
+//        this.exampleList = exampleList;
+//        exampleListFull = new ArrayList<>(exampleList);
+//        this.mOnPlusListener = mOnPlusListener;
+//        this.mOnMinusListener = mOnMinusListener;
+//    }
+
+    public ProductItemsAdapter_test(ProductsHomeActivity myProductsActivity, ArrayList<MedicineInfo> medicineList) {
+
+    }
+
+    public ProductItemsAdapter_test(List<MedicineInfo> medicineList) {
+
+        this.ctx=ctx;
+        this.exampleList = exampleList;
+    }
+
+
+    @NonNull
+    @Override
+    public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.products_items_list, parent, false);
+        return new ExampleViewHolder(view, mOnPlusListener, mOnMinusListener);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ExampleViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        MedicineInfo currentItem = exampleList.get(position);
+//        holder.medicine_name.setText(currentItem.getmMedicine_name());
+////        ((TextView)findViewById(R.id.text)).setText(Html.fromHtml("your Text <sup style="font-size:5(yourfontsize);">subscript</sup>"));
+////        holder.medicine_name.setText(Html.fromHtml("Saline- Orsaline<sup><small>Q-33</small></sup>"));
+//        holder.mPrice.setText(currentItem.getmMedicine_price());
+//        holder.mStock.setText(currentItem.getmMedicine_stock());
+//        holder.mValue.setText(currentItem.getCount().toString());
+//        holder.mAmount.setText(currentItem.getResult().toString());
+
+
+
+
+    }
+
+
+    public class ExampleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView medicine_name;
+        TextView mPrice, mAmount, action_amount;
+        TextView mStock;
+        EditText mValue;
+        CardView plus, plus2, minus;
+        OnPlusListener onPlusListener;
+        OnMinusListener onMinusListener;
+
+        ImageView bookmark;
+
+
+        public ExampleViewHolder(View itemView, OnPlusListener mOnPlusListener, OnMinusListener mOnMinusListener) {
+            super(itemView);
+
+            medicine_name = itemView.findViewById(R.id.medicine_name);
+//            mPrice = itemView.findViewById(R.id.mPrice);
+//            mAmount = itemView.findViewById(R.id.mAmount);
+            mStock = itemView.findViewById(R.id.mStock);
+            bookmark = itemView.findViewById(R.id.medicine_bookmark);
+            plus = itemView.findViewById(R.id.increase);
+            plus2 = itemView.findViewById(R.id.increaseBlue);
+            minus = itemView.findViewById(R.id.decrease);
+//            mValue = itemView.findViewById(R.id.mValue);
+
+            this.onPlusListener = mOnPlusListener;
+            plus.setOnClickListener(this);
+            this.onMinusListener = mOnMinusListener;
+            minus.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.increase:
+                    onPlusListener.onPlusClick(getAdapterPosition(), v);
+                    break;
+                case R.id.decrease:
+                    onMinusListener.onMinusClick(getAdapterPosition(), v);
+                    break;
+//                case R.id.mValue:
+//                    onMinusListener.onMinusClick(getAdapterPosition(), v);
+//                    break;
+            }
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return exampleList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<MedicineInfo> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(exampleListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (MedicineInfo item : exampleListFull) {
+//                    if (item.getmMedicine_name().toLowerCase().contains(filterPattern)) {
+//                        filteredList.add(item);
+//                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            exampleList.clear();
+            exampleList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    public interface OnPlusListener{
+        void onPlusClick(int position, View v);
+
+    }
+
+    public interface OnMinusListener{
+        void onMinusClick(int position, View v);
+    }
+}
+

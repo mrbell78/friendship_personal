@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        tools:context=".ui.product_management.activity.ProductsHomeActivity">
+
+       <!-- <include
+            android:id="@+id/toolbar"
+            layout="@layout/custom_toolbar_adjust" />-->
+
+
+        <include
+            android:id="@+id/layout_sync"
+            layout="@layout/layout_get_mydata" />
+
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/month_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:padding="8dp"
+                android:text="My Sale This Month"
+                android:textColor="@color/ase"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/separator"
+                android:layout_width="150dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/month_name"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/ash_gray2"
+                android:textAlignment="center"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mAmmount"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="৳ 300.00"
+                    android:textColor="@color/app_color"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:text="/1630.50"
+                    android:textColor="@color/ase"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+                />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="Profit: ৳ 45.00"
+                android:textColor="@color/ash_gray2"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:paddingBottom="16dp"
+                android:text="Items: 12/809 pcs"
+                android:textColor="@color/ash_gray2"
+                android:textSize="14dp"
+                android:textStyle="italic" />
+
+            />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/layout1"
+            android:layout_marginTop="60dp"
+            android:background="#E8E8E8"
+            android:orientation="horizontal">
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:background="#FFFFFF"
+                android:iconifiedByDefault="false"
+                android:padding="4dp"
+                android:queryBackground="@null"
+                android:queryHint="Search Product" />
+
+
+            <ngo.friendship.satellite.views.MdiTextView
+                android:id="@+id/mFilter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/mdi_filter"
+                android:textSize="@dimen/fontsize_large" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_below="@id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp">
+
+            <TextView
+                android:id="@+id/medicine_name"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:paddingLeft="20dp"
+                android:textAlignment="textStart"
+                android:layout_height="match_parent"
+                android:text="All Category"
+                android:textColor="@color/black"
+                android:textStyle="italic" />
+            <TextView
+                android:paddingRight="8dp"
+                android:id="@+id/mStock"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="System\nQty"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="40dp"
+                android:gravity="end"
+                android:layout_height="wrap_content"
+                android:text="Actual\nQty"
+                android:textColor="@color/black"
+                android:textStyle="italic" />
+
+
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_marginTop="40dp"
+            android:layout_below="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:id="@+id/ll_medicine_row_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+
+
+
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/recycler_view"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_below="@+id/layout2"-->
+        <!--            android:layout_marginTop="4dp"-->
+        <!--            android:divider="#BABABA"-->
+        <!--            android:dividerHeight="2dp"-->
+        <!--            android:paddingTop="40dp"-->
+        <!--            tools:listitem="@layout/products_items_list" />-->
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="bottom">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_bottom_nav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btn_home"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/round_white_button_drop_shadow"
+                    android:elevation="40dp"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_home_active"
+                    app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+                    app:layout_constraintEnd_toEndOf="@+id/bottomNavigationView"
+                    app:layout_constraintStart_toStartOf="@+id/bottomNavigationView"
+                    app:layout_constraintTop_toTopOf="@+id/bottomNavigationView" />
+
+                <TextView
+                    android:id="@+id/tv_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-5dp"
+                    android:elevation="40dp"
+                    android:text="Product sale"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_home"
+                    app:layout_constraintStart_toStartOf="@+id/btn_home"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_home" />
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottomNavigationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:textColor="@color/colorPrimary"
+                    android:background="?android:attr/windowBackground"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:itemHorizontalTranslationEnabled="false"
+                    app:itemTextAppearanceInactive="@style/BottomNavigationView"
+                    app:labelVisibilityMode="auto"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:menu="@menu/bottom_nav_menu_product">
+
+
+                </com.google.android.material.bottomnavigation.BottomNavigationView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</layout>

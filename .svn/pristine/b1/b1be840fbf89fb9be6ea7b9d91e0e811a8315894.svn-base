@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:id="@+id/outerRectangle">
+
+        <shape>
+
+            <solid android:color="#3197F4" />
+
+            <corners
+                android:bottomRightRadius="8dp"
+                android:topLeftRadius="8dp" />
+
+        </shape>
+
+    </item>
+
+</layer-list>

@@ -1,0 +1,22 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ActivityRequestCode.
+ */
+public class ActivityRequestCode {
+	
+	/** The Constant REQUEST_CODE_CAPTURE_PHOTO. */
+	public static final int REQUEST_CODE_CAPTURE_PHOTO=1;
+	
+	/** The Constant REQUEST_CODE_RECODR_VEDIO. */
+	public static final int REQUEST_CODE_RECODR_VEDIO=1;
+	
+	/** The Constant REQUEST_CODE_RECODR_AUDIO. */
+	public static final int REQUEST_CODE_RECODR_AUDIO=1;
+	
+	/** The Constant REQUEST_CODE_OPEN_GALLERY. */
+	public static final int REQUEST_CODE_OPEN_GALLERY=1;
+	
+
+}

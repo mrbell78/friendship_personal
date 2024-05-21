@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mHealth="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_color"
+    android:gravity="center_vertical">
+
+    <ngo.friendship.satellite.views.AppButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        mHealth:layout_constraintBottom_toBottomOf="parent"
+        mHealth:layout_constraintLeft_toLeftOf="parent"
+        mHealth:layout_constraintTop_toTopOf="parent"
+        mHealth:mdIcon="@string/mdi_arrow_left" />
+
+    <TextView
+        android:id="@+id/tvProductTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:text="My Products"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        mHealth:layout_constraintBottom_toBottomOf="parent"
+        mHealth:layout_constraintEnd_toStartOf="@+id/action_cart"
+        mHealth:layout_constraintHorizontal_bias="0"
+        mHealth:layout_constraintStart_toEndOf="@+id/btn_back"
+        mHealth:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/action_cart"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_card_stock"
+        mHealth:layout_constraintBottom_toBottomOf="parent"
+        mHealth:layout_constraintEnd_toStartOf="@+id/llCard"
+        mHealth:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/llCard"
+        android:visibility="gone"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_rectangle_shape"
+        android:orientation="horizontal"
+        mHealth:layout_constraintBottom_toBottomOf="parent"
+        mHealth:layout_constraintEnd_toStartOf="@+id/product_page_notification"
+        mHealth:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="3dp"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingTop="3dp"
+            android:text="৳"
+            android:textAlignment="center"
+            android:textColor="@color/app_color"
+            android:textSize="@dimen/font_size_small"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_total_medicine_price"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="3dp"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingTop="3dp"
+            android:text="00.00"
+            android:textAlignment="center"
+            android:textColor="@color/app_color"
+            android:textSize="@dimen/font_size_small"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/ic_back_arrow"
+            android:gravity="center"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/product_page_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_notification"
+        mHealth:layout_constraintBottom_toBottomOf="parent"
+        mHealth:layout_constraintEnd_toStartOf="@+id/ivSetting"
+        mHealth:layout_constraintTop_toTopOf="parent"
+        mHealth:tint="#ffffff" />
+
+    <ImageView
+        android:id="@+id/ivSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ic_action_24"
+        mHealth:layout_constraintBottom_toBottomOf="parent"
+        mHealth:layout_constraintRight_toRightOf="parent"
+        mHealth:layout_constraintTop_toTopOf="parent"
+        mHealth:tint="#ffffff" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

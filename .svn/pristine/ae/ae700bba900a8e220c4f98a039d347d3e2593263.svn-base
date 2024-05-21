@@ -1,0 +1,336 @@
+package ngo.friendship.satellite.ui.product_management.activity;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Message;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import ngo.friendship.satellite.App;
+import ngo.friendship.satellite.LanguageContextWrapper;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.adapter.BeneficiaryListAdapter;
+import ngo.friendship.satellite.asynctask.CommiunicationTask;
+import ngo.friendship.satellite.asynctask.MHealthTask;
+import ngo.friendship.satellite.asynctask.Task;
+import ngo.friendship.satellite.asynctask.TaskKey;
+import ngo.friendship.satellite.communication.RequestData;
+import ngo.friendship.satellite.communication.ResponseData;
+import ngo.friendship.satellite.constants.Constants;
+import ngo.friendship.satellite.constants.DBTable;
+import ngo.friendship.satellite.constants.KEY;
+import ngo.friendship.satellite.constants.RequestName;
+import ngo.friendship.satellite.constants.RequestType;
+import ngo.friendship.satellite.databinding.ActivityBeneficiaryNameBinding;
+import ngo.friendship.satellite.interfaces.OnCompleteListener;
+import ngo.friendship.satellite.interfaces.OnDialogButtonClick;
+import ngo.friendship.satellite.jsonoperation.JSONParser;
+import ngo.friendship.satellite.model.AppSettings;
+import ngo.friendship.satellite.model.Beneficiary;
+import ngo.friendship.satellite.utility.AppPreference;
+import ngo.friendship.satellite.utility.SystemUtility;
+import ngo.friendship.satellite.utility.Utility;
+import ngo.friendship.satellite.views.DialogView;
+
+public class BeneficiaryNameActivity extends Activity implements View.OnClickListener, OnCompleteListener {
+    ActivityBeneficiaryNameBinding binding;
+    ListView lv;
+    TextView tvPageTitle;
+    String activityPath;
+
+    EditText etHhNumber;
+    BeneficiaryListAdapter adapter;
+    EditText etSearch;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityBeneficiaryNameBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        this.setFinishOnTouchOutside(false);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.x =-20;
+        params.height = displayMetrics.heightPixels-200;
+        params.width = displayMetrics.widthPixels-100;
+        params.y =-10;
+
+
+        this.getWindow().setAttributes(params);
+        App.loadApplicationData(this);
+
+        View v = findViewById(R.id.btn_close);
+        v.setOnClickListener(this);
+
+        v = findViewById(R.id.btn_retrieve_data);
+        v.setOnClickListener(this);
+
+	    /*((TextView)findViewById(R.id.tv_week)).setText("");
+	    ((TextView)findViewById(R.id.tv_last_risk_factor)).setText("");
+	    ((TextView)findViewById(R.id.tv_edd)).setText(R.string.sex_without_colon);
+	    ((TextView)findViewById(R.id.tv_date)).setText(R.string.age_without_colon);*/
+        findViewById(R.id.ll_list_header).setVisibility(View.GONE);
+
+        tvPageTitle = findViewById(R.id.tv_page_title);
+        tvPageTitle.setVisibility(View.VISIBLE);
+
+        findViewById(R.id.ll_serach).setVisibility(View.VISIBLE);
+        findViewById(R.id.btn_search).setOnClickListener(this);
+        etHhNumber = findViewById(R.id.et_hh_number);
+
+
+        ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();
+
+        adapter = new BeneficiaryListAdapter(beneficiaryList, this);
+
+
+
+
+//        binding.headerSearch.etSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                adapter.getFilter().filter(s);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//
+//
+//        });
+
+
+        boolean isShowHhNumber = Boolean.parseBoolean(Utility.getFcmConfigurationValue(BeneficiaryNameActivity.this, "list_show", "show.hh.number.in.benef.list", "false"));
+        if (!isShowHhNumber) {
+            findViewById(R.id.btn_search).setVisibility(View.GONE);
+            etHhNumber.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+            etHhNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(100)});
+            etHhNumber.setHint(getString(R.string.search));
+            etHhNumber.addTextChangedListener(new TextWatcher() {
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // Call back the Adapter with current character to Filter
+                    adapter.getFilter().filter(s.toString());
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+
+        } else {
+            findViewById(R.id.btn_search).setVisibility(View.VISIBLE);
+            etHhNumber.setInputType(InputType.TYPE_CLASS_TEXT);
+            etHhNumber.setHint(getString(R.string.benef_name));
+
+        }
+
+
+
+
+        Bundle b = getIntent().getExtras();
+
+        retriveAndShow("");
+
+
+    }
+
+    private void retriveAndShow(String hhNumber) {
+        if (hhNumber != null && hhNumber.trim().length() == 0) etHhNumber.setText("");
+        MHealthTask tsk = new MHealthTask(this, Task.RETERIEVE_BENEFICIARY_LIST, R.string.retrieving_data, R.string.please_wait);
+        tsk.setParam(hhNumber);
+        tsk.setCompleteListener(this);
+        tsk.execute();
+
+    }
+
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        if (App.getContext().getAppSettings() == null)
+            App.getContext().readAppSettings(this);
+
+        Utility.setActivityPath(this, R.string.beneficiary_list);
+        if (!SystemUtility.isAutoTimeEnabled(this)) {
+            SystemUtility.openDateTimeSettingsActivity(this);
+        }
+    }
+
+    private void showDataRetrieveConfirmationPrompt(String msg) {
+
+        HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_yes);
+        buttonMap.put(2, R.string.btn_no);
+        DialogView exitDialog = new DialogView(this, R.string.dialog_title, msg, R.drawable.information, buttonMap);
+        exitDialog.setOnDialogButtonClick(new OnDialogButtonClick() {
+
+            @Override
+            public void onDialogButtonClick(View view) {
+                switch (view.getId()) {
+                    case 1:
+                        retrieveBeneficiaries();
+                        break;
+                    case 2:
+
+                        break;
+
+                }
+
+            }
+
+
+        });
+
+        exitDialog.show();
+    }
+
+
+    private void retrieveBeneficiaries() {
+        App.getContext().loadApplicationData(BeneficiaryNameActivity.this);
+        RequestData request = new RequestData(RequestType.USER_GATE, RequestName.BENEFICIARIES, Constants.MODULE_DATA_GET);
+        try {
+            HashMap<String, String> refTable = new HashMap<String, String>();
+            refTable.put(KEY.VERSION_NO_BENEFICIARY, DBTable.BENEFICIARY);
+            request.setParam1(Utility.getTableRef(refTable, BeneficiaryNameActivity.this));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        CommiunicationTask commiunicationTask = new CommiunicationTask(BeneficiaryNameActivity.this, request, R.string.retrieving_data, R.string.please_wait);
+        commiunicationTask.setCompleteListener(BeneficiaryNameActivity.this);
+        commiunicationTask.execute();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_search:
+                retriveAndShow(etHhNumber.getText().toString());
+                break;
+            case R.id.btn_close:
+                this.finish();
+                break;
+            case R.id.btn_retrieve_data:
+                showDataRetrieveConfirmationPrompt(getResources().getString(R.string.retrieve_data_confirmation));
+                break;
+            default:
+                break;
+        }
+    }
+
+
+
+
+
+    /**
+     * set beneficiaries to beneficiary list view.
+     */
+    private void showData(ArrayList<Beneficiary> beneficiaryList) {
+        adapter = new BeneficiaryListAdapter(beneficiaryList, this);
+        binding.lvBeneficiaryList.setAdapter(adapter);
+        binding.lvBeneficiaryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = beneficiaryList.get(position).getBenefName();
+                Intent benifIntent= new Intent( BeneficiaryNameActivity.this,MedicineSaleConfirmActivity.class);
+                benifIntent.putExtra("benifName", selectedItem);
+                startActivity(benifIntent);
+
+            }
+        });
+        long count = 0;
+        for (Beneficiary beneficiary : beneficiaryList) {
+            if (!beneficiary.getBenefCode().equals("00000")) count++;
+        }
+        tvPageTitle.setText(getResources().getString(R.string.beneficiary_list) + "(" + count + ")");
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    long needReq = 0;
+
+    @Override
+    public void onComplete(Message msg) {
+        if (msg.getData().getString(TaskKey.NAME).equals(TaskKey.COMMUNICATION_TASK)) {
+            if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+                String errorMsg = (String) msg.getData().getSerializable(TaskKey.ERROR_MSG);
+                App.showMessageDisplayDialog(this, getResources().getString(R.string.network_error), R.drawable.error, Color.RED);
+            } else {
+                ResponseData response = (ResponseData) msg.getData().getSerializable(TaskKey.DATA0);
+                if (response.getResponseCode().equalsIgnoreCase("00")) {
+                    App.showMessageDisplayDialog(this, response.getErrorCode() + "-" + response.getErrorDesc(), R.drawable.error, Color.RED);
+                } else {
+                    needReq = JSONParser.getLongNullAllow(response.getParamJson(), KEY.NEED_SAME_REQ);
+                    MHealthTask tsk = new MHealthTask(this, Task.RETERIEVE_BENEFICIARY_LIST, R.string.retrieving_data, R.string.please_wait);
+                    tsk.setParam(response);
+                    tsk.setCompleteListener(this);
+                    tsk.execute();
+                }
+            }
+        } else if (msg.getData().getString(TaskKey.NAME).equals(TaskKey.MHEALTH_TASK)) {
+            if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+                String errorMsg = (String) msg.getData().getSerializable(TaskKey.ERROR_MSG);
+                App.showMessageDisplayDialog(this, getResources().getString(R.string.saving_error), R.drawable.error, Color.RED);
+            } else {
+
+                if (needReq == 1) {
+                    needReq = 0;
+                    retrieveBeneficiaries();
+                } else {
+                    showData((ArrayList<Beneficiary>) msg.getData().getSerializable(TaskKey.DATA0));
+                }
+
+            }
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        App.getContext().onStartActivity(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        App.getContext().onStartActivity(this);
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(LanguageContextWrapper.wrap(context, AppPreference.getString(context, KEY.LANGUAGE, AppSettings.DEFAULT_LANGUAGE)));
+    }
+
+
+}

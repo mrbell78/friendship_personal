@@ -1,0 +1,17 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RequestAction.
+ */
+public class RequestAction {
+	
+	/** The Constant INSERT. */
+	public static final String INSERT = "INSERT";
+	
+	/** The Constant DELET. */
+	public static final String DELET = "DELETE";
+	
+	/** The Constant UPDATE. */
+	public static final String UPDATE = "UPDATE";
+}

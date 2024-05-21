@@ -1,0 +1,54 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class QUESTION_TYPE.
+ */
+public class QUESTION_TYPE {
+	 
+ 	/** The string. */
+ 	public static String STRING ="string";
+	 
+ 	/** The number. */
+ 	public static String NUMBER ="int";
+	 
+ 	/** The location. */
+ 	public static String LOCATION ="location";
+	 
+ 	/** The select. */
+ 	public static String SELECT ="select1";
+	 
+ 	/** The multi select. */
+ 	public static String MULTI_SELECT ="select";
+	 
+ 	/** The barcode. */
+ 	public static String BARCODE="barcode";
+	 
+ 	/** The image. */
+ 	public static String IMAGE="image";
+	 
+ 	/** The video. */
+ 	public static String VIDEO="video";
+	 
+ 	/** The audio. */
+ 	public static String AUDIO="audio";
+	 
+ 	/** The binary. */
+ 	public static String BINARY="binary";
+	 
+ 	/** The date. */
+ 	public static String DATE="date";
+ 	
+ 	public static String TIME="time";
+ 	
+ 	/** The List. */
+    public static String LIST="list";
+	 
+	 /** The referral center. */
+ 	public static String REFERRAL_CENTER="referralCenter";
+	 
+ 	/** The prescription. */
+ 	public static String PRESCRIPTION="prescription";
+	 
+	 //"mediaType": "image",
+}

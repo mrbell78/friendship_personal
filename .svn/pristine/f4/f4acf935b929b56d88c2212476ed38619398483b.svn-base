@@ -1,0 +1,45 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class QuestionnaireName.
+ */
+public class QuestionnaireName {
+	public static final String BENEFICIARY_REGISTRATION = "BENEFICIARY_REGISTRATION";
+	public static final String CERVICAL_CANCER_SCREENING = "CERVICAL_CANCER_SCREENING";
+	public static final String CERVICAL_CANCER_FOLLOWUP = "CERVICAL_CANCER_FOLLOWUP";
+	public static final String CERVICAL_CANCER = "CERVICAL_CANCER";
+	
+	public static final String EPI = "EPI";
+	public static final String EPI_FOLLOWUP = "EPI_FOLLOWUP";
+	public static final String EPI_BENEF_LIST = "EPI_BENEF_LIST";
+	public static final String MATERNAL_BENEF_LIST = "MATERNAL_BENEF_LIST";
+	public static final String CHILD_BENEF_LIST = "CHILD_BENEF_LIST";
+	
+	public static final String TT = "TT";
+	public static final String TT_FOLLOWUP = "TT_FOLLOWUP";
+	public static final String TT_BENEF_LIST = "TT_BENEF_LIST";
+	public static final String CHILD_GROWTH_ASSESSMENT = "CHILD_GROWTH_ASSESSMENT";
+	
+	public static final String HOUSEHOLD_LIST = "HOUSEHOLD_LIST";
+	public static final String HOUSEHOLD_REGISTRATION = "HOUSEHOLD_REGISTRATION";
+	public static final String BENEFICIARY_PROFILE_UPDATE = "BENEFICIARY_PROFILE_UPDATE";
+
+
+    public static final String MATERNAL_PREGNANT_MOTHER_REGISTRATION="MATERNAL_PREGNANT_MOTHER_REGISTRATION";
+    public static final String MATERNAL_MOTHER_AND_BABY_REGISTRATION = "MATERNAL_MOTHER_AND_BABY_REGISTRATION";
+    public static final String MATERNAL_HIGH_RISK_MOTHER_IDENTIFICATION="MATERNAL_HIGH_RISK_MOTHER_IDENTIFICATION";
+    public static final String MATERNAL_DELIVERY_CARE="MATERNAL_DELIVERY_CARE";
+    public static final String MATERNAL_DISCONTINUATION_OF_PREGNANCY="MATERNAL_DISCONTINUATION_OF_PREGNANCY";
+
+    
+    public static final String BENEFICIARY_MIGRATION="BENEFICIARY_MIGRATION";
+    public static final String DEATH_REGISTRATION="DEATH_REGISTRATION";
+    public static final String COURT_YARD="COURT_YARD";
+
+	public static final String DIABETES_BENEF_LIST = "DIABETES_BENEF_LIST";
+	public static final String DIABETES_SCREENING = "DIABETES_SCREENING";
+
+	public static final String HYPERTENSION_SCREENING = "HYPERTENSION_SCREENING";
+	public static final String HYPERTENSION_BENEF_LIST = "HYPERTENSION_BENEF_LIST";
+}

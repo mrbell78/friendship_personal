@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mHealth="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#a6a8bf"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dip">
+
+        <ImageView
+            android:id="@+id/img_dialog_title"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/error" />
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:text="@string/dialog_title"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_dialog_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:gravity="center"
+        android:text="Error dialog"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <ngo.friendship.satellite.views.AppButton
+            android:id="@+id/btn_referral_center"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            mHealth:mdIcon="@string/mdi_hospital"
+            mHealth:text="@string/btn_refer_to_referral_center" />
+
+        <ngo.friendship.satellite.views.AppButton
+            android:id="@+id/btn_try_again"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            mHealth:mdIcon="@string/mdi_repeat"
+            mHealth:text="@string/btn_try_again" />
+
+        <ngo.friendship.satellite.views.AppButton
+            android:id="@+id/btn_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            mHealth:mdIcon="@string/mdi_close"
+            mHealth:text="@string/btn_cancel" />
+    </LinearLayout>
+
+</LinearLayout>

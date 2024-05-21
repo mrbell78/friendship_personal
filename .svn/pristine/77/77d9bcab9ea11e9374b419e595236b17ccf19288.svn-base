@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:text="Date:02/Dec/2023"
+        android:layout_marginTop="16dp"
+
+        android:layout_marginBottom="16dp"
+        android:textStyle="italic|bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="8dp"
+        android:visibility="visible"
+        android:textSize="@dimen/font_size_small"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2.5"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvSL"
+                android:text="001"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/gray_600"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/font_size_small"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginStart="8dp"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvBenefInfo"
+                    android:layout_width="wrap_content"
+                    android:text="00028-Yeasin Ali"
+                    android:textStyle="bold"
+                    android:textColor="@color/app_black"
+                    android:textSize="@dimen/font_size_medium"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvBenefOtherInfo"
+                    android:layout_width="wrap_content"
+                    android:text="Khamar Holokhana"
+                    android:textStyle="italic"
+                    android:textSize="@dimen/font_size_small"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvLocation"
+                    android:layout_width="wrap_content"
+                    android:text="Khamar Holokhana"
+                    android:textSize="@dimen/font_size_small"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvFcmInfo"
+                    android:layout_width="wrap_content"
+                    android:text="FCM: Shilpi"
+                    android:textStyle="italic"
+                    android:textSize="@dimen/font_size_tiny"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvService"
+                android:layout_width="wrap_content"
+                android:text="General Health Care"
+                android:textSize="@dimen/font_size_small"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvDisease"
+                android:layout_width="wrap_content"
+                android:text="Fever"
+                android:textStyle="italic"
+                android:textSize="@dimen/font_size_small"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvMedicine"
+                android:layout_width="wrap_content"
+                android:text="Nama 500mg(10)"
+                android:textSize="@dimen/font_size_small"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/separetor"
+        android:orientation="horizontal" />
+
+</LinearLayout>
+</layout>

@@ -1,0 +1,161 @@
+package ngo.friendship.satellite.ui.product_management.adapter;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.ui.product_management.Products_model.ProductItemsInvoice;
+import ngo.friendship.satellite.ui.product_management.activity.DispatchActivity;
+import ngo.friendship.satellite.ui.product_management.activity.InitiatedActivity;
+
+public class ProductItemsInvoiceAdapter extends
+        RecyclerView.Adapter<ProductItemsInvoiceAdapter.ExampleViewHolder> implements Filterable {
+    private List<ProductItemsInvoice> exampleList;
+    private List<ProductItemsInvoice> exampleListFull;
+    private Context context;
+
+    public ProductItemsInvoiceAdapter(Context context) {
+        this.context = context;
+    }
+
+    class ExampleViewHolder extends RecyclerView.ViewHolder {
+        int minteger = 0;
+        TextView medicine_name;
+        TextView mDateTime;
+        TextView mPrice;
+        TextView mStock, mValue;
+        CardView plus, minus;
+        Dialog dialog;
+
+
+        ExampleViewHolder(View itemView) {
+            super(itemView);
+            medicine_name = itemView.findViewById(R.id.saleID);
+            mDateTime = itemView.findViewById(R.id.dateTime);
+            mPrice = itemView.findViewById(R.id.soldPrice);
+//            mStock = itemView.findViewById(R.id.profit);
+
+
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if (getPosition() == 0) {
+//
+////                        Toast.makeText(itemView.getContext(),String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+////                        Intent intent = new Intent(context, InitiatedActivity.class);
+////                        context.startActivity(intent);
+//
+//                    }
+////
+//                }
+//            });
+
+
+        }
+
+
+    }
+
+    public ProductItemsInvoiceAdapter(Context context, List<ProductItemsInvoice> exampleList) {
+        this.context = context;
+        this.exampleList = exampleList;
+        exampleListFull = new ArrayList<>(exampleList);
+    }
+
+    @NonNull
+    @Override
+    public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_rise_list, parent, false);
+        return new ExampleViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
+        ProductItemsInvoice currentItem = exampleList.get(position);
+        holder.medicine_name.setText(currentItem.getmMedicine_name());
+        holder.mDateTime.setText(currentItem.getmDateTime());
+        holder.mPrice.setText(currentItem.getmMedicine_price());
+//        holder.mStock.setText(currentItem.getmMedicine_stock());
+
+        holder.mPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+//                Toast.makeText(context,currentItem.getmMedicine_price(), Toast.LENGTH_SHORT).show();
+
+                if (currentItem.getmMedicine_price() == "Initiated") {
+                    Intent intent = new Intent(context, InitiatedActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                } else if (currentItem.getmMedicine_price() == "Approved") {
+                    Toast.makeText(context, "Approved data", Toast.LENGTH_SHORT).show();
+                    ;
+                } else if (currentItem.getmMedicine_price() == "Dispatch") {
+                    Intent intent = new Intent(context, DispatchActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                } else if (currentItem.getmMedicine_price() == "Cancelled") {
+                    Toast.makeText(context, "Cancelled data", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return exampleList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<ProductItemsInvoice> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(exampleListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (ProductItemsInvoice item : exampleListFull) {
+                    if (item.getmMedicine_name().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+
+        }
+
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            exampleList.clear();
+            exampleList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+}
+

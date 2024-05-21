@@ -1,0 +1,25 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VALIDATION_TYPE.
+ */
+public class VALIDATION_TYPE {
+	
+	/** The Constant REGEX. */
+	public static final String REGEX="customRegex";
+	
+	/** The Constant MIN_LENGTH. */
+	public static final String MIN_LENGTH="minLen";
+	
+	/** The Constant MAX_LENGTH. */
+	public static final String MAX_LENGTH="maxLen";
+	
+	/** The Constant MAX_VALUE. */
+	public static final String MAX_VALUE="max";
+	
+	/** The Constant MIN_VALUE. */
+	public static final String MIN_VALUE="min";
+	
+
+}

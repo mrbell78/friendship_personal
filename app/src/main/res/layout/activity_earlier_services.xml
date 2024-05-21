@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.earlier_services.EarlierServicesActivity">
+    <LinearLayout
+        android:id="@+id/ll_tab_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="0dp"
+        android:scrollbars="none"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <LinearLayout
+            android:id="@+id/ll_tab_pending"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/border_rounded_corner"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <ngo.friendship.satellite.views.MdiTextView
+                android:id="@+id/mdi_tab_pending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="@string/mdi_unsync"
+                android:textColor="@color/ash_gray"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/tv_tab_pending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/unsync_list"
+                android:textColor="@color/text_light" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_tab_syncd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/border_rounded_corner_white"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <ngo.friendship.satellite.views.MdiTextView
+                android:id="@+id/mdi_syncd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="@string/mdi_syncUpload"
+                android:textColor="@color/text_black"
+                android:textSize="24dp"/>
+
+            <TextView
+                android:id="@+id/tv_syncd_syncd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/all_synced_data"
+                android:textColor="@color/text_black" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_tab_view"
+        tools:layout="@android:layout/simple_gallery_item" />
+</androidx.constraintlayout.widget.ConstraintLayout>

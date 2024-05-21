@@ -1,0 +1,92 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mHealth="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_auto_sync"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/tmp_btm_actn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/square_distance"
+        android:layout_marginTop="@dimen/square_distance"
+        android:layout_marginEnd="@dimen/square_distance"
+        android:layout_marginBottom="@dimen/square_distance"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_sync_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="0/0"
+            android:textColor="@color/warning"
+            android:textSize="@dimen/font_size_medium"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sb_sync_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/seekbar_thumb_drawable"
+            android:progressDrawable="@drawable/seekbar_drawable"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:clickable="false"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:max="100"
+            android:progress="0" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ngo.friendship.satellite.views.AppButton
+                android:id="@+id/btn_get_my_data"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="56dp"
+                android:layout_weight="1"
+                mHealth:mdIcon="@string/mdi_download"
+                mHealth:text="@string/get_data" />
+
+            <ngo.friendship.satellite.views.AppButton
+                android:id="@+id/btn_skip_now"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="@dimen/square_distance"
+                android:layout_marginLeft="@dimen/square_distance"
+                android:layout_marginBottom="56dp"
+                android:layout_weight="1"
+                mHealth:btn_class="ASH"
+                mHealth:mdIcon="@string/mdi_page_last"
+                mHealth:text="@string/skip" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tmp_btm_actn"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/square_distance"
+            android:gravity="center"
+            android:text="@string/auto_sync_msg"
+            android:textColor="@color/app_black"
+            android:textSize="@dimen/font_size_medium" />
+
+    </LinearLayout>
+
+</RelativeLayout>

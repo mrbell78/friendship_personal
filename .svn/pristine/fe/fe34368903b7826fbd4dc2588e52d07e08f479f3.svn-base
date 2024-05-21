@@ -1,0 +1,392 @@
+package ngo.friendship.satellite.ui.product_management.activity;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import ngo.friendship.satellite.App;
+import ngo.friendship.satellite.LanguageContextWrapper;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.asynctask.CommiunicationTask;
+import ngo.friendship.satellite.asynctask.TaskKey;
+import ngo.friendship.satellite.base.BaseActivity;
+import ngo.friendship.satellite.communication.RequestData;
+import ngo.friendship.satellite.communication.ResponseData;
+import ngo.friendship.satellite.constants.ActivityDataKey;
+import ngo.friendship.satellite.constants.Column;
+import ngo.friendship.satellite.constants.Constants;
+import ngo.friendship.satellite.constants.KEY;
+import ngo.friendship.satellite.constants.RequestName;
+import ngo.friendship.satellite.constants.RequestType;
+import ngo.friendship.satellite.constants.RequisitionStatus;
+import ngo.friendship.satellite.error.MhealthException;
+import ngo.friendship.satellite.interfaces.OnCompleteListener;
+import ngo.friendship.satellite.interfaces.OnDialogButtonClick;
+import ngo.friendship.satellite.jsonoperation.JSONCreateor;
+import ngo.friendship.satellite.jsonoperation.JSONParser;
+import ngo.friendship.satellite.model.AppSettings;
+import ngo.friendship.satellite.model.MedicineInfo;
+import ngo.friendship.satellite.model.RequisitionInfo;
+import ngo.friendship.satellite.model.RequisitionMedicineInfo;
+import ngo.friendship.satellite.utility.AppPreference;
+import ngo.friendship.satellite.utility.SystemUtility;
+import ngo.friendship.satellite.utility.TextUtility;
+import ngo.friendship.satellite.utility.Utility;
+import ngo.friendship.satellite.views.DialogView;
+
+
+public class RequisitionDetailActivity extends BaseActivity implements OnClickListener{
+
+	String activityPath;
+	long requisitionId=-1;
+	RequisitionInfo reqInfo;
+	LinearLayout llRowContainer;
+	ArrayList<MedicineInfo> medicineList;
+
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		App.loadApplicationData(this);
+		setContentView(R.layout.requisition_detail_layout);
+
+		View v = findViewById(R.id.btn_close);
+		v.setOnClickListener(this);
+
+		llRowContainer = findViewById(R.id.ll_medicine_row_container);
+
+		Bundle b = getIntent().getExtras();
+
+		enableBackButton();
+
+
+		if(b.containsKey(ActivityDataKey.REQUISITION_ID)){
+           requisitionId = b.getLong(ActivityDataKey.REQUISITION_ID);
+           reqInfo = App.getContext().getDB().getRequisitionMedicineInfo(requisitionId);
+           showData();
+		}else{
+			requisitionId = App.getContext().getDB().getIncompletedMedicineRequisitionId();
+			if(requisitionId>0){
+				reqInfo = App.getContext().getDB().getRequisitionMedicineInfo(requisitionId);
+                if(reqInfo.getRequisitionNo()<=0)
+				{
+                    showData();
+				}else{
+					checkRequisitionStatus(reqInfo.getRequisitionNo()+"");
+				}
+			}else{
+				showTwoButtonErrorDialog(R.string.dialog_title, R.string.requisition_request_not_found, R.drawable.warning);
+			}
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if( App.getContext().getAppSettings()==null)
+			App.getContext().readAppSettings(this);
+	   
+
+		if(getIntent().getExtras().containsKey(ActivityDataKey.REQUISITION_ID)){
+
+
+//			activityPath=Utility.setActivityPath(this,"");
+		}else{
+			activityPath=Utility.setActivityPath(this, R.string.stock_requisition_request_status);
+
+		}
+
+		if(!SystemUtility.isAutoTimeEnabled(this)){
+			SystemUtility.openDateTimeSettingsActivity(this);
+		}
+	
+	
+	}
+
+
+
+	private void showData()
+	{
+
+		TextView tv_status= findViewById(R.id.tv_requisition_request_status);
+		tv_status.setText(reqInfo.getRequisitionStatus()+(reqInfo.getRequisitionNo()>0?":"+reqInfo.getRequisitionNo():""));
+
+		llRowContainer.removeAllViews();
+		if(reqInfo == null)
+		{
+//			AppToast.showToast(this, R.string.data_not_available);
+			return;
+		}
+		View v = findViewById(R.id.btn_send_data);
+		if(reqInfo.getRequisitionNo()<=0)
+		{
+			v.setVisibility(View.VISIBLE);
+			v.setOnClickListener(this);
+			medicineList = new ArrayList<MedicineInfo>();
+		}else{
+			v.setVisibility(View.GONE);
+		}
+
+		for(int i=0;i<reqInfo.getRequisitionMedicineList().size();i++)
+		{
+			RequisitionMedicineInfo reqMedInfo = reqInfo.getRequisitionMedicineList().get(i);
+			if(reqInfo.getRequisitionNo()<=0)
+			{
+				MedicineInfo medicineInfo = new MedicineInfo();
+				medicineInfo.setMedId(reqMedInfo.getMedId());
+				medicineInfo.setRequiredQuantity(reqMedInfo.getRequisitionQuantity()+"");
+				medicineList.add(medicineInfo);
+			}
+
+			View view = View.inflate(this, R.layout.medicine_requisition_row, null);
+			llRowContainer.addView(view);
+
+			TextView tv = view.findViewById(R.id.tv_name);
+			tv.setText(reqMedInfo.toString());
+			
+			 tv = view.findViewById(R.id.tv_type);
+		     tv.setText(reqMedInfo.getMedicineType());
+
+		     tv = view.findViewById(R.id.tv_info_left);
+		     tv.setText(TextUtility.format("%.2f", reqMedInfo.getRequisitionPrice()));
+		     
+		     tv = view.findViewById(R.id.tv_info_right);
+		     tv.setText(reqMedInfo.getRequisitionQuantity()+"");
+
+			
+		     view.findViewById(R.id.et_quantity).setVisibility(View.GONE);
+		     
+		     
+		     tv = view.findViewById(R.id.tv_quantity);
+		     tv.setVisibility(View.VISIBLE);
+		     tv.setText(TextUtility.format("%.2f", reqMedInfo.getReceivePrice())+" | "+reqMedInfo.getReceiveQuantity());
+
+		}
+
+	}
+
+
+	private final int EXIT_ON_OK=1;
+	private void showOneButtonDialog(String msg, final int imageId, int messageColor,final boolean isActivityFinishOnClose){
+		HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_close);
+        DialogView dialog = new DialogView(this, R.string.dialog_title, msg,messageColor, imageId, buttonMap);
+		dialog.setOnDialogButtonClick(new OnDialogButtonClick() {
+
+			@Override
+			public void onDialogButtonClick(View view) {
+				if(isActivityFinishOnClose)
+				{
+					RequisitionDetailActivity.this.finish();
+				}
+
+			}
+		});
+        dialog.show();
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btn_close:
+			this.finish();
+			break;
+		case R.id.btn_send_data:
+				uploadRequisition();
+				break;
+		default:
+			break;
+		}
+
+	}
+
+
+
+
+	private void showTwoButtonErrorDialog(int titleId, int msgId, int imageId)
+	{
+		HashMap<Integer ,Object> buttonMap =new HashMap<Integer, Object>();
+		buttonMap.put(1, R.string.btn_close);
+		buttonMap.put(2, R.string.btn_ok);
+		DialogView dialog= new DialogView(this,titleId,msgId, imageId, buttonMap);
+		dialog.setOnDialogButtonClick(new OnDialogButtonClick() {
+
+			@Override
+			public void onDialogButtonClick(View view) {
+				switch (view.getId()) {
+					case 1:
+						RequisitionDetailActivity.this.finish();
+						break;
+					case 2:
+                        retrieveRequisition();
+						break;
+
+				}
+
+			}
+		});
+		dialog.show();
+	}
+
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		App.getContext().onStartActivity(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		App.getContext().onStartActivity(this);
+	}
+
+
+
+	private void retrieveRequisition(){
+		RequestData request =new RequestData(RequestType.STOCK_INVENTORY, RequestName.LAST7_REQUISITION, Constants.MODULE_DATA_GET);
+		CommiunicationTask commiunicationTask= new CommiunicationTask(this, request,getResources().getString(R.string.retrieving_data), getResources().getString(R.string.please_wait));
+		commiunicationTask.setCompleteListener(new OnCompleteListener() {
+			@Override
+			public void onComplete(Message msg) {
+				if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+					showOneButtonDialog(getResources().getString(R.string.network_error)+"\n"+msg.getData().getString(TaskKey.ERROR_MSG), R.drawable.error, Color.RED ,false);
+				} else {
+					ResponseData response=(ResponseData) msg.getData().getSerializable(TaskKey.DATA0);
+					if(response.getResponseCode().equalsIgnoreCase("00")){
+						showOneButtonDialog(response.getErrorCode()+"-"+response.getErrorDesc(), R.drawable.error, Color.RED,false);
+					}else{
+
+						try {
+							ArrayList<RequisitionInfo> requisitionList = JSONParser.pasreRequisitionListJSON(response.getData());
+							App.getContext().getDB().saveRequisitionList(requisitionList, App.getContext().getUserInfo().getUserId());
+							requisitionId = App.getContext().getDB().getIncompletedMedicineRequisitionId();
+							if(requisitionId>0){
+								reqInfo = App.getContext().getDB().getRequisitionMedicineInfo(requisitionId);
+								showData();
+							}
+						} catch (MhealthException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+
+			}
+		});
+		commiunicationTask.execute();
+	}
+
+
+
+
+	private void uploadRequisition()
+	{
+		final RequisitionInfo requInfo = App.getContext().getDB().getUnSentRequisition();
+		if(requInfo !=null )
+		{
+			ArrayList<MedicineInfo> medList = App.getContext().getDB().getRequsitionData(requInfo.getRequisitionId());
+			RequestData request =new RequestData(RequestType.STOCK_INVENTORY, RequestName.MEDICINE_REQUISITION,Constants.MODULE_BUNCH_PUSH);
+			request.setData(JSONCreateor.createMedicineRequisitionJSON(medList));
+			CommiunicationTask commiunicationTask= new CommiunicationTask(this, request,getResources().getString(R.string.uploading_data), getResources().getString(R.string.please_wait));
+			commiunicationTask.setCompleteListener(new OnCompleteListener() {
+				@Override
+				public void onComplete(Message msg) {
+					boolean isError=false;
+					if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+						App.showMessageDisplayDialog(RequisitionDetailActivity.this, getResources().getString(R.string.network_error), R.drawable.error, Color.RED);
+					} else {
+						ResponseData response=(ResponseData) msg.getData().getSerializable(TaskKey.DATA0);
+						if(response.getResponseCode().equalsIgnoreCase("00")){
+							if(response.getErrorCode().equals("0308")){
+								App.getContext().getDB().removeRequisitionRequest(requInfo.getRequisitionId());
+								String msgaa=getResources().getString(R.string.incomplete_requisition_request_server_exist_prompt_again);
+								try {
+									msgaa=msgaa.replace("REQUISITION_NUMBER",response.getParamJson().getString(Column.REQ_NO));
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								showOneButtonDialog(msgaa, R.drawable.information, Color.BLACK,true);
+							}else{
+								App.showMessageDisplayDialog(RequisitionDetailActivity.this, response.getErrorCode()+"-"+response.getErrorDesc(), R.drawable.error, Color.RED);
+							}
+						}else{
+							try {
+								long reqNo = response.getDataJson().getLong(Column.REQ_NO);
+								if(reqNo > 0)
+								{
+									App.getContext().getDB().updateRequisitionMasterTable(requInfo.getRequisitionId(), reqNo, RequisitionStatus.Initiated.toString(), -1);
+									showOneButtonDialog(getResources().getString(R.string.medicine_requisition_successfully)+"\n"+getResources().getString(R.string.requisition_number)+":"+reqNo, R.drawable.information, Color.BLACK,false);
+									requisitionId = App.getContext().getDB().getIncompletedMedicineRequisitionId();
+									reqInfo = App.getContext().getDB().getRequisitionMedicineInfo(requisitionId);
+									showData();
+								}
+
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+						}
+
+					}
+				}
+			});
+			commiunicationTask.execute();
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+	}
+
+	private void checkRequisitionStatus(final String reqNo)
+	{
+		RequestData request =new RequestData(RequestType.STOCK_INVENTORY, RequestName.MEDICINE_REQUISITION_STATUS,Constants.MODULE_AUTO_SYNC);
+		try {
+			request.getParam1().put(Column.REQ_NO, reqNo );
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		CommiunicationTask commiunicationTask= new CommiunicationTask(this, request,getResources().getString(R.string.retrieving_data), getResources().getString(R.string.please_wait));
+		commiunicationTask.setCompleteListener(new OnCompleteListener() {
+				@Override
+				public void onComplete(Message msg) {
+					if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+						App.showMessageDisplayDialog(RequisitionDetailActivity.this, getResources().getString(R.string.network_error), R.drawable.error, Color.RED);
+
+					} else {
+						ResponseData response=(ResponseData) msg.getData().getSerializable(TaskKey.DATA0);
+						if(response.getResponseCode().equalsIgnoreCase("00")){
+							showOneButtonDialog(response.getErrorCode()+"-"+response.getErrorDesc(), R.drawable.error, Color.RED,false);
+						}else{
+							Double tpd= JSONParser.getDouble(response.getDataJson(), "TOTAL_PRICE_DISPATCH");
+							String reqStatus = JSONParser.getString(response.getDataJson(), Column.REQ_STATUS);
+							JSONArray requisitionDetail=JSONParser.getJsonArray(response.getDataJson(), "medicine_requisition_detail");
+							App.getContext().getDB().updateRequisition(reqNo, reqStatus,tpd,requisitionDetail);
+						}
+					}
+					showData();
+				}
+			});
+		commiunicationTask.execute();
+	}
+
+
+	@Override
+	protected void attachBaseContext(Context context) {
+		super.attachBaseContext(LanguageContextWrapper.wrap(context, AppPreference.getString(context, KEY.LANGUAGE, AppSettings.DEFAULT_LANGUAGE)));
+	}
+}

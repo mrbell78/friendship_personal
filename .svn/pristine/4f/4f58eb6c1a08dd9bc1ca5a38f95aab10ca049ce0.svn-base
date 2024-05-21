@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+            @import url("responsive.css");
+    </style>
+
+</head>
+<body>
+<div id="wrap">
+
+
+    <div id="over" >
+        <img src="images/satellite_logo.png" style="display: block; margin: 0 auto;">
+        <p style="margin: 0 auto; text-align:Center ; padding:10px;">
+            <a href='version.html' style="margin:10px;font-size:20;" >Version: <span id="version">3.12.13</span></a></p>
+        <p style="margin: 0 auto; text-align:Center">
+            Release date:<span id="rdate">27/04/2022 </span><br>
+            Copyright © 2022 <a href='http://friendship-bd.org'>Friendship</a>. All rights reserved.
+        </p>
+    </div>
+    <br>
+    <p style="text-align: justify;">SatelliteCare stands for Mobile Health and FCM for <a href='http://friendship-bd.org'>Friendship</a> Community Medic Aide. SatelliteCare-FCM is the fully automated implementation on Health Program of <a href='http://friendship-bd.org'>Friendship</a> Bangladesh.
+    </p>
+    <br><br>
+    <div id="t" style="display: inline; padding: 50px 0px 50px 0px; text-align: justify;" onclick="show();" ></div>
+    <br><br>
+    <img src="images/friendship_logo.png"/>
+    <br>
+    <h1>About <a href='http://friendship-bd.org'>Friendship</a></h1>
+    <p align="justify">
+        <a href='http://friendship-bd.org'>Friendship</a> is a value-based organisation with a holistic approach to development. Based in Bangladesh and founded in 1998, <a href='http://friendship-bd.org'>Friendship’s</a> flagship project was the Lifebuoy <a href='http://friendship-bd.org'>Friendship</a> Hospital, a floating hospital delivering primary and secondary healthcare. <a href='http://friendship-bd.org'>Friendship</a> was founded in order to serve the marginalised and isolated communities of the chars of northern Bangladesh. <a href='http://friendship-bd.org'>Friendship</a> includes programmes in Healthcare, Nutrition & Population; Education & Good Governance; Disaster Management & Infrastructure Development; Sustainable Economic Development; and Cultural Preservation.
+    </p>
+    <br><br>
+    <div class="inner-content">
+        <p style="text-align: justify;"><span style="font-size: medium;"><strong>Our Story</strong></span></p>
+        <p style="text-align: justify;">It all started in 1994, when Yves Marre, a French sailor,&nbsp; sailed a retired oil barge from France to Bangladesh to have it converted into a floating hospital to provide healthcare services to those who had limited or no access to healthcare. After countless failed attempts to convince various local and international NGOs in Bangladesh of the possibility of converting the barge into a sustainable health delivery model, Yves and Runa took it upon themselves to realize their dream, and that is when our organization, <a href='http://friendship-bd.org'>Friendship</a>, began.<br><br>With the help of corporate sector funding from Unilever, who believed in <a href='http://friendship-bd.org'>Friendship's</a> vision, we were able to progress and start our work in the remote nomadic islands (<em>chars</em>) of northern Bangladesh. Today, <a href='http://friendship-bd.org'>Friendship</a> works in the most remote and vulnerable areas of Bangladesh, including the cyclone affected areas of Southern Bangladesh.<br><br><a href='http://friendship-bd.org'>Friendship’s</a> vision has always been to create and develop an exemplary organization with proven sustainable social, health and environmental initiatives for the poorest of the poor. The interventions of <a href='http://friendship-bd.org'>Friendship</a> are based on compassion, empathy, in-depth knowledge, and grass root experience, facilitated by modern technology.</p>
+
+
+    </div>
+</div>
+
+<script>
+
+ 
+function putVersionAndDate(version, date) {
+   document.getElementById("version").innerHTML =version ;
+   document.getElementById("rdate").innerHTML =date ;
+}
+
+function set(a,b) {
+   t1=a;
+   t2=b;
+   document.getElementById("t").innerHTML =t1;
+}
+
+function show(){
+   if(document.getElementById("t").innerHTML==t1){
+     document.getElementById("t").innerHTML =t2;
+   }else if(document.getElementById("t").innerHTML==t2){
+     document.getElementById("t").innerHTML =t1;
+   }
+}
+
+</script>
+
+
+</body>
+</html>

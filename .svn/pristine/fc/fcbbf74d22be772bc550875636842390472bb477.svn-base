@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <dist:module dist:instant="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.REQUEST_OVERLAY_PERMISSIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.DEFAULT_SCOPED_STORAGE" />
+    <uses-permission android:name="android.permission.FORCE_ENABLE_SCOPED_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission
+        android:name="android.permission.READ_PRECISE_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PREV" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:grantUriPermissions="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MHealthEntFCM"
+        android:usesCleartextTraffic="true"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:targetApi="31">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
+        <activity
+            android:name=".ui.reports.ReportviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.beneficiary.profile.BeneficiaryProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.reports.HealthCareReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.reports.TodaysMedicineSalesReportActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.reports.Last30DaysRcvSalesReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.reports.BeneficiaryRegistrationReportActivity"
+            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".ui.maternal.MaternalBeneficiaryReportActivity"-->
+<!--            android:exported="false" />-->
+
+        <activity
+            android:name=".ui.reports.UpcomingTimeScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.SettingsPreferenceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.reports.TomorrowsTimeScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.reports.Last30DaysSalesReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.referral_center.ReferralCenterActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.QuestionnaireListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.CautionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.service_category.ServiceCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.earlier_services.EarlierServicesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.notification.NotificationActivity"
+            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".ui.doctor_feedback.DoctorFeedbackActivity"-->
+<!--            android:exported="false" />-->
+        <activity
+            android:name=".ui.beneficiary.BeneficiaryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MHealthEntFCM.NoActionBar" />
+<!--        <activity-->
+<!--            android:name=".ui.doctor_feedback.FeedbackDetailsShowActivity"-->
+<!--            android:exported="true" />-->
+        <activity
+            android:name=".ui.InterviewActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|locale|screenSize"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MHealthEntFCM.NoActionBar" />
+<!--        <activity-->
+<!--            android:name=".ui.household.HouseholdListActivity"-->
+<!--            android:configChanges="keyboard|keyboardHidden|orientation|locale|screenSize"-->
+<!--            android:exported="false"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:screenOrientation="portrait" />-->
+        <activity
+            android:name=".ui.NotificationShowActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|locale|screenSize"
+            android:label="@string/app_name"
+            android:noHistory="true"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".ui.WebViewActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|locale|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.service_category.AllServicesActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|locale|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.LauncherActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|locale|screenSize"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MHealthEntFCM.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.ChangePasswordActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|locale|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.LoginActivity"
+            android:theme="@style/Theme.MHealthEntFCM.NoActionBar" />
+        <activity
+            android:name=".ui.login.LoginPinActivity"
+            android:theme="@style/Theme.MHealthEntFCM.NoActionBar" />
+        <activity
+            android:name=".ui.reports.ReportListActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|locale|screenSize"
+            android:label="@string/app_name" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <service
+            android:name=".service.ManualSyncService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".service.AutoSyncReceiver"
+            android:label="@string/app_name" />
+        <receiver
+            android:name=".service.NotificationReceiver"
+            android:label="@string/app_name" />
+        <receiver
+            android:name=".service.BootReceiver"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter android:priority="999">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.SCREEN_ON" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

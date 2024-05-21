@@ -1,0 +1,194 @@
+package ngo.friendship.satellite.ui.beneficiary.profile
+
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
+import ngo.friendship.satellite.App
+import ngo.friendship.satellite.R
+import ngo.friendship.satellite.base.BaseActivity
+import ngo.friendship.satellite.databinding.ActivityBeneficiariesDetailsBinding
+import ngo.friendship.satellite.jsonoperation.JSONParser
+import ngo.friendship.satellite.model.Beneficiary
+import ngo.friendship.satellite.model.QuestionnaireInfo
+import ngo.friendship.satellite.views.DialogView
+import ngo.friendship.satellite.views.MdiTextView
+
+@AndroidEntryPoint
+class BeneficiaryProfileActivity : BaseActivity() {
+    private lateinit var binding: ActivityBeneficiariesDetailsBinding;
+    private lateinit var beneficiary: Beneficiary;
+    var questionnaireBenefReg: QuestionnaireInfo? = null
+    var questionnaireBenefMig: QuestionnaireInfo? = null
+    var questionnaireBenefDeath: QuestionnaireInfo? = null
+    var benefProfileString = ""
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityBeneficiariesDetailsBinding.inflate(
+            layoutInflater
+        )
+        setContentView(binding.root)
+        enableBackButton()
+        title = getString(R.string.benef_profile)
+        if (intent.getStringExtra("BENEF_PROFILE") != null && intent.getStringExtra("BENEF_PROFILE") != "") {
+            var gson = Gson()
+             benefProfileString = intent.getStringExtra("BENEF_PROFILE").toString()
+            beneficiary = gson.fromJson(benefProfileString, Beneficiary::class.java)
+            binding.model = beneficiary
+        }
+        try {
+            questionnaireBenefReg = App.getContext().db.getQuestionnaire("BENEFICIARY_REGISTRATION")
+            questionnaireBenefMig = App.getContext().db.getQuestionnaire("BENEFICIARY_MIGRATION")
+            questionnaireBenefDeath = App.getContext().db.getQuestionnaire("DEATH_REGISTRATION")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        binding.tvBeneficiaryCode.setText("" + beneficiary.benefCode)
+        binding.tvBeneficiaryCode.setText("" + beneficiary.benefCode)
+        binding.tvServiceType.setText("FCM : " + beneficiary.fcmName + "( " + beneficiary.locationName + " )")
+
+        if (beneficiary.getGender().equals("F", ignoreCase = true)) {
+            binding.mobileNo.setText("Female (" + beneficiary.getAge() + ")")
+        } else if (beneficiary.getGender().equals("M", ignoreCase = true)) {
+            binding.mobileNo.setText("Male (" + beneficiary.getAge() + ")")
+        } else {
+            binding.mobileNo.setText("Others (" + beneficiary.getAge() + ")")
+        }
+        isTabActiveDeactive(
+            binding.llTabServiceList,
+            binding.tvTabSyncdServiceList,
+            binding.mdiTabServiceList,
+            binding.llTabPersonalInfo,
+            binding.tvTabSyncdPersonalInfo,
+            binding.mdiTabPersonalInfo
+        )
+        loadFragment(PreviousServiceFragment.newInstance(benefProfileString))
+        binding.llTabServiceList.setOnClickListener({
+
+            loadFragment(PreviousServiceFragment.newInstance(benefProfileString))
+
+            isTabActiveDeactive(
+                binding.llTabServiceList,
+                binding.tvTabSyncdServiceList,
+                binding.mdiTabServiceList,
+                binding.llTabPersonalInfo,
+                binding.tvTabSyncdPersonalInfo,
+                binding.mdiTabPersonalInfo
+            )
+
+        })
+
+        binding.llTabPersonalInfo.setOnClickListener({
+            loadFragment(PersonalInfoFragment.newInstance(benefProfileString))
+            isTabActiveDeactive(
+                binding.llTabPersonalInfo,
+                binding.tvTabSyncdPersonalInfo,
+                binding.mdiTabPersonalInfo,
+                binding.llTabServiceList,
+                binding.tvTabSyncdServiceList,
+                binding.mdiTabServiceList
+
+            )
+        })
+    }
+
+    private fun isTabActiveDeactive(
+        llTabactvieName: LinearLayout,
+        tvTabActiveName: TextView,
+        mdiActive: MdiTextView,
+        llTabDeactvieName1: LinearLayout,
+        tvTabDeactvieName1: TextView,
+        mdiDeactive1: MdiTextView
+    ) {
+
+        llTabactvieName.setBackground(
+            ContextCompat.getDrawable(
+                this, R.drawable.border_rounded_corner
+            )
+        )
+        tvTabActiveName.setTextColor(ContextCompat.getColor(this, R.color.white))
+        mdiActive.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+        llTabDeactvieName1.setBackground(
+            ContextCompat.getDrawable(
+                this, R.drawable.border_rounded_corner_white
+            )
+        )
+
+        tvTabDeactvieName1.setTextColor(ContextCompat.getColor(this, R.color.black))
+        mdiDeactive1.setTextColor(ContextCompat.getColor(this, R.color.black))
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_beneficiary, menu)
+        try {
+            val actionMigration = menu.findItem(R.id.action_migration)
+            val actionDeathRegistration = menu.findItem(R.id.action_death_registration)
+            val actionUpdateBeneficiary = menu.findItem(R.id.action_update_beneficiary)
+            actionMigration.setTitle("" + (questionnaireBenefMig?.questionnaireTitle ?: ""))
+            actionDeathRegistration.setTitle(
+                "" + (questionnaireBenefDeath?.questionnaireTitle ?: "")
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+            R.id.action_update_beneficiary -> {
+                updateBenef()
+
+                return true
+            }
+            R.id.action_death_registration -> {
+                DialogView.showDeviceIDDialog(this)
+                return true
+            }
+            R.id.action_migration -> {
+                DialogView.showDeviceIDDialog(this)
+                return true
+            }
+            else -> {}
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentContainer, fragment)
+        fragmentTransaction.commit()
+    }
+
+    private fun updateBenef() {
+        var jsonStr: String? = ""
+        val questionnaireInfo = App.getContext().db.getQuestionnaire("BENEFICIARY_REGISTRATION")
+        if (questionnaireInfo != null) {
+            val beneficiary = App.getContext().db.getBeneficiaryInfo(
+                beneficiary.getBenefCodeFull(),
+                questionnaireInfo.questionnaireName
+            )
+            jsonStr = questionnaireInfo.getQuestionnaireJSON(this@BeneficiaryProfileActivity)
+            jsonStr = JSONParser.preapreRegirtrationQuestionear(jsonStr, beneficiary)
+        }
+//        entryPrams.add(householdNumberStr)
+//        val intent = Intent(this@BeneficiaryProfileActivity, InterviewActivity::class.java)
+//        intent.putExtra(ActivityDataKey.QUESTIONNAIRE_JSON, jsonStr)
+//        intent.putExtra(ActivityDataKey.BENEFICIARY_CODE, beneficiaryList.get(p).getBenefCodeFull())
+//        intent.putExtra(ActivityDataKey.BENEFICIARY_ID, beneficiaryList.get(p).getBenefId())
+//        intent.putExtra(ActivityDataKey.INTERVIEW_TYPE, ActivityDataKey.UPDATE_BENEF)
+//        intent.putExtra(ActivityDataKey.PARAMS, entryPrams)
+//        intent.putExtra("EDIT_HOUSEHOLD", false)
+//        startActivity(intent)
+    }
+}

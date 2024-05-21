@@ -1,0 +1,18 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Priority.
+ */
+public class Priority {
+	
+	/** The Constant REFERRAL_CENTER. */
+	public static final int REFERRAL_CENTER = 100;
+	
+	/** The Constant DOCTOR_FEEDBACK. */
+	public static final int DOCTOR_FEEDBACK = 500;
+
+	/** The Constant CALL_HELPLINE_PRIORITY. */
+	public static final int CALL_HELPLINE_PRIORITY = 500;
+
+}

@@ -1,0 +1,95 @@
+package ngo.friendship.satellite.ui;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import ngo.friendship.satellite.App;
+import ngo.friendship.satellite.LanguageContextWrapper;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.base.BaseActivity;
+import ngo.friendship.satellite.constants.KEY;
+import ngo.friendship.satellite.model.AppSettings;
+import ngo.friendship.satellite.model.TextRef;
+import ngo.friendship.satellite.ui.login.LoginPinActivity;
+import ngo.friendship.satellite.utility.AppPreference;
+import ngo.friendship.satellite.views.AppToast;
+
+public class CautionActivity extends BaseActivity implements View.OnClickListener {
+    TextView tvCutionText;
+    WebView container;
+    Button btnNext;
+    ArrayList<TextRef> cautionTextRefList;
+    String splashText=null;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_caution);
+
+        container=(WebView) findViewById(R.id.container);
+        final String mimeType = "text/html";
+        final String encoding = "UTF-8";
+        cautionTextRefList=App.getContext().getDB().getTextRef("SPLASH2_TEXT");
+        StringBuilder html=new StringBuilder();
+        if(cautionTextRefList.size()>0){
+            splashText=cautionTextRefList.get(0).getTextCaption();
+            html.append(splashText+"");
+        }else{
+            html.append("");
+        }
+
+
+        container.loadDataWithBaseURL("", html.toString(), mimeType, encoding, "");
+//        tvCutionText=(TextView)findViewById(R.id.tvCutionText);
+        btnNext=(Button)findViewById(R.id.btnNext);
+        btnNext.setOnClickListener(this);
+//        cautionTextRefList=App.getContext().getDB().getTextRef("SPLASH_TEXT");
+//        if(cautionTextRefList.size()>0){
+//            splashText=cautionTextRefList.get(0).getTextCaption();
+//        }
+//
+//        if(splashText==null || splashText.equals("")){
+//            tvCutionText.setText(R.string.app_title);
+//        }
+//        else {
+//            tvCutionText.setText(splashText);
+//        }
+
+    }
+
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnNext:
+                Intent intent = getIntent();
+                int redirectPageValue = intent.getIntExtra("valueToRedirect", 0);
+
+                if (redirectPageValue==0) {
+                    AppToast.showToast(CautionActivity.this, Integer.valueOf(R.string.sdcard_not_present));
+                    CautionActivity.this.finish();
+                } else if (redirectPageValue==1) {
+                    CautionActivity.this.startActivity(new Intent(CautionActivity.this, LoginPinActivity.class));
+                    CautionActivity.this.finish();
+
+                } else {
+                    CautionActivity.this.startActivity(new Intent(CautionActivity.this, LoginActivity.class));
+                    CautionActivity.this.finish();
+
+                }
+        }
+
+    }
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(LanguageContextWrapper.wrap(context, AppPreference.getString(context, KEY.LANGUAGE, AppSettings.DEFAULT_LANGUAGE)));
+    }
+}

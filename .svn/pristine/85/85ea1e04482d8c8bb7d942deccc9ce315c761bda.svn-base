@@ -1,0 +1,15 @@
+package ngo.friendship.satellite.ui.product_management.activity;
+
+import android.os.Bundle;
+
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.base.BaseActivity;
+
+public class InitiatedActivity extends BaseActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_initiated);
+    }
+}

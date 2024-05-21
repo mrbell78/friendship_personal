@@ -1,0 +1,365 @@
+package ngo.friendship.satellite.ui.product_management.activity;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Message;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import ngo.friendship.satellite.App;
+import ngo.friendship.satellite.LanguageContextWrapper;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.asynctask.CommiunicationTask;
+import ngo.friendship.satellite.asynctask.MHealthTask;
+import ngo.friendship.satellite.asynctask.Task;
+import ngo.friendship.satellite.asynctask.TaskKey;
+import ngo.friendship.satellite.base.BaseActivity;
+import ngo.friendship.satellite.communication.RequestData;
+import ngo.friendship.satellite.communication.ResponseData;
+import ngo.friendship.satellite.constants.Constants;
+import ngo.friendship.satellite.constants.KEY;
+import ngo.friendship.satellite.constants.RequestName;
+import ngo.friendship.satellite.constants.RequestType;
+import ngo.friendship.satellite.databinding.ActivityCurrentStockBinding;
+import ngo.friendship.satellite.databinding.ActivityMainBinding;
+import ngo.friendship.satellite.interfaces.OnCompleteListener;
+import ngo.friendship.satellite.interfaces.OnDialogButtonClick;
+import ngo.friendship.satellite.jsonoperation.JSONParser;
+import ngo.friendship.satellite.model.AppSettings;
+import ngo.friendship.satellite.model.MedicineInfo;
+import ngo.friendship.satellite.utility.AppPreference;
+import ngo.friendship.satellite.utility.SystemUtility;
+import ngo.friendship.satellite.utility.TextUtility;
+import ngo.friendship.satellite.utility.Utility;
+import ngo.friendship.satellite.views.DialogView;
+
+public class CurrentStockActivity extends BaseActivity implements View.OnClickListener {
+    String activityPath;
+    ArrayList<MedicineInfo> medicineList;
+    ArrayList<MedicineInfo> medicineFilterList= new ArrayList<>();
+    ActivityCurrentStockBinding binding;
+    LinearLayout llRowContainer;
+
+    PopupMenu popupmenu;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        App.loadApplicationData(this);
+
+        binding = ActivityCurrentStockBinding.inflate(getLayoutInflater());
+
+        setContentView(binding.getRoot());
+        enableBackButton();
+        setTitle(getResources().getString(R.string.title_current_stock));
+
+
+        binding.layoutSync.llPenddingSync.setVisibility(View.GONE);
+        binding.layoutSync.viewLine.setVisibility(View.GONE);
+        binding.layoutSync.llAllSync.setVisibility(View.GONE);
+        binding.layoutSync.viewLine2.setVisibility(View.GONE);
+
+        binding.layoutSync.syncLayoutOpen.setOnClickListener(v -> {
+            binding.layoutSync.cvSyncLayout.setVisibility(View.VISIBLE);
+            binding.layoutSync.syncLayoutOpen.setVisibility(View.GONE);
+        });
+        binding.layoutSync.ivCloseSync.setOnClickListener(v -> {
+            binding.layoutSync.cvSyncLayout.setVisibility(View.GONE);
+            binding.layoutSync.syncLayoutOpen.setVisibility(View.VISIBLE);
+        });
+
+
+        binding.layoutSync.llGetData.setOnClickListener(v -> {
+            if (SystemUtility.isConnectedToInternet(this)) {
+                showDataRetrieveConfirmationPrompt(getResources().getString(R.string.retrieve_data_confirmation));
+            } else {
+                SystemUtility.openInternetSettingsActivity(this);
+            }
+
+        });
+
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+              //  callSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                medicineFilterList.clear();
+                for(MedicineInfo item : medicineList){
+                    if(item.toString().toLowerCase().contains(newText.toLowerCase())){
+
+                        medicineFilterList.add(item);
+                    }
+                }
+
+                showData(medicineFilterList);
+
+
+                return true;
+            }
+
+            public void callSearch(String query) {
+                //Do searching
+            }
+
+        });
+
+
+        binding.mFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopMenuDisplay();
+            }
+
+            public void PopMenuDisplay() {
+
+                popupmenu = new PopupMenu(CurrentStockActivity.this, binding.mFilter);
+
+                popupmenu.getMenuInflater().inflate(R.menu.popup, popupmenu.getMenu());
+
+                popupmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        Toast.makeText(CurrentStockActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+
+                        switch (item.getItemId()){
+
+                            case R.id.medicine:
+//                                for(MedicineInfo category : medicineList){
+//                                    if(item.toString().toLowerCase().contains(newText.toLowerCase())){
+//
+//                                        medicineFilterList.add(item);
+//                                    }
+//                                }
+
+                        }
+
+
+
+                        return true;
+                    }
+                });
+
+                popupmenu.show();
+
+            }
+        });
+
+//        View v = findViewById(R.id.btn_retrieve_data);
+//        v.setOnClickListener(this);
+//
+//        v = findViewById(R.id.btn_close);
+//        v.setOnClickListener(this);
+
+        llRowContainer = findViewById(R.id.ll_medicine_row_container);
+
+        retrieveCurrentStock();
+    }
+
+
+
+
+
+    /**
+     * Show medicine stock.
+     * Prepare medicine row and add to row container layout
+     */
+    private void showData(ArrayList<MedicineInfo> medicineLists)
+    {
+        llRowContainer.removeAllViews();
+        if(medicineLists == null)
+        {
+//            AppToast.showToast(this, R.string.data_not_available);
+            return;
+        }
+
+        for(MedicineInfo medInfo : medicineLists)
+        {
+            View view = View.inflate(this, R.layout.medicine_requisition_row, null);
+            llRowContainer.addView(view);
+
+            TextView tv_name = view.findViewById(R.id.tv_name);
+            TextView tv_type = view.findViewById(R.id.tv_type);
+            TextView tv_info_left = view.findViewById(R.id.tv_info_left);
+            TextView tv_info_right = view.findViewById(R.id.tv_info_right);
+            view.findViewById(R.id.et_quantity).setVisibility(View.GONE);
+
+            TextView tv_quantity = view.findViewById(R.id.tv_quantity);
+            tv_quantity.setVisibility(View.VISIBLE);
+
+//            if(medInfo.getCurrentStockQuantity() <= medInfo.getMinimumStockQuantity())
+//            {
+//                tv_name.setTextColor(Color.RED);
+//                tv_type.setTextColor(Color.RED);
+//                tv_info_left.setTextColor(Color.RED);
+//                tv_info_right.setTextColor(Color.RED);
+                tv_quantity.setTextColor(Color.RED);
+//            }
+
+            tv_name.setText(medInfo.toString());
+            tv_type.setText(medInfo.getMedicineType());
+            tv_info_left.setText(TextUtility.format("%.2f",medInfo.getUnitPurchasePrice()));
+            tv_info_right.setText(TextUtility.format("%.2f",medInfo.getUnitSalesPrice()));
+            tv_quantity.setText(medInfo.toString());
+            tv_quantity.setText(""+medInfo.getCurrentStockQuantity());
+        }
+    }
+
+
+    /**
+     * show user confirmation alert dialog to retrieve data from server.
+     *
+     * @param msg will be displayed in the dialog message section.
+     * This is a question to ask user whether s/he really wants to retrieve data from server
+     */
+    private void showDataRetrieveConfirmationPrompt(String msg)
+    {
+        HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_ok);
+        buttonMap.put(2, R.string.btn_no);
+        DialogView exitDialog = new DialogView(this, R.string.dialog_title, msg, R.drawable.information, buttonMap);
+        exitDialog.setOnDialogButtonClick(new OnDialogButtonClick() {
+
+            @Override
+            public void onDialogButtonClick(View view) {
+                switch (view.getId()) {
+                    case 1:
+                        retrieveMedicines();
+                        break;
+                }
+            }
+        });
+        exitDialog.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_close:
+                this.finish();
+                break;
+
+            case R.id.btn_retrieve_data:
+                showDataRetrieveConfirmationPrompt(getResources().getString(R.string.retrieve_data_confirmation));
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    /**
+     * Display alert dialog with one button.
+     *
+     * @param msg will be displayed in the message section of the dialog
+     * @param imageId is the image drawable id which will be displayed at the dialog's title
+     * @param messageColor is the color id of the dialog's message
+     */
+    private void showOneButtonDialog(String msg, int imageId, int messageColor){
+        HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_close);
+        DialogView exitDialog = new DialogView(this, R.string.dialog_title, msg,messageColor, imageId, buttonMap);
+        exitDialog.show();
+    }
+
+
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    private void retrieveCurrentStock(){
+        MHealthTask tsk=new MHealthTask(this, Task.RETRIEVE_CURRENT_STOCK_MEDICINE_LIST, R.string.retrieving_data, R.string.please_wait);
+        tsk.setCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(Message msg) {
+                if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+                    String errorMsg = (String) msg.getData().getSerializable(TaskKey.ERROR_MSG);
+                    App.showMessageDisplayDialog(CurrentStockActivity.this, getResources().getString(R.string.retrive_error), R.drawable.error, Color.RED);
+                } else {
+                    medicineList=(ArrayList<MedicineInfo>)msg.getData().getSerializable(TaskKey.DATA0);
+                    showData(medicineList);
+                }
+            }
+        });
+        tsk.execute();
+    }
+
+    private void retrieveMedicines(){
+        RequestData request =new RequestData(RequestType.USER_GATE,RequestName.MEDICINES,Constants.MODULE_DATA_GET);
+        request.setParam1(Utility.getTableRef(null,this));
+        CommiunicationTask commiunicationTask=new CommiunicationTask(this, request,R.string.retrieving_data,R.string.please_wait);
+        commiunicationTask.setCompleteListener(new OnCompleteListener() {
+
+            @Override
+            public void onComplete(Message msg) {
+                if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+                    String errorMsg = (String) msg.getData().getSerializable(TaskKey.ERROR_MSG);
+                    App.showMessageDisplayDialog(CurrentStockActivity.this, getResources().getString(R.string.network_error), R.drawable.error, Color.RED);
+                } else {
+                    final ResponseData response=(ResponseData) msg.getData().getSerializable(TaskKey.DATA0);
+                    if(response.getResponseCode().equalsIgnoreCase("00")){
+                        App.showMessageDisplayDialog(CurrentStockActivity.this, response.getErrorCode()+"-"+response.getErrorDesc(), R.drawable.error, Color.RED);
+                    }else{
+                        MHealthTask tsk=new MHealthTask(CurrentStockActivity.this, Task.MYDATA, R.string.saving_data, R.string.please_wait);
+                        tsk.setParam(response);
+                        tsk.setCompleteListener(new OnCompleteListener() {
+
+                            @Override
+                            public void onComplete(Message msg) {
+                                if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+                                    String errorMsg = (String) msg.getData().getSerializable(TaskKey.ERROR_MSG);
+                                    App.showMessageDisplayDialog(CurrentStockActivity.this, getResources().getString(R.string.saving_error), R.drawable.error, Color.RED);
+                                } else {
+                                    if(JSONParser.getLongNullAllow(response.getParamJson(),KEY.NEED_SAME_REQ)==1){
+                                        retrieveMedicines();
+                                    }else{
+
+                                        App.showMessageDisplayDialog(CurrentStockActivity.this, getResources().getString(R.string.retrieve_successfull), R.drawable.information, Color.BLACK);
+                                        retrieveCurrentStock();
+                                    }
+                                }
+                            }
+                        });
+                        tsk.execute();
+                    }
+                }
+            }
+        });
+        commiunicationTask.execute();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        App.getContext().onStartActivity(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        App.getContext().onStartActivity(this);
+    }
+
+
+
+
+}

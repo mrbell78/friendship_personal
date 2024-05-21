@@ -1,0 +1,652 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
+	<link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="jquery-ui.css">
+        <script src="jquery-1.10.2.js"></script>
+        <script src="jquery-ui.js"></script>
+        <script>
+            $(function() {
+                $("#accordion").accordion({
+                    collapsible: true
+                });
+            });
+        </script>
+  </head>
+  <body>
+  <div id="wrap" style="padding: 10px;">
+<div id="over" >
+<img src="images/mhealth_logo.png" style="display: block; margin: 0 auto;">
+<p style="margin: 0 auto; text-align:Center ; padding:10px;">
+<a href='version.html' style="margin:10px;font-size:20;" >Version: <span id="version">3.12.12</span></a></p>
+<p style="margin: 0 auto; text-align:Center">
+Release date:<span id="rdate">26/04/2022 </span><br>
+Copyright © 2022 <a href='http://friendship-bd.org'>Friendship</a>. All rights reserved.
+</p>
+</div>
+		   <div class="page_content">
+		  
+		             <div id="accordion">
+                         <div>Version: 3.12.14<span style="float:right;" >Release Date: 17/05/2022</span></div>
+                         <div>
+                             <p> 1. OUTPUT_RESULT add on growth_measurement_param table.</p>
+                             <p> 2. IMPL_VERSION remove on growth_measurement_param table.</p>
+                         </div>
+                         <div>Version: 3.12.13<span style="float:right;" >Release Date: 27/04/2022</span></div>
+                         <div>
+                             <p> 1. RELIGION_OTHER_SPECIFIC add on Beneficiary.</p>
+                         </div>
+                         <div>Version: 3.12.12<span style="float:right;" >Release Date: 26/04/2022</span></div>
+                         <div>
+                             <p> 1. Household upload bug fix </p>
+                         </div>
+                         <div>Version: 3.12.10<span style="float:right;" >Release Date: 30/03/2022</span></div>
+                         <div>
+                             <p> 1. Omit lodding feture on hidden values (inverviewactivity). </p>
+                             <p> 1. isBeneficiaryExist add on beneficiary model . </p>
+                         </div>
+                         <div>Version: 3.12.9<span style="float:right;" >Release Date: 24/03/2022</span></div>
+                         <div>
+                             <p> 1. HH_CHARACTER and HH_ADULT_WOMEN add on Household table. </p>
+                         </div>
+                         <div>Version: 3.12.8<span style="float:right;" >Release Date: 15/03/2022</span></div>
+                         <div>
+                             <p> 1.Create Beneficiary whit household </p>
+                         </div>
+                         <div>Version: 3.12.7<span style="float:right;" >Release Date: 23/02/2022</span></div>
+                         <div>
+                             <p> 1.MONTHLY_FAMILY_EXPENDITURE add on Household. </p>
+                             <p> 2.interview id adjust for  user shedule and doctor feedback table </p>
+                         </div>
+                         <div>Version: 3.12.6<span style="float:right;" >Release Date: 05/12/2021</span></div>
+                         <div>
+                             <p> 1.Bug Resolved:update apk install related (android 11) </p>
+                         </div>
+                         <div>Version: 3.12.5<span style="float:right;" >Release Date: 02/12/2021</span></div>
+                         <div>
+                             <p> 1. Notification list design change </p>
+                         </div>
+                         <div>Version: 3.12.4<span style="float:right;" >Release Date: 30/11/2021</span></div>
+                         <div>
+                             <p> 1. Notification management  bug fix  </p>
+                         </div>
+                         <div>Version: 3.12.0<span style="float:right;" >Release Date: 18/11/2021</span></div>
+                         <div>
+                             <p> 1. Notification management  developed  </p>
+                         </div>
+
+                         <div>Version: 3.11.1<span style="float:right;" >Release Date: 26/10/2021</span></div>
+                         <div>
+                             <p> 1. Beneficiary table updated with two new column OCCUPATION_HER_HUSBAND, MONTHLY_FAMILY_EXPENDITURE.</p>
+                             <p> 2. Beneficiary Registration  Update.</p>
+                             <p> 3. Maternal Delivery table updated with two Constraints remove DELIVERY_CARE_INTERVIEW_ID,MATERNAL_ID </p>
+                         </div>
+                         <div>Version: 3.11.0<span style="float:right;" >Release Date: 26/10/2021</span></div>
+                         <div>
+                             <p> 1. Feedback table updated with two new column UPDATE BY, UPDATE ON.</p>
+                             <p> 2. Doctorcenter Feedback Update feature incorporated.</p>
+                         </div>
+
+                         <div>Version: 3.10.11<span style="float:right;" >Release Date: 23/09/2021</span></div>
+                         <div>
+                             <p> 1. Device registration process with admin approval.</p>
+                             <p> 2. Added new column (APP_VERSION_CODE ) in FCM raw data. </p>
+                         </div>
+
+                         <div>Version: 3.10.10<span style="float:right;" >Release Date: 23/09/2021</span></div>
+                         <div>
+                             <p> 1. Added BENEF_CODE column in patient_interview_doctor_feedback table.</p>
+                             <p> 2. Diabetic and hypertension list recyclerview code added. </p>
+                             <p> 3. Diabetc & hypertension benef list details query updated.</p>
+                             <p> 4. isExist checking added for notification in db class.</p>
+                             <p> 5. generate Notification shifted into AlermManager code.</p>
+                             <p> 6. Query updated for show all interviewList with feedback for Diabetics & Hypertension.</p>
+                         </div>
+                         <div>Version: 3.10.9<span style="float:right;" >Release Date: 26/08/2021</span></div>
+                         <div>
+                             <p> 1. AutoSync StringBuilder length check added.</p>
+                         </div>
+                         <div>Version: 3.10.8<span style="float:right;" >Release Date: 25/08/2021</span></div>
+                         <div>
+                             <p> 1. Testing Feedback incorporated & bug resolved on 3.10.7</p>
+                             <p> 2. BootReceiver register code added. AutoSync code updated.</p>
+                         </div>
+
+                         <div>Version: 3.10.7<span style="float:right;" >Release Date: 24/08/2021</span></div>
+                         <div>
+                             <p> 1. Testing Feedback incorporated & bug resolved on 3.10.6</p>
+                         </div>
+
+                         <div>Version: 3.10.6<span style="float:right;" >Release Date: 18/08/2021</span></div>
+                         <div>
+                             <p> 1. AutoSync is working with notification. Version compatibility completed for Android 10.</p>
+                             <p> 2. Notification generation code modified.</p>
+                             <p> 3.Bug Resolved: FCM_INTERVIEW_ID field re-adjust because Feedback INTERVIEW_ID from server is mismatched with local INTERVIEW_ID.</p>
+                             <p> 4.Bug Resolved: Locally same feedback inserted twice in feedback table.</p>
+                         </div>
+
+                         <div>Version: 3.10.5<span style="float:right;" >Release Date: 12/08/2021</span></div>
+                         <div>
+                             <p> 1. Bug resolved: BENEF Registration & Migration not showing in interviewlist.</p>
+                         </div>
+
+                         <div>Version: 3.10.4<span style="float:right;" >Release Date: 08/08/2021</span></div>
+                         <div>
+                             <p> 1. Gradle updated to 7.0.0</p>
+                             <p> 2. Added feedback list in MainDashboardActivity which is currently off for next release.</p>
+                             <p> 3. saved Feedback upload Null showing issue resolved. </p>
+                         </div>
+
+                         <div>Version: 3.10.3<span style="float:right;" >Release Date: 06/08/2021</span></div>
+                         <div>
+                             <p> 1. saved interview upload date field null showing issue resolved.</p>
+                             <p> 2. feedback saving InterviewId not found issue resolved.</p>
+                             <p> 3. notification sound off as per testing feedback.</p>
+                         </div>
+
+                         <div>Version: 3.10.2<span style="float:right;" >Release Date: 04/08/2021</span></div>
+                         <div>
+                             <p> 1. perodic workmanager off due to unexpected crashing.</p>
+                             <p> 2. App Folder path set into SD card again.</p>
+                             <p> 3. bug fixed on Switch User screen</p>
+                         </div>
+                         <div>Version: 3.10.1<span style="float:right;" >Release Date: 31/07/2021</span></div>
+                         <div>
+                             <p> 1. perodic workmanager added in MainDashboardActictity</p>
+                             <p> 2. AlertDialog with webview- black msg shoiwing issue resolved.</p>
+                             <p> 3. Asyc task removed front dialog.</p>
+                             <p> 4. In MainDashboard & some other screen: async task removed & load data from local data directly to remove unnecessary loading msg.</p>
+                         </div>
+                         <div>Version: 3.10.0<span style="float:right;" >Release Date: 08/07/2021</span></div>
+                         <div>
+                             <p> 1. Completeness of mHealth existing feature upgradation for latest Android OS version compatible</p>
+                         </div>
+                         <div>Version: 3.9.3<span style="float:right;" >Release Date: 23/06/2021</span></div>
+                         <div>
+                             <p> 1. Source Code Updated & testing feedback incorporated with bug fixation. </p>
+                         </div>
+                         <div>Version: 3.9.2<span style="float:right;" >Release Date: 21/06/2021</span></div>
+                         <div>
+                             <p> 1. Q_TITLE field added & Code updated in Diabetics & Hypertension feature. </p>
+                         </div>
+                         <div>Version: 3.8.6<span style="float:right;" >Release Date: 06/06/2021</span></div>
+                         <div>
+                             <p> 1. DOCTOR_FEEDBACK Update Request Action set "Insert" for saving as new interview master in Gateway </p>
+                         </div>
+                         <div>Version: 3.8.5<span style="float:right;" >Release Date: 06/06/2021</span></div>
+                         <div>
+                             <p> 1. bug fixed for saved doctor feedback upload.</p>
+                         </div>
+
+                         <div>Version: 3.8.4<span style="float:right;" >Release Date: 03/06/2021</span></div>
+                         <div>
+                             <p> 1. bug fixed for saving multiple medicine in reopen prescription service.</p>
+                         </div>
+                         <div>Version: 3.8.3<span style="float:right;" >Release Date: 02/06/2021</span></div>
+                         <div>
+                             <p> 1. bug fixed for showing multiple medicine in diabetics details and interview.</p>
+                             <p> 2. diabetics list tab Page swap selected/non selected issue resolved.</p>
+                         </div>
+                         <div>Version: 3.8.2<span style="float:right;" >Release Date: 31/05/2021</span></div>
+                         <div>
+                             <p> 1. DB patch sql updated.</p>
+                             <p> 2. Diabetic Patient list search box bug resolved, sorting based on BENEF_CODE now.</p>
+                             <p> 3. Feedback Receive Time added in SQLITE & all notification show for first time data fetch issue is resolved.</p>
+                         </div>
+                         <div>Version: 3.8.1<span style="float:right;" >Release Date: 23/05/2021</span></div>
+                         <div>
+                             <p> 1. DB patch added for update.</p>
+                         </div>
+                         <div>Version: 3.8.0<span style="float:right;" >Release Date: 20/05/2021</span></div>
+                         <div>
+                             <p> 1. Diabetic BRS completed with feedback rerun feature.</p>
+                         </div>
+                         <div>Version: 3.7.0<span style="float:right;" >Release Date: 26/04/2021</span></div>
+                         <div>
+                             <p> 1. Added doctor feedback into get my data request.</p>
+                             <p> 2. Store & update doctor feedback with new column.</p>
+                             <p> 3. Added Doctor feedback Notification with custom sound in auto sync feature.</p>
+                             <p> 4. modify followup table & followup schedule with bug fixation.</p>
+                         </div>
+                         <div>Version: 3.6.0<span style="float:right;" >Release Date: 18/03/2021</span></div>
+                         <div>
+                             <p> 1. Added ImageView to show show image in InterviewActivity. Code updated in reflection mechanishm aslo.</p>
+
+                         </div>
+                         <div>Version: 3.5.5<span style="float:right;" >Release Date: 15/03/2021</span></div>
+                         <div>
+                             <p> 1. Added Button "Save Locally" in InterviewActivity</p>
+                             <p> 2. build this apk with LIVE ACF URL </p>
+
+                         </div>
+                         <div>Version: 3.5.4<span style="float:right;" >Release Date: 31/01/2021</span></div>
+                         <div>
+                             <p> 1. Added a new table in sqlite "hh_audit_log" in sqlite.</p>
+                             <p> 2. Added a new trigger "hh_update_audit_log" in sqlite to monitor the update event in household table.</p>
+                             <p> 3. build this apk with devs server address because of testing purpose. </p>
+
+                         </div>
+                         <div>Version: 3.5.3<span style="float:right;" >Release Date: 17/11/2020</span></div>
+                         <div>
+                             <p> 1. Application Update issue through click "Update" Button is resolved.</p>
+                             <p> 2. Update download location of APK and add permission to install app from unknown source.</p>
+                         </div>
+                         <div>Version: 3.5.2<span style="float:right;" >Release Date: 11/11/2020</span></div>
+                         <div>
+                             <p> 1. fetch call helpLine from QuestionAnswerJson instead of QuestionJson.</p>
+                         </div>
+                         <div>Version: 3.5.1<span style="float:right;" >Release Date: 04/10/2020</span></div>
+                         <div>
+                             <p> 1. Set live url in release(production) version.</p>
+                         </div>
+                         <div>Version: 3.5.0<span style="float:right;" >Release Date: 30/09/2020</span></div>
+                         <div>
+                             <p> 1. GET MY DATA feature is added in AutoSync Service.</p>
+                         </div>
+                         <div>Version: 3.4.5<span style="float:right;" >Release Date: 20/09/2020</span></div>
+                         <div>
+                             <p> 1. Save button removed from interview save page.</p>
+                             <p> 2. Call to helpline is a new feature which is added into interview page. Data upload is also executed simultaneously.</p>
+                             <p> 3. Upload button is renamed to "Send". When Helpline button is showed, Send button is disappeared from screen.</p>
+                         </div>
+                         <div>Version: 3.4.4<span style="float:right;" >Release Date: 01/07/2020</span></div>
+                         <div>
+                             <p> 1. Button retrieve data is added in My Information page's household activated & deactivated list.  </p>
+                             <p> 2. New HTTP Request to get Household list is added.  </p>
+                         </div>
+                         <div>Version: 3.4.3<span style="float:right;" >Release Date: 30/06/2020</span></div>
+                         <div>
+                             <p> 1. Button retrieve data is removed from My Information page's household activated & deactivated list.  </p>
+                         </div>
+
+                         <div>Version: 3.4.2<span style="float:right;" >Release Date: 25/06/2020</span></div>
+                         <div>
+                             <p> 1. Bug resolved in household number in savedInterview for courtyard JSON. </p>
+                             <p> 2. Added Male & female participant count in courtyard table,query & Model . </p>
+                             <p> 3. Logo & image updated. </p>
+                         </div>
+
+                         <div>Version: 3.4.1<span style="float:right;" >Release Date: 22/06/2020</span></div>
+                         <div>
+                             <p> 1. Bug fix in Beneficiary Migration, Doctor centre refferal & courtyard data save & upload. </p>
+                         </div>
+
+                         <div>Version: 3.4.0<span style="float:right;" >Release Date: 10/06/2020</span></div>
+                         <div>
+                             <p> 1. Household deactivate feature incorporated. </p>
+                         </div>
+
+                         <div>Version: 3.3.1<span style="float:right;" >Release Date: 07/05/2020</span></div>
+                         <div>
+                             <p> 1. Add a SplashText Screen for Covid 19 </p>
+                         </div>
+
+
+                         <div>Version: 3.2.-1<span style="float:right;" >Release Date: 12/03/2020</span></div>
+                         <div>
+                             <p> 1. Encrypted questionnaire is off </p>                            
+                         </div>
+
+
+                         <div>Version: 3.2.0<span style="float:right;" >Release Date: 20/03/2019</span></div>
+                         <div>
+                             <p> 1. Encrypted questionnaire </p>
+                             <p> 2. Remove interview file save </p>
+                             <p> 3. Interview edit mechanisum change from file to answer jeson </p>
+                             <p> 4. Ready for demo. </p>
+                         </div>
+
+                         <div>Version: 3.1.3<span style="float:right;">Release Date: 20/01/2019</span></div>
+                         <div>
+                             <p> 1. Add household search</p>
+                             <p> 2. Add allow.0.inventory.product.consumption on INVENTORY </p>
+                             <p> 3. Change admin login algoritham </p>
+                             <p> 4. Application defult url acf</p>
+                         </div>
+
+                         <div>Version: 3.1.1<span style="float:right;">Release Date: 22/01/2019</span></div>
+                         <div>
+                             <p> 1. url mhealth.apps for live and training.mhealth.apps for training</p>
+                             <p> 2. Add Secure-file-sharing on camera </p>
+                             <p> 3. null check on TITLE_LOGO_PATH_MOBILE  </p>
+                         </div>
+
+                         <div>Version: 3.1.0<span style="float:right;">Release Date: 21/01/2019</span></div>
+                         <div>
+                             <p> 1. set url GSK mHealth </p>
+                         </div>
+
+                         <div>Version: 3.0.9<span style="float:right;">Release Date: 06/01/2019</span></div>
+                         <div>
+                             <p> 1. Add bangla as a default language and default url is acfEnt </p>
+                         </div>
+
+
+                         <div>Version: 3.0.8<span style="float:right;">Release Date: 01/11/2018</span></div>
+                         <div>
+                             <p> 1. Remove new line from edit text component </p>
+                         </div>
+
+                         <div>Version: 3.0.7<span style="float:right;">Release Date: 31/10/2018</span></div>
+                         <div>
+                             <p> 1. Add multi line feature on edittext</p>
+                         </div>
+
+                         <div>Version: 3.0.6<span style="float:right;">Release Date: 22/10/2018</span></div>
+                         <div>
+                             <p> 1. Create common function for String.format  and set Locale.ROOT</p>
+                          </div>
+
+                         <div>Version: 3.0.5<span style="float:right;">Release Date: 03/10/2018</span></div>
+                         <div>
+                             <p> 1. Default address set http://demo.mhealth.apps.friendship.ngo  </p>
+                             <p> 1. Default language set Bangla  </p>
+                         </div>
+
+                         <div>Version: 3.0.4<span style="float:right;">Release Date: 16/09/2018</span></div>
+                         <div>
+                             <p> 1. Interview send status tested </p>
+                         </div>
+
+                         <div>Version: 3.0.3<span style="float:right;">Release Date: 27/08/2018</span></div>
+                         <div>
+                             <p> 1. Add sql alias as "ICON"  for q.ICON </p>
+                         </div>
+
+                         <div>Version: 3.0.2<span style="float:right;">Release Date: 14/08/2018</span></div>
+                         <div>
+                             <p> 1. Change default address </p>
+                             <p> 1. Set default language english</p>
+
+                         </div>
+
+                         <div>Version: 3.0.1<span style="float:right;">Release Date: 12/08/2018</span></div>
+                         <div>
+                             <p> Add INTERVIEW_SENT_STATUS request on USER_GATE </p>
+                         </div>
+
+
+                         <div>Version: 3.0.0<span style="float:right;">Release Date: 12/04/2018</span></div>
+                         <div>
+                             <p> Ready for enterprice version</p>
+                         </div>
+
+		               <div>Version: 2.4.3<span style="float:right;">Release Date: 05/01/2018</span></div>
+                         <div>
+                              <p> 1. Medicine stock sync mechanism change  [use LAST_UPDATED_ON] </p>
+                          </div>
+		             
+		             <div>Version: 2.4.2<span style="float:right;">Release Date: 22/01/2018</span></div>
+                           <div>
+                              <p> 1. change label in login screen  </p>
+                           </div>
+		             
+		               <div>Version: 2.4.1<span style="float:right;">Release Date: 21/01/2018</span></div>
+                           <div>
+                              <p> 1. Alow add or remove medicine on prescription during interview (Dynamic prescription)  </p>
+                              <p> 1. Remove is open check box from prescription component  </p>
+                           </div>
+		             
+		             <div>Version: 2.3.0<span style="float:right;">Release Date: 25/10/2017</span></div>
+                           <div>
+                              <p> 1. Release for rohingya responseData   </p>
+                              <p> 2. Add BENEF_NAME into patient_interview_master, it's value insert when interview contain 'BENEF_NAME' question   </p>
+                              <p> 3. Add suggestion check box and suggestion type text input field on text component.</p>
+                              <p> 4. Add is open check box on prescription component.</p>
+                          </div>
+		             
+		              <div>Version: 2.2.41-R1<span style="float:right;">Release Date: 08/10/2017</span></div>
+                           <div>
+                              <p> For Rohingya  <br>
+                             </p>
+                          </div>
+		            
+		             
+		             <div>Version: 2.2.40<span style="float:right;">Release Date: 03/08/2017</span></div>
+                           <div>
+                              <p> 1.Saved and send interview list show mechanism change for performance increase <br>
+                             </p>
+                          </div>
+		             <div>Version: 2.2.39<span style="float:right;">Release Date: 22/06/2017</span></div>
+                        
+                         <div>
+                              <p> 1. Load data chunk by chunk <br>
+                             </p>
+                          </div>
+		             
+		               <div>Version: 2.2.38<span style="float:right;">Release Date: 22/03/2017</span></div>
+                        
+                         <div>
+                              <p> 1. Make inactive users unworkable <br>
+                                  2. Implement Dynamic Report <br>
+                                  3. Ensure client-gateway bond <br>
+                              </p>
+                          </div>
+		             
+		               <div>Version: 2.2.36<span style="float:right;">Release Date: 24/11/2016</span></div>
+                        
+                         <div>
+                              <p> 1. Ensure risk properties correctly saved into maternal service <br>
+                                  2. Set date input validation rule into schedule card view.<br>
+                                  3. Add timer dialog for doctor feedback.<br>
+                              </p>
+                          </div>
+		             
+		             
+		             
+		              <div>Version: 2.2.35<span style="float:right;">Release Date: 02/11/2016</span></div>
+                         <div>
+                              <p> 1. Remove requisition creation from medicine sales    <br>
+                                  2. Change every medicine list layout design and use single layout<br>
+                                  3. BENEF_IMAGE_PATH  "null" string check when save, update and select beneficiaries<br>
+                                  4. "Last 7 requisitions" bug resolved <br></p>
+                         </div>
+		             
+		              <div>Version: 2.2.34<span style="float:right;">Release Date: 23/10/2016</span></div>
+                          <div>
+                              <p> 1.Resolved medicine stock and adjustment bug<br></p>
+                         </div>
+		             
+		              <div>Version: 2.2.33<span style="float:right;">Release Date: 19/10/2016</span></div>
+                          <div>
+                              <p> 1.Change system message while upload any request for getting feedback<br>
+                         </div>
+		             
+		              <div>Version: 2.2.32<span style="float:right;">Release Date: 04/10/2016</span></div>
+                          <div>
+                              <p> 1.In beneficiary migration when SYS_MIGRATION_SRC  not OWN skip migration process<br>
+                                  1.Add ReflectionUtility.getReferralCenterList(WHERE_CONDITION, FORMATTYPE) <br>
+                             </p>
+                         </div>
+		             
+		             <div>Version:2.2.31<span style="float:right;">Release Date: 02/10/2016</span></div>
+                          <div>
+                             <p> 1. For every new CCS followup, inactive previous undone CCS followup <br>
+                             	 2. Add ccs followup detection flag <br>
+                             </p>
+                         </div>
+		             
+		              <div>Version:2.2.30<span style="float:right;">Release Date: 25/09/2016</span></div>
+                          <div>
+                             <p> 1. Resolved duplicate file upload.<br>
+                                 2. Resolved ccs bug.<br>
+                             </p>
+                         </div>
+		             
+		              <div>Version:2.2.29<span style="float:right;"> Date:08/09/2016</span></div>
+                         <div>
+                             <p> 1. Add location Component <br>
+                             	 2. Add two fields ( HOSPITAL_GOING_DATE ,REASON_ID)into ccs_treatment table <br>
+                             	 3. Add total as list summary at the header of list for items count<br>
+                             	 4. Make a list for child beneficiary under CHILD_HEALTH<br>
+                             	</p>
+                         </div>
+		                
+		               <div>Version:2.2.28<span style="float:right;"> Date:03/08/2016</span></div>
+                         <div>
+                             <p> 1. Tuning VERSION_NO update mechanism.<br>
+                             	 2. Truncate ccs_status,courtyard_meeting_topic_month, courtyard_meeting_topic_month and set VERSION_NO =0 <br> 
+                             	</p>
+                         </div>
+		              
+		              <div>Version:2.2.27<span style="float:right;"> Date:21/07/2016</span></div>
+                         <div>
+                             <p> 1. Tuning courtyard_meeting_topic_month table.<br> </p>
+                         </div>
+		             
+		              <div>Version:2.2.26-C<span style="float:right;"> Date:20/07/2016</span></div>
+                         <div>
+                             <p> 1. Only exist binary file will send to server.<br> </p>
+                         </div>
+		             
+		             <div>Version:2.2.26-B<span style="float:right;"> Date:19/07/2016</span></div>
+                         <div>
+                             <p> 1.Cancel beneficiary update file base mechanism, now it works by table base mechanism.<br> </p>
+                         </div>
+		             
+		              <div>Version:2.2.26<span style="float:right;"> Date:17/07/2016</span></div>
+                         <div>
+                             <p> 1. Redesign CCS module. <br>
+								 2. Redesign doctor center feedback. <br>
+								 3. Resolve saved doctor feedback bug. <br>
+								 4. Add a reflection method- addDate() ,isStoredInServer().<br> 
+								 5. Doctor feedback wait time and internal get from fcm configuration.<br> 
+                             </p>
+                         </div>
+		              
+		             <div>Version:2.2.25-P3<span style="float:right;"> Date:09/02/2016</span></div>
+                         <div>
+                             <p> 1. Add household basic data into auto sync.<br>
+								 2. Add SORT_ORDER  into immunization_info.<br>
+								 3. CCS data range from configuration. <br>
+								 3. Rebuild Auto Sync <br> 
+                             </p>
+                         </div>
+		              
+		             <div>Version:2.2.23-P3<span style="float:right;"> Date:09/02/2016</span></div>
+                         <div>
+                             <p> 1. Implement TRANSITION_REF into every transition <br>
+                                 2. Change the mechanism in beneficiary info update <br>
+                             </p>
+                         </div>
+		             
+		             
+		             <div>Version: 2.2.17<span style="float:right;">Release Date: 09/02/2016</span></div>
+                         <div>
+                             <p> 1. Solved image capture problem interview edit mode <br>
+                                 2. Set maximum image size 50 on image view<br>
+     							*** This version depend on mHealth Gateway 2.2.12<br> 
+                             </p>
+                         </div>
+		             
+		             
+		             
+		              <div>Version: 2.2.16<span style="float:right;">Release Date: 26/01/2016</span></div>
+                         <div>
+                             <p> 1. Solved activity close problem when capture image in interview<br>
+                                 2. Solved image rotation problem<br>
+     							*** This version depend on mHealth Gateway 2.2.12<br> 
+                             </p>
+                         </div>
+		             
+		               <div>Version: 2.2.15<span style="float:right;">Release Date: 10/01/2016</span></div>
+                         <div>
+                             <p> 1. Solved color problem on household list  <br>
+     							*** This version depend on mHealth Gateway 2.2.12<br> 
+                             </p>
+                         </div>
+		             
+		                 <div>Version: 2.2.14<span style="float:right;">Release Date: 22/11/2015</span></div>
+                         <div>
+                            <p> 1. Add media properties (Scaling , Quality) into media type question view. <br>
+                            	2. Add questionnaire sort order feature. <br>
+                            	3. Add component feature (Stop watch and timer).By using this feature we can easily add component into any question view. <br>
+                            	4. Implement court yard module.  <br> 
+                            	*** This version depend on mHealth Gateway 2.2.11<br> 
+                             </p>
+                         </div>
+		             
+		                 <div>Version: 2.2.13<span style="float:right;">Release Date: 21/09/2015</span></div>
+                         <div>
+                            <p> Add gateway server relocation feature. It depends on server side fcm configuration and automatic relocate server address after effective date. </p>
+                         </div>
+                     
+		                <div>Version: 2.2.12<span style="float:right;">Release Date: 31/08/2015</span></div>
+                         <div>
+                            <p>Tuning doctor feedback referral center</p>
+                        </div>
+                     
+		             
+		              <div>Version: 2.2.11<span style="float:right;">Release Date: 27/08/2015</span></div>
+                         <div>
+                            <p>Add Beneficiary death registration </p>
+                        </div>
+                        
+		              <div>Version: 2.2.6<span style="float:right;">Release Date: 29/07/2015</span></div>
+                         <div>
+                            <p>Add beneficiary migration</p>
+                        </div>
+		             
+		             <div>Version: 2.2.4<span style="float:right;">Release Date: 17/06/2015</span></div>
+                        <div>
+                            <p>Remove replace file userName mechanism from beneficiary reg file download</p>
+                        </div>
+		             
+		              <div>Version: 2.2.3<span style="float:right;">Release Date: 16/06/2015</span></div>
+                        <div>
+                            <p>Remove replace file userName mechanism from beneficiary reg file download</p>
+                        </div>
+		             
+		              <div>Version: 2.2.2<span style="float:right;">Release Date: 9/06/2015</span></div>
+                        <div>
+                            <p>Hide doctor feedback list and Patient Followup ,Release version </p>
+                        </div>
+		              <div>Version: 2.2.1<span style="float:right;">Release Date: 9/06/2015</span></div>
+                        <div>
+                            <p>Update beneficiary info is added</p>
+                        </div>
+		             
+		               <div>Version: 2.1.27<span style="float:right;">Release Date: 26/05/2015</span></div>
+                        <div>
+                            <p>Complete Immunization and Obstetrical Care module, add household and complete development text</p>
+                        </div>
+		             
+                        <div>Version: 2.1.26<span style="float:right;">Release Date: 24/05/2015</span></div>
+                        <div>
+                            <p>Complete Immunization and Obstetrical Care module,add household </p>
+                        </div>
+                        
+                  
+                        <div>Version: 2.1.25<span style="float:right;">Release Date: 14/05/2015</span></div>
+                        <div>
+                            <p>Complete Immunization and Obstetrical Care module</p>
+                        </div>
+                    
+                        <div>Version: 2.1.24<span style="float:right;">Release Date: 12/05/2015</span></div>
+                        <div>
+                            <p>Complete Immunization module</p>
+                        </div>
+                        
+                        <div>Version: 2.1.18<span style="float:right;">Release Date: 08/02/2015</span></div>
+                        <div>
+                            <p>Add application update , Disable first question back button and mark last and maybe last question next button </p>
+                        </div>
+
+                        <div>Version: 2.1.1<span style="float:right;">Release Date: 10/12/2014</span></div>
+                        <div>
+                            <p>Add list view component and finalize prescription view.  </p>
+                        </div>
+                        
+                        <div>Version : 2.1<span style="float:right;">Release Date : 01/07/2014</span></div>
+                        <div>
+                            <p>First live version , that only  for beneficiary registration and house hold basic data entry. </p>
+                        </div>
+                        
+                    </div>
+                </div>
+  </div>
+  </body>
+</html>

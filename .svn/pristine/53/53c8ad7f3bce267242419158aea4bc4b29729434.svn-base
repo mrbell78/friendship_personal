@@ -1,0 +1,90 @@
+package ngo.friendship.satellite.ui.product_management.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.base.BaseActivity;
+import ngo.friendship.satellite.databinding.ActivityMyProductsBinding;
+import ngo.friendship.satellite.ui.product_management.fragment.ProductAdjustmentFragment;
+import ngo.friendship.satellite.ui.product_management.fragment.ProductSaleFragment;
+import ngo.friendship.satellite.ui.product_management.fragment.ProductStockFragment;
+
+public class ProductsHomeActivity extends BaseActivity  {
+    ActivityMyProductsBinding binding;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityMyProductsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, ProductStockFragment.newInstance()).commit();
+        binding.bottomNavigationView.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, ProductSaleFragment.newInstance()).commit();
+            binding.bottomNavigationView.getMenu().getItem(0).setChecked(true);
+        });
+        binding.bottomNavigationView.getMenu().getItem(0).setChecked(true);
+
+
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            // NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
+            switch (id) {
+                case R.id.product_rise:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, ProductStockFragment.newInstance()).commit();
+                    return true;
+                case R.id.nav_bottom_home:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, ProductSaleFragment.newInstance()).commit();
+
+//                    item.setChecked(true);
+                    return true;
+                case R.id.product_adjust:
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, ProductAdjustmentFragment.newInstance()).commit();
+
+                    return true;
+                //check id
+            }
+            return true;
+        });
+
+
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_product_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else if (id == R.id.product_rise) {
+            // finish the activity
+
+            startActivity(new Intent(this, RiseListActivity.class));
+            return true;
+        } else if (id == R.id.product_adjust) {
+            startActivity(new Intent(this, ProductAdjustmentActivity.class));
+            return true;
+        } else if (id == R.id.all_invoice) {
+            startActivity(new Intent(this, InvoiceListActivity.class));
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+}

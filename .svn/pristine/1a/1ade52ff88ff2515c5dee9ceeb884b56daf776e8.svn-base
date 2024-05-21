@@ -1,0 +1,47 @@
+package ngo.friendship.satellite.communication
+
+import org.json.JSONObject
+import java.io.Serializable
+
+class ResponseData : Serializable {
+    /** The response type.  */
+    var responseType: String? = null
+
+    /** The response name.  */
+    var responseName: String? = null
+
+    /** The response time.  */
+    var responseTime: String? = null
+
+    /** The response code.  */
+    var responseCode: String? = null
+
+    /** The error code.  */
+    var errorCode: String? = null
+
+    /** The error desc.  */
+    var errorDesc: String? = null
+
+    /** The data length.  */
+    var dataLength = 0
+
+    /** The data.  */
+    var data: String? = null
+    var dataJson: JSONObject? = null
+
+    /** The exec time.  */
+    var execTime: String? = null
+
+    /** The web response status code.  */
+    var webResponseStatusCode = 0
+
+    /** The param.  */
+    var param: String? = null
+    var paramJson: JSONObject? = null
+
+    companion object {
+        const val FAIL = "00"
+        const val SUCCESS = "01"
+        const val NO_DATA = "03"
+    }
+}

@@ -1,0 +1,302 @@
+package ngo.friendship.satellite.ui;
+
+import java.util.HashMap;
+
+import ngo.friendship.satellite.App;
+import ngo.friendship.satellite.LanguageContextWrapper;
+import ngo.friendship.satellite.MainActivity;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.asynctask.CommiunicationTask;
+import ngo.friendship.satellite.asynctask.TaskKey;
+import ngo.friendship.satellite.communication.RequestData;
+import ngo.friendship.satellite.communication.ResponseData;
+import ngo.friendship.satellite.constants.Constants;
+import ngo.friendship.satellite.constants.KEY;
+import ngo.friendship.satellite.constants.RequestName;
+import ngo.friendship.satellite.constants.RequestType;
+import ngo.friendship.satellite.databinding.ChangePasswordLayoutBinding;
+import ngo.friendship.satellite.interfaces.OnCompleteListener;
+import ngo.friendship.satellite.interfaces.OnDialogButtonClick;
+import ngo.friendship.satellite.model.AppSettings;
+import ngo.friendship.satellite.utility.AppPreference;
+import ngo.friendship.satellite.utility.SystemUtility;
+import ngo.friendship.satellite.utility.Utility;
+import ngo.friendship.satellite.views.DialogView;
+
+import org.json.JSONException;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Message;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AppCompatActivity;
+
+
+public class ChangePasswordActivity extends AppCompatActivity implements OnClickListener, OnCompleteListener {
+
+    private ChangePasswordLayoutBinding binding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        App.loadApplicationData(this);
+        binding = ChangePasswordLayoutBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        setTitle("Change Password");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        binding.btnSendData.setOnClickListener(this);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void onBackPressedMethod(){
+        if (Build.VERSION.SDK_INT >= 33) {
+            getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    // Back is pressed... Finishing the activity
+                    finish();
+                }
+            });
+        }else {
+            onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+
+        if (App.getContext().getAppSettings() == null)
+            App.getContext().readAppSettings(this);
+
+//        Utility.setActivityPath(this, R.string.change_password);
+        if (!SystemUtility.isAutoTimeEnabled(this)) {
+            SystemUtility.openDateTimeSettingsActivity(this);
+        }
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(LanguageContextWrapper.wrap(context, AppPreference.getString(context, KEY.LANGUAGE, AppSettings.DEFAULT_LANGUAGE)));
+    }
+
+
+    /**
+     * Show a alert dialog with single button to display message.
+     *
+     * @param titleId     the string ID of dialog title
+     * @param msg         will be displayed as the dialog message
+     * @param imageId     the drawable id of image which will be set in dialog title
+     * @param textColorId the text color id
+     * @param et          the et
+     */
+    private void showOneButtonDialog(int titleId, String msg, final int imageId, int textColorId, final EditText et) {
+
+        HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_close);
+        DialogView exitDialog = new DialogView(this, titleId, msg, textColorId, imageId, buttonMap);
+        exitDialog.setOnDialogButtonClick(new OnDialogButtonClick() {
+
+            @Override
+            public void onDialogButtonClick(View view) {
+                if (et != null)
+                    et.requestFocus();
+
+                if (imageId == R.drawable.information) {
+
+                    App.getContext().readUserInfo(ChangePasswordActivity.this);
+                    MainActivity.PASSWORD_CHANGED = true;
+                    ChangePasswordActivity.this.finish();
+                }
+            }
+        });
+        exitDialog.show();
+    }
+
+    /**
+     * Check provided password are valid.
+     *
+     * @return <b>true</b> If user entered valid data. <b>false</b> otherwise.
+     */
+    private boolean checkDataValidity() {
+        String dataStr = null;
+        EditText etOldPassword = findViewById(R.id.et_old_password);
+        dataStr = etOldPassword.getText().toString();
+
+        /*
+         * Check if password field is empty
+         */
+        if (dataStr.equalsIgnoreCase("")) {
+            showOneButtonDialog(R.string.dialog_title, getResources().getString(R.string.empty_password), R.drawable.error, Color.RED, etOldPassword);
+            return false;
+        }
+
+        /*
+         * Check if given password length is less than 4
+         */
+        if (dataStr.length() < 4) {
+            showOneButtonDialog(R.string.dialog_title, getResources().getString(R.string.invalid_password_length), R.drawable.error, Color.RED, etOldPassword);
+            return false;
+        }
+
+        /*
+         * Check if given password is matched with current password
+         */
+        if (!dataStr.equals(App.getContext().getUserInfo().getPassword())) {
+            showOneButtonDialog(R.string.dialog_title, getResources().getString(R.string.worng_password), R.drawable.error, Color.RED, etOldPassword);
+            return false;
+        }
+
+        EditText etNewPassword = findViewById(R.id.et_new_password);
+        dataStr = etNewPassword.getText().toString();
+
+        /*
+         * Check if new password field is empty
+         */
+        if (dataStr.equalsIgnoreCase("")) {
+            showOneButtonDialog(R.string.dialog_title, getResources().getString(R.string.empty_password), R.drawable.error, Color.RED, etNewPassword);
+            return false;
+        }
+
+        /*
+         * Check if new password length is less than 4
+         */
+        if (dataStr.length() < 4) {
+            showOneButtonDialog(R.string.dialog_title, getResources().getString(R.string.invalid_password_length), R.drawable.error, Color.RED, etNewPassword);
+            return false;
+        }
+
+        EditText etReNewPassword = findViewById(R.id.et_confirm_new_password);
+        dataStr = etReNewPassword.getText().toString();
+
+        /*
+         * Check if confirmation password field is empty
+         */
+        if (dataStr.equalsIgnoreCase("")) {
+            showOneButtonDialog(R.string.dialog_title, getResources().getString(R.string.empty_password), R.drawable.error, Color.RED, etReNewPassword);
+            return false;
+        }
+
+        /*
+         * Check if confirmation password length is less than 4
+         */
+        if (dataStr.length() < 4) {
+            showOneButtonDialog(R.string.dialog_title, getResources().getString(R.string.invalid_password_length), R.drawable.error, Color.RED, etReNewPassword);
+            return false;
+        }
+
+        /*
+         * Check if confirmation password matched with new password
+         */
+        if (!dataStr.equals(etNewPassword.getText().toString())) {
+            showOneButtonDialog(R.string.dialog_title, getResources().getString(R.string.password_not_matched), R.drawable.error, Color.RED, etReNewPassword);
+            return false;
+        }
+        return true;
+    }
+
+    /* (non-Javadoc)
+     * @see android.view.View.OnClickListener#onClick(android.view.View)
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.btn_send_data:
+                if (checkDataValidity()) {
+                    if (SystemUtility.isConnectedToInternet(this)) {
+
+                        try {
+                            EditText etNewPassword = findViewById(R.id.et_new_password);
+                            String password = etNewPassword.getText().toString().trim();
+                            RequestData request = new RequestData(RequestType.USER_GATE, RequestName.PW_CHANGE, Constants.MODULE_DATA_GET);
+                            request.getData().put("PASS_MD5", Utility.md5(password));
+                            request.getData().put("PASS_ENCRYPTED", Utility.generateEncryptedPassword(password));
+                            CommiunicationTask task = new CommiunicationTask(this, request, R.string.retrieving_data, R.string.please_wait);
+                            task.setCompleteListener(this);
+                            task.execute();
+                        } catch (JSONException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+
+
+                    } else {
+                        SystemUtility.openInternetSettingsActivity(this);
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see android.app.Activity#onBackPressed()
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
+
+    @Override
+    public void onComplete(Message msg) {
+
+        if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+            String errorMsg = (String) msg.getData().getSerializable(TaskKey.ERROR_MSG);
+            App.showMessageDisplayDialog(this, getResources().getString(R.string.network_error), R.drawable.error, Color.RED);
+        } else {
+            ResponseData response = (ResponseData) msg.getData().getSerializable(TaskKey.DATA0);
+            if (response.getResponseCode().equalsIgnoreCase("00")) {
+                App.showMessageDisplayDialog(this, response.getErrorCode() + "-" + response.getErrorDesc(), R.drawable.error, Color.RED);
+            } else {
+
+                EditText etNewPassword = findViewById(R.id.et_new_password);
+                AppPreference.putString(this, KEY.PASSWORD, etNewPassword.getText().toString());
+                showOneButtonDialog(R.string.dialog_title, getResources().getString(R.string.password_change_successful), R.drawable.information, Color.BLACK, null);
+
+            }
+        }
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        App.getContext().onStartActivity(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        App.getContext().onStartActivity(this);
+    }
+
+
+}

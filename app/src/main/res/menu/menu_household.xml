@@ -1,0 +1,42 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="search"
+        android:orderInCategory="100"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom" />
+    <item
+        android:id="@+id/action_sync"
+        android:icon="@drawable/ic_sync"
+        android:title="Sync"
+        android:visible="false"
+        android:orderInCategory="200"
+        app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/menu_activate_households"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/activeList"
+        android:icon="@drawable/ic_settings"/>
+
+    <item
+        android:id="@+id/menu_deactivated_households_list"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/deactivatedList"
+        android:icon="@drawable/ic_arrow_right"/>
+    <item
+        android:id="@+id/menu_deactivate_households"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/deactivate_households"
+        android:icon="@drawable/ic_settings"/>
+
+
+
+
+</menu>

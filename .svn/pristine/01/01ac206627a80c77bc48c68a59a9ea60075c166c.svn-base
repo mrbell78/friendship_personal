@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.product_management.CurrentStockActivity">
+
+<!--        <include-->
+<!--            android:id="@+id/toolbar"-->
+<!--            layout="@layout/custom_toolbar" />-->
+        <LinearLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#E8E8E8"
+            android:orientation="horizontal"
+            android:weightSum="8">
+
+
+<!--            <EditText-->
+<!--                android:id="@+id/searchView"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_weight="7"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="8dp"-->
+<!--                android:layout_marginLeft=""-->
+<!--                android:background="@drawable/editext_border_second"-->
+<!--                android:inputType="text"/>-->
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="7"
+                android:background="#FFFFFF"
+                android:iconifiedByDefault="false"
+                android:padding="4dp"
+                android:queryBackground="@null"
+                android:queryHint="@string/search_product" />
+
+            <ngo.friendship.satellite.views.MdiTextView
+                android:id="@+id/mFilter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignRight="@+id/searchView"
+
+                android:layout_weight="1"
+                android:gravity="center"
+
+                android:text="@string/mdi_filter"
+                android:textSize="@dimen/fontsize_large" />
+        </LinearLayout>
+        <include
+            android:id="@+id/layout_sync"
+            layout="@layout/layout_sync" />
+
+        <LinearLayout
+
+            android:id="@+id/layout22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout2"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="8dp">
+
+            <TextView
+                android:id="@+id/medicine_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:paddingLeft="20dp"
+                android:text="All Category"
+                android:textAlignment="textStart"
+                android:textColor="@color/ash_gray"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:paddingRight="8dp"
+                android:text="Quantity"
+                android:textColor="@color/ash_gray"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layout22"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/ll_medicine_row_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </ScrollView>
+
+
+        </LinearLayout>
+
+
+
+
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/layout233"-->
+        <!--            android:layout_below="@+id/layout22"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="2dp"-->
+        <!--            android:background="#FAFAFA"-->
+        <!--            android:orientation="vertical">-->
+
+        <!--            <LinearLayout-->
+        <!--                android:layout_margin="8dp"-->
+        <!--                android:id="@+id/list_last"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:orientation="vertical"-->
+        <!--                android:paddingTop="4dp">-->
+
+        <!--                <LinearLayout-->
+        <!--                    android:id="@+id/linearLayout1"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:orientation="horizontal"-->
+        <!--                    android:padding="6dp">-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="0dp"-->
+        <!--                        android:layout_height="match_parent"-->
+        <!--                        android:layout_weight="1"-->
+        <!--                        android:paddingTop="2dp"-->
+        <!--                        android:text="@string/saline_orsaline_10_5mg"-->
+        <!--                        android:textColor="@color/black"-->
+        <!--                        android:textSize="18dp"-->
+        <!--                        android:textStyle="bold" />-->
+
+        <!--                    <ImageView-->
+        <!--                        android:id="@+id/medicine_bookmark"-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginRight="35dp"-->
+        <!--                        android:paddingLeft="8dp"-->
+        <!--                        android:background="@drawable/bookmark"-->
+        <!--                        android:paddingTop="3dp"-->
+        <!--                        android:textSize="18dp"-->
+        <!--                        android:textStyle="bold"-->
+        <!--                        />-->
+
+        <!--                    <TextView-->
+        <!--                        android:id="@+id/mStock"-->
+        <!--                        android:layout_width="0dp"-->
+        <!--                        android:layout_height="match_parent"-->
+        <!--                        android:layout_weight="1"-->
+        <!--                        android:gravity="center"-->
+        <!--                        android:paddingLeft="20dp"-->
+        <!--                        android:text="3"-->
+        <!--                        android:textColor="@color/red"-->
+        <!--                        android:textSize="14dp" />-->
+
+        <!--                    <LinearLayout-->
+
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content">-->
+
+        <!--                    </LinearLayout>-->
+
+
+        <!--                </LinearLayout>-->
+
+
+        <!--                <LinearLayout-->
+        <!--                    android:id="@+id/last_list"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:orientation="horizontal"-->
+        <!--                    android:padding="8dp">-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:text="5.00"-->
+        <!--                        android:layout_height="wrap_content"></TextView>-->
+        <!--                </LinearLayout>-->
+
+        <!--            </LinearLayout>-->
+
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:paddingTop="15dp">-->
+
+        <!--                <View-->
+        <!--                    android:id="@+id/separator"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="1dip"-->
+        <!--                    android:layout_alignParentTop="true"-->
+        <!--                    android:layout_centerVertical="true"-->
+        <!--                    android:layout_marginLeft="16dp"-->
+        <!--                    android:layout_marginRight="16dp"-->
+        <!--                    android:background="#C1C0C0" />-->
+        <!--            </LinearLayout>-->
+
+
+        <!--        </LinearLayout>-->
+        <!--        <LinearLayout-->
+        <!--            android:layout_below="@+id/layout233"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="2dp"-->
+        <!--            android:background="#FAFAFA"-->
+        <!--            android:orientation="vertical">-->
+
+        <!--            <LinearLayout-->
+        <!--                android:layout_margin="8dp"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:orientation="vertical"-->
+        <!--                android:paddingTop="4dp">-->
+
+        <!--                <LinearLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:orientation="horizontal"-->
+        <!--                    android:padding="6dp">-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="0dp"-->
+        <!--                        android:layout_height="match_parent"-->
+        <!--                        android:layout_weight="1"-->
+        <!--                        android:paddingTop="2dp"-->
+        <!--                        android:text="@string/paracitamal"-->
+        <!--                        android:textColor="@color/black"-->
+        <!--                        android:textSize="18dp"-->
+        <!--                        android:textStyle="bold" />-->
+
+        <!--                    <ImageView-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginRight="35dp"-->
+        <!--                        android:paddingLeft="8dp"-->
+        <!--                        android:background="@drawable/bookmark"-->
+        <!--                        android:paddingTop="3dp"-->
+        <!--                        android:textSize="18dp"-->
+        <!--                        android:textStyle="bold"-->
+        <!--                        />-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="0dp"-->
+        <!--                        android:layout_height="match_parent"-->
+        <!--                        android:layout_weight="1"-->
+        <!--                        android:gravity="center"-->
+        <!--                        android:paddingLeft="20dp"-->
+        <!--                        android:text="3"-->
+        <!--                        android:textColor="@color/red"-->
+        <!--                        android:textSize="14dp" />-->
+
+        <!--                    <LinearLayout-->
+
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content">-->
+
+        <!--                    </LinearLayout>-->
+
+
+        <!--                </LinearLayout>-->
+
+
+        <!--                <LinearLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:orientation="horizontal"-->
+        <!--                    android:padding="8dp">-->
+
+        <!--                    <TextView-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:text="5.00"-->
+        <!--                        android:layout_height="wrap_content"></TextView>-->
+        <!--                </LinearLayout>-->
+
+        <!--            </LinearLayout>-->
+
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:paddingTop="15dp">-->
+
+        <!--                <View-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="1dip"-->
+        <!--                    android:layout_alignParentTop="true"-->
+        <!--                    android:layout_centerVertical="true"-->
+        <!--                    android:layout_marginLeft="16dp"-->
+        <!--                    android:layout_marginRight="16dp"-->
+        <!--                    android:background="#C1C0C0" />-->
+        <!--            </LinearLayout>-->
+
+
+        <!--        </LinearLayout>-->
+
+
+    </RelativeLayout>
+</layout>

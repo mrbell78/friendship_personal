@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mHealth="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/square_distance">
+
+                <ngo.friendship.satellite.views.CardButton
+                    android:id="@+id/btn_tomorrow_time_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/square_distance"
+                    mHealth:mdIcon="@string/mdi_calendar"
+                    mHealth:orientation="HORIZONTAL"
+                    mHealth:text="@string/tomorrow_time_schedule" />
+
+                <ngo.friendship.satellite.views.CardButton
+                    android:id="@+id/btn_next_7_days_time_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/square_distance"
+                    mHealth:mdIcon="@string/mdi_calendar"
+                    mHealth:orientation="HORIZONTAL"
+                    mHealth:text="@string/next_7_days_time_schedule" />
+
+                <ngo.friendship.satellite.views.CardButton
+                    android:id="@+id/btn_undone_time_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/square_distance"
+                    mHealth:mdIcon="@string/mdi_calendar"
+                    mHealth:orientation="HORIZONTAL"
+                    mHealth:text="@string/undone_time_schedule" />
+            </LinearLayout>
+        </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/app_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_color_mid"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/square_distance"
+            android:paddingLeft="@dimen/square_distance"
+            android:paddingTop="5dip"
+            android:paddingEnd="@dimen/square_distance"
+            android:paddingRight="@dimen/square_distance"
+            android:paddingBottom="5dip">
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ngo.friendship.satellite.views.AppButton
+                    android:id="@+id/btn_close"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    mHealth:mdIcon="@string/mdi_close"
+                    mHealth:text="@string/btn_close" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

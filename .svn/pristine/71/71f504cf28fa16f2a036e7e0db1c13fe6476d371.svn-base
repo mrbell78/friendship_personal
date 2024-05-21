@@ -1,0 +1,15 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class QUESTION_TYPE.
+ */
+public class INPUT_TYPE {
+ 	public static String INTEGER ="int";
+ 	public static String DECIMAL ="dec";
+ 	public static String TEXT ="txt";
+ 	public static String PHONE ="phone";
+ 	public static String PASSWORD ="pass";
+ 	public static String EMAIL ="email";
+
+}

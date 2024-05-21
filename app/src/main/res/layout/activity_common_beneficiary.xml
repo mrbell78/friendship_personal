@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mHealth="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <include
+           android:id="@+id/toolbar"
+           layout="@layout/custom_toolbar_activity_dialog" />
+
+       <ImageView
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:id="@+id/imgCloseDialog"
+           android:layout_alignParentRight="true"
+           android:layout_marginRight="5dp"
+           android:src="@drawable/ic_close_border_circle"/>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:background="#ffffff"
+           android:gravity="center_horizontal"
+           android:layout_below="@+id/imgCloseDialog"
+           android:orientation="vertical" >
+
+           <LinearLayout
+               android:id="@+id/layout2"
+               android:layout_width="match_parent"
+               android:layout_height="60dp"
+               android:background="#E8E8E8"
+               android:orientation="horizontal">
+
+             <!--  <SearchView
+                   android:id="@+id/searchView"
+                   android:layout_width="0dp"
+                   android:layout_weight="7"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentTop="true"
+                   android:layout_gravity="center"
+                   android:layout_marginLeft="15dp"
+                   android:layout_marginRight="15dp"
+                   android:background="#ACACAC"
+                   android:iconifiedByDefault="false"
+                   android:padding="4dp"
+                   android:queryBackground="@null"
+                   android:queryHint="Search Beneficiary" />-->
+
+
+
+               <EditText
+                   android:id="@+id/etBenefSearchCommon"
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_margin="4dp"
+                   android:layout_weight="2"
+                   android:textColor="@color/black"
+                   android:layout_marginLeft="15dp"
+                   android:hint="@string/search_beneficiary"
+                   android:layout_marginRight="15dp"
+                   android:background="@drawable/border_searchbar_gray"
+                   android:padding="8dp" />
+           </LinearLayout>
+
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rvCommonBenefList"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="20dp"
+               android:layout_marginLeft="20dp"
+               android:layout_marginTop="24dp"
+               android:layout_marginEnd="20dp"
+               android:layout_marginRight="20dp"
+               android:orientation="vertical"
+               app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+               tools:listitem="@layout/common_services_item_row" />
+
+           <LinearLayout
+               android:visibility="gone"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@color/app_color_mid"
+               android:orientation="horizontal"
+               android:padding="5dip" >
+
+               <LinearLayout
+                   android:layout_width="0dip"
+                   android:layout_height="match_parent"
+                   android:layout_weight="1"
+                   android:orientation="vertical" >
+
+                   <ngo.friendship.satellite.views.AppButton
+                       android:id="@+id/btn_retrieve_data"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       mHealth:mdIcon="@string/mdi_download"
+                       mHealth:text="@string/retrieve_data_from_server" />
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="0dip"
+                   android:layout_height="match_parent"
+                   android:layout_weight="1"
+                   android:orientation="vertical" >
+
+                   <ngo.friendship.satellite.views.AppButton
+                       android:id="@+id/btn_close"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginLeft="5dp"
+                       mHealth:mdIcon="@string/mdi_close"
+                       mHealth:text="@string/btn_close" />
+               </LinearLayout>
+           </LinearLayout>
+
+       </LinearLayout>
+
+   </RelativeLayout>
+
+</layout>

@@ -1,0 +1,239 @@
+BEGIN;
+--DROP TABLE IF EXISTS old_ccs_treatment;
+--DROP TABLE IF EXISTS old_immunizable_beneficiary;
+--DROP TABLE IF EXISTS old_immunization_followup;
+--DROP TABLE IF EXISTS old_immunization_service;
+--DROP TABLE IF EXISTS old_immunization_target;
+--DROP TABLE IF EXISTS old_maternal_abortion;
+--DROP TABLE IF EXISTS old_maternal_baby_info;
+--DROP TABLE IF EXISTS old_maternal_delivery;
+--DROP TABLE IF EXISTS old_maternal_service;
+--DROP TABLE IF EXISTS old_medicine_consumption_master;
+--DROP TABLE IF EXISTS old_prescription_detail;
+
+--
+--
+--ALTER TABLE patient_interview_doctor_feedback RENAME TO old_patient_interview_doctor_feedback;
+--
+--
+--ALTER TABLE patient_interview_master
+--ADD COLUMN FCM_INTERVIEW_ID INTEGER DEFAULT 0;
+--
+--ALTER TABLE questionnaire
+--ADD COLUMN PARAM_1 VARCHAR(250);
+--
+--ALTER TABLE questionnaire
+--ADD COLUMN PARAM_2 VARCHAR(250);
+--
+--ALTER TABLE questionnaire_detail
+--ADD COLUMN SHOWABLE_OUTPUT INTEGER DEFAULT 0;
+--
+--ALTER TABLE household ADD COLUMN HH_ADULT_WOMEN INTEGER ;
+--
+--ALTER TABLE household ADD HH_CHARACTER varchar(200) NULL;
+--
+--
+
+
+CREATE TABLE "medicine_consumption_detail_delete" (
+	"MED_CONSUMP_DTL_ID"	INT,
+	"MED_CONSUMP_ID"	NUM,
+	"MEDICINE_ID"	NUM,
+	"QTY"	NUM,
+	"PRICE"	NUM
+);
+
+CREATE TABLE "medicine_consumption_master_delete" (
+	"INTERVIEW_ID"	NUM,
+	"BENEF_CODE"	TEXT,
+	"MED_CONSUMP_ID"	INT,
+	"CONSUMP_DATE"	NUM,
+	"LOCATION_ID"	NUM,
+	"USER_ID"	TEXT,
+	"TOTAL_PRICE"	NUM,
+	"REMARKS"	TEXT,
+	"DATA_SENT"	TEXT
+);
+
+CREATE TABLE "patient_interview_detail_delete" (
+	"INTERVIEW_DTL_ID"	INT,
+	"INTERVIEW_ID"	INT,
+	"Q_ID"	INT,
+	"ANSWER"	TEXT,
+	"TRANS_REF"	NUM
+);
+
+CREATE TABLE "patient_interview_master_delete" (
+	"INTERVIEW_ID"	INT,
+	"FILE_PATH"	TEXT,
+	"PARENT_INTERVIEW_ID"	NUM,
+	"REF_CENTER_ID"	NUM,
+	"DURATION"	NUM,
+	"START_TIME"	NUM,
+	"DATA_SENT"	TEXT,
+	"REF_DATA_ID"	NUM,
+	"STATUS"	TEXT,
+	"NEXT_FOLLOWUP_DATE"	NUM,
+	"PRIORITY"	NUM,
+	"UPDATED_ON"	NUM,
+	"BENEF_CODE"	TEXT,
+	"USER_ID"	NUM,
+	"CREATE_DATE"	NUM,
+	"QUESTIONNAIRE_ID"	NUM,
+	"FILE_KEY"	TEXT,
+	"QUESTION_ANSWER_JSON"	TEXT,
+	"PRESC_ID"	NUM,
+	"ADVICE_FLAG"	NUM,
+	"TRANS_REF"	NUM,
+	"IS_FEEDBACK"	INT,
+	"BENEF_NAME"	TEXT,
+	"FCM_INTERVIEW_ID"	INT,
+	"BENEF_ADDRESS"	TEXT,
+	"AGE_IN_DAY"	INT,
+	"GENDER"	TEXT
+);
+
+
+
+--CREATE TABLE "notification_master" (
+--	"NOTIFICATION_ID"	INTEGER NOT NULL UNIQUE,
+--	"CONTENT"	VARCHAR(500),
+--	"CREATE_DATE"	TEXT,
+--	"TITLE"	VARCHAR(500),
+--	"TYPE"	VARCHAR(500),
+--	"VIEW_TIME"	TEXT,
+--	"NOTIFICATION_STATUS"	INTEGER,
+--	"NOTIFICATION_TIME"	INTEGER,
+--	"STATE"	INTEGER,
+--	"BENEF_CODE"	TEXT,
+--	"ORG_ID"	INTEGER,
+--	"VERSION_NO"	INTEGER,
+--	"S_NOTIFICATION_ID"	INTEGER,
+--	"UPDATE_SOURCE"	TEXT,
+--	"SEND_STATUS"	INTEGER DEFAULT -1,
+--	"DESTINATION_PATH"	TEXT,
+--	"NOTIFICATION_ICON"	TEXT,
+--	"DESTINATION_KEY"	TEXT,
+--	PRIMARY KEY("NOTIFICATION_ID" AUTOINCREMENT)
+--);
+--
+--
+--
+--
+--
+--PRAGMA foreign_keys=off;
+--ALTER TABLE patient_interview_doctor_feedback RENAME TO _patient_interview_doctor_feedback_old;
+--
+--CREATE TABLE patient_interview_doctor_feedback (
+--	"DOC_FOLLOWUP_ID"	INTEGER NOT NULL,
+--	"INTERVIEW_ID"	INTEGER,
+--	"USER_ID"	NUMERIC,
+--	"FEEDBACK_DATE"	NUMERIC,
+--	"DOCTOR_FINDINGS"	VARCHAR(500),
+--	"REF_CENTER_ID"	INTEGER,
+--	"PRESCRIBED_MEDICINE"	TEXT,
+--	"NEXT_FOLLOWUP_DATE"	NUMERIC,
+--	"MESSAGE_TO_FCM"	VARCHAR(500),
+--	"QUESTION_ANSWER_JSON"	TEXT,
+--	"SEND_STATUS"	INT,
+--	"TRANS_REF"	NUMERIC,
+--	"IS_FEEDBACK_ON_TIME"	INTEGER,
+--	"FEEDBACK_SOURCE"	TEXT,
+--	"INVES_ADVICE"	TEXT,
+--	"INVES_RESULT"	TEXT,
+--	"INVES_STATUS"	TEXT,
+--	"NOTIFICATION_STATUS"	INTEGER DEFAULT 0,
+--	"QUESTION_ANSWER_JSON2"	TEXT,
+--	"FEEDBACK_RECEIVE_TIME"	INTEGER DEFAULT 0,
+--	PRIMARY KEY("DOC_FOLLOWUP_ID")
+--);
+--
+--INSERT INTO patient_interview_doctor_feedback SELECT * FROM _patient_interview_doctor_feedback_old;
+--
+--ALTER TABLE patient_interview_doctor_feedback
+--ADD COLUMN BENEF_CODE TEXT;
+--
+--ALTER TABLE patient_interview_doctor_feedback
+--ADD COLUMN UPDATE_BY NUMERIC DEFAULT 0;
+--
+--ALTER TABLE patient_interview_doctor_feedback
+--ADD COLUMN UPDATE_ON NUMERIC DEFAULT 0;
+--
+--PRAGMA foreign_keys=off;
+--
+--ALTER TABLE beneficiary RENAME TO beneficiary_old;
+--
+--CREATE TABLE "beneficiary" (
+--	"STATE"	NUMERIC,
+--	"HH_NUMBER"	TEXT,
+--	"BENEF_ID"	INTEGER,
+--	"HH_ID"	NUMERIC,
+--	"BENEF_CODE"	TEXT UNIQUE,
+--	"BENEF_NAME"	TEXT,
+--	"BENEF_NAME_LOCAL"	TEXT,
+--	"FAMILY_HEAD"	NUMERIC,
+--	"DOB"	TEXT,
+--	"GENDER"	TEXT,
+--	"BENEF_IMAGE_PATH"	TEXT,
+--	"MOBILE_NUMBER"	TEXT,
+--	"MOBILE_COMM"	TEXT,
+--	"EDU_LEVEL"	TEXT,
+--	"CREATE_DATE"	TEXT,
+--	"REF_DATA_ID"	NUMERIC,
+--	"RELATION_GUARDIAN"	TEXT,
+--	"GUARDIAN_NAME"	TEXT,
+--	"GUARDIAN_NAME_LOCAL"	TEXT,
+--	"RELIGION"	TEXT,
+--	"MARITAL_STATUS"	TEXT,
+--	"OCCUPATION"	TEXT,
+--	"NATIONAL_ID"	TEXT,
+--	"BIRTH_REG_NUMBER"	TEXT,
+--	"LAST_UPDATE_DATE"	NUMERIC DEFAULT (0),
+--	"FILE_KEY"	VARCHAR,
+--	"OCCUPATION_HER_HUSBAND"	TEXT,
+--	"MONTHLY_FAMILY_EXPENDITURE"	TEXT,
+--	PRIMARY KEY("BENEF_ID")
+--);
+--
+--INSERT INTO beneficiary SELECT * FROM beneficiary_old;
+--
+--ALTER TABLE beneficiary
+--ADD COLUMN RELIGION_OTHER_SPECIFIC TEXT;
+--
+--DROP TABLE IF EXISTS beneficiary_old;
+--
+--PRAGMA foreign_keys=off;
+--ALTER TABLE household RENAME TO household_old;
+--
+--CREATE TABLE "household" (
+--	"HH_ID"	INTEGER(11),
+--	"HH_NUMBER"	VARCHAR(20) UNIQUE,
+--	"LOCATION_ID"	INTEGER(11),
+--	"NO_OF_FAMILY_MEMBER"	INTEGER(2),
+--	"HH_GRADE"	VARCHAR(20),
+--	"CREATE_DATE"	NUMERIC(11),
+--	"REG_DATE"	NUMERIC,
+--	"LATITUDE"	NUMERIC(25, 20),
+--	"LONGITUDE"	NUMERIC(25, 20),
+--	"REF_DATA_ID"	NUMERIC,
+--	"STATE"	INTEGER(2),
+--	"SENT"	INTEGER(2),
+--	"UPDATE_HISTORY"	TEXT,
+--	"MONTHLY_FAMILY_EXPENDITURE"	TEXT,
+--	"HH_ADULT_WOMEN"	INTEGER,
+--	"HH_CHARACTER"	TEXT
+--);
+--INSERT INTO household SELECT * FROM household_old;
+--
+--DROP TABLE IF EXISTS household_old;
+--
+--
+--PRAGMA foreign_keys=on;
+--PRAGMA foreign_keys=off;
+--ALTER TABLE growth_measurement_param  ADD COLUMN OUTPUT_RESULT TEXT;
+--
+--ALTER TABLE growth_measurement_param ADD COLUMN IMPL_VERSION INTEGER ;
+--PRAGMA foreign_keys=on;
+
+
+COMMIT;

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <HorizontalScrollView
+        android:id="@+id/hsc_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/ll_tab_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+
+
+
+            <LinearLayout
+                android:id="@+id/llSentDoctorFeedback"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/border_rounded_corner_white"
+                android:gravity="center"
+                android:padding="5dp">
+
+                <ngo.friendship.satellite.views.MdiTextView
+                    android:id="@+id/mdiTabSentDoctorFeedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/mdi_sync"
+                    android:textColor="@color/ash_gray"
+                    android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/tvTabSentDoctorFeedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Sent Doctor Feedbacks"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_tiny" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llTabDoctorFeedback"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/border_rounded_corner_white"
+                android:gravity="center"
+                android:padding="5dp">
+
+                <ngo.friendship.satellite.views.MdiTextView
+                    android:id="@+id/mdiTabDoctorFeedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/mdi_arrow_down_circle_outline"
+                    android:textColor="@color/ash_gray"
+                    android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/tvTabDoctorFeedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Doctor Feedbacks"
+                    android:textColor="@color/text_deep"
+                    android:textSize="@dimen/font_size_tiny" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fvNotification"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hsc_view"
+        tools:layout="@android:layout/simple_gallery_item" />
+</androidx.constraintlayout.widget.ConstraintLayout>

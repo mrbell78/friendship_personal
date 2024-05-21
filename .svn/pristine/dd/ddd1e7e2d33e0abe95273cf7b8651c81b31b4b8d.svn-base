@@ -1,0 +1,560 @@
+package ngo.friendship.satellite.ui.product_management.activity;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+
+import ngo.friendship.satellite.App;
+import ngo.friendship.satellite.MainActivity;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.base.BaseActivity;
+import ngo.friendship.satellite.constants.ActivityDataKey;
+import ngo.friendship.satellite.constants.KEY;
+import ngo.friendship.satellite.databinding.ActivityProductRiseBinding;
+import ngo.friendship.satellite.interfaces.OnDialogButtonClick;
+import ngo.friendship.satellite.jsonoperation.JSONParser;
+import ngo.friendship.satellite.model.MedicineInfo;
+import ngo.friendship.satellite.ui.notification.NotificationActivity;
+import ngo.friendship.satellite.ui.product_management.adapter.ProductItemsAdapter_test;
+import ngo.friendship.satellite.utility.AppPreference;
+import ngo.friendship.satellite.utility.SystemUtility;
+import ngo.friendship.satellite.utility.TextUtility;
+import ngo.friendship.satellite.utility.Utility;
+import ngo.friendship.satellite.views.AppButton;
+import ngo.friendship.satellite.views.DialogView;
+
+public class ProductRiseActivity extends BaseActivity implements View.OnClickListener{
+    ActivityProductRiseBinding binding;
+    private ProductItemsAdapter_test adapter;
+    ArrayList<ngo.friendship.satellite.model.MedicineInfo> medicineList;
+    ArrayList<MedicineInfo> soldMedicineList;
+    String activityPath;
+    PopupMenu popupmenu;
+    int minteger = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityProductRiseBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        binding.toolbar.tvProductTitle.setText(getResources().getString(R.string.create_requisition));
+        binding.toolbar.actionCart.setVisibility(View.VISIBLE);
+        binding.toolbar.llCard.setVisibility(View.VISIBLE);
+        binding.toolbar.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                adapter.getFilter().filter(s);
+
+                return false;
+            }
+        });
+        binding.toolbar.llCard.setOnClickListener(view -> {
+
+            readDataFromView();
+            if (soldMedicineList.size() == 0) {
+                showOneButtonDialog(getResources().getString(R.string.empty_sold_medicine), R.drawable.error, Color.RED, "");
+                return;
+            }
+
+            Intent intent = new Intent(this, StockRaiseConfirmActivity.class);
+            intent.putExtra(ActivityDataKey.DATA, soldMedicineList);
+            intent.putExtra(ActivityDataKey.PARENT_NAME, this.getClass().getName());
+            intent.putExtra(ActivityDataKey.ACTIVITY_PATH, activityPath);
+            startActivity(intent);
+            finish();
+        });
+        binding.toolbar.ivSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopMenuDisplay();
+            }
+
+            public void PopMenuDisplay() {
+
+                popupmenu = new PopupMenu(ProductRiseActivity.this, binding.toolbar.ivSetting);
+
+                popupmenu.getMenuInflater().inflate(R.menu.invoice_popup, popupmenu.getMenu());
+
+                popupmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        Intent dataActivity = new Intent(ProductRiseActivity.this, InvoiceListActivity.class);
+                        startActivity(dataActivity);
+
+                        return true;
+                    }
+                });
+
+                popupmenu.show();
+
+            }
+        });
+
+        binding.toolbar.productPageNotification.setOnClickListener(view -> {
+            Intent notificationIntent = new Intent(ProductRiseActivity.this, NotificationActivity.class);
+            startActivity(notificationIntent);
+            Toast.makeText(ProductRiseActivity.this, "No notification", Toast.LENGTH_LONG).show();
+        });
+
+
+        medicineList = App.getContext().getDB().getCurrentMedicineStock(App.getContext().getUserInfo().getUserId(), false);
+
+        showMedicineList();
+
+//        setUpRecyclerView();
+
+
+
+        binding.mFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopMenuDisplay();
+            }
+
+            public void PopMenuDisplay() {
+
+                popupmenu = new PopupMenu(ProductRiseActivity.this, binding.mFilter);
+
+                popupmenu.getMenuInflater().inflate(R.menu.popup, popupmenu.getMenu());
+
+                popupmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        Toast.makeText(ProductRiseActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+
+                        return true;
+                    }
+                });
+
+                popupmenu.show();
+
+            }
+        });
+
+
+        //..................................................................
+
+
+        binding.bottomNavigationView.setOnClickListener(v -> {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, HomeFragment.newInstance()).commit();
+//
+//            binding.bottomNavigationView.getMenu().getItem(1).setChecked(true);
+        });
+        binding.bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
+
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            // NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
+            switch (id) {
+                case R.id.nav_product_rise:
+//                    startActivity(new Intent(this, RiseListActivity.class));
+
+//                    Intent dataActivity = new Intent(MainActivity.this, MyServiceActivity.class);
+//                    startActivity(dataActivity);
+//                    //  getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, Myser.newInstance()).commit();
+//                    item.setChecked(true);
+//                    binding.appBarMain.contentMain.btnHome.setImageResource(R.drawable.ic_home);
+//                    binding.appBarMain.contentMain.tvHome.setTextColor(getResources().getColor(R.color.ash_gray));
+                    return true;
+                case R.id.nav_bottom_home:
+                    startActivity(new Intent(this, ProductRiseActivity.class));
+
+//                    item.setChecked(true);
+                    return true;
+                case R.id.nav_product_adjust:
+
+//                    startActivity(new Intent(this, AdjustmentOpenActivity.class));
+
+                    return true;
+                //check id
+            }
+            return true;
+        });
+
+
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_product_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else if (id == R.id.nav_product_rise) {
+            // finish the activity
+
+//            startActivity(new Intent(this, RiseListActivity.class));
+            return true;
+        } else if (id == R.id.nav_product_adjust) {
+            startActivity(new Intent(this, ProductAdjustmentActivity.class));
+            return true;
+        } else if (id == R.id.all_invoice) {
+            startActivity(new Intent(this, InvoiceListActivity.class));
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showMedicineList() {
+        final TextView tvMedicineTotalPrice = findViewById(R.id.tv_total_medicine_price);
+        tvMedicineTotalPrice.setText("");
+
+        binding.llMedicineRowContainer.removeAllViews();
+        if (medicineList != null) {
+            int i = 0;
+            for (ngo.friendship.satellite.model.MedicineInfo medicineInfo : medicineList) {
+                View view = View.inflate(this, R.layout.products_items_list, null);
+                binding.llMedicineRowContainer.addView(view);
+
+
+                TextView tv = view.findViewById(R.id.tv_name);
+                tv.setText(medicineInfo.toString());
+
+                tv = view.findViewById(R.id.tv_type);
+                tv.setText(medicineInfo.getMedicineType());
+
+                tv = view.findViewById(R.id.tv_info_left);
+                tv.setText(TextUtility.format("%.2f", medicineInfo.getUnitSalesPrice()));
+
+                tv = view.findViewById(R.id.tv_info_right);
+                tv.setText(TextUtility.format("%d", medicineInfo.getCurrentStockQuantity()));
+                TextView etQty = view.findViewById(R.id.et_quantity);
+                CardView plus = view.findViewById(R.id.increase);
+                CardView minus = view.findViewById(R.id.decrease);
+                CardView plus2 = findViewById(R.id.increaseBlue);
+
+                plus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        String m = String.valueOf(0);
+                        int qty = Integer.parseInt(etQty.getText().toString().trim());
+
+                        m = String.valueOf(qty + 1);
+                        etQty.setText(m);
+
+                    }
+                });
+                minus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        String m = String.valueOf(0);
+                        int qty = Integer.parseInt(etQty.getText().toString().trim());
+                        m = String.valueOf(qty - 1);
+                        etQty.setText(m);
+                        if (qty<=0) {
+                            showOneButtonDialog(getResources().getString(R.string.empty_medicine), R.drawable.error, Color.RED, "");
+                            return;
+                        }
+
+                    }
+                });
+                etQty.setTag(i);
+                i++;
+
+
+
+
+//                binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                    @Override
+//                    public boolean onQueryTextSubmit(String query) {
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onQueryTextChange(String newText) {
+//                        medicineList.getFilter().filter(newText);
+//                        return false;
+//                    }
+//                });
+
+//                plus.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        EditText etQty = view.findViewById(R.id.et_quantity);
+//                        String qtyStr = etQty.getText().toString().trim();
+//                        String m = qtyStr+1;
+//                        etQty.setText(m);
+//                    }
+//                });
+//
+
+
+                etQty.addTextChangedListener(new TextWatcher() {
+
+                    @Override
+                    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                        // TODO Auto-generated method stub
+
+
+                    }
+
+                    @Override
+                    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                                  int arg3) {
+                        // TODO Auto-generated method stub
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable arg0) {
+                        try {
+
+
+                            int sellQty = Utility.parseInt(arg0.toString().trim());
+                            int rowIndex = (Integer) etQty.getTag();
+                            int currentStock = medicineList.get(rowIndex).getCurrentStockQuantity();
+                            JSONArray configArry = new JSONArray(AppPreference.getString(ProductRiseActivity.this, KEY.FCM_CONFIGURATION, "[]"));
+                            String val = JSONParser.getFcmConfigValue(configArry, "INVENTORY", "allow.0.inventory.product.consumption");
+                            Log.e("valData", val);
+
+
+                            if (!val.equalsIgnoreCase("YES")) {
+                                if (sellQty > currentStock) {
+                                    arg0.delete(arg0.length() - 1, arg0.length());
+                                    return;
+                                }
+                            }
+
+                            String totalPriceString = TextUtility.format("%s %.2f", "", getMedicineTotalPrice());
+                            tvMedicineTotalPrice.setText(totalPriceString);
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+
+                });
+
+
+            }
+        }
+    }
+
+
+//    private void increaseNumber() {
+//        minteger = minteger + 1;
+//        display(minteger);
+//
+//    }
+//
+//    private void display(int number) {
+//        p.setText("" + number);
+//    }
+
+
+    private double getMedicineTotalPrice() {
+        double totalPrice = 0;
+        for (int i = 0; i < binding.llMedicineRowContainer.getChildCount(); i++) {
+
+            View view = binding.llMedicineRowContainer.getChildAt(i);
+            EditText etQty = view.findViewById(R.id.et_quantity);
+            String qtyStr = etQty.getText().toString().trim();
+            if (Utility.parseLong(qtyStr) <= 0)
+                continue;
+
+            totalPrice += medicineList.get(i).getUnitSalesPrice() * Utility.parseLong(qtyStr);
+        }
+        return totalPrice;
+
+    }
+
+
+//    private void increaseInteger() {
+//        minteger = minteger + 1;
+////        display(minteger);
+//        plus2.setVisibility(View.VISIBLE);
+//        plus.setVisibility(View.GONE);
+//
+//        int medicinePrice = Integer.parseInt(mPrice.getText().toString());
+//        int medicineItems = Integer.parseInt(mValue.getText().toString());
+//
+//
+//        int result = (int) (medicinePrice * medicineItems);
+//        mAmount.setText(String.valueOf(result));
+////        exampleList.get(getPosition()).setResult(String.valueOf(result));
+////
+////        increaseTotalAmount();
+////        stockDecrease();
+//
+//    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_close:
+                this.finish();
+                break;
+
+//            case R.id.increase:
+//                Toast.makeText(this, "jhggfdgr", Toast.LENGTH_SHORT).show();
+//                break;
+
+            case R.id.btn_sell_medicine:
+                readDataFromView();
+                if (soldMedicineList.size() == 0) {
+                    showOneButtonDialog(getResources().getString(R.string.empty_sold_medicine), R.drawable.error, Color.RED, "");
+                    return;
+                }
+
+                Intent intent = new Intent(this, StockRaiseConfirmActivity.class);
+                intent.putExtra(ActivityDataKey.DATA, soldMedicineList);
+                intent.putExtra(ActivityDataKey.PARENT_NAME, this.getClass().getName());
+                intent.putExtra(ActivityDataKey.ACTIVITY_PATH, activityPath);
+                startActivity(intent);
+                finish();
+
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
+    private void showOneButtonDialog(String msg, final int imageId, int messageColor, final String type) {
+        HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_close);
+        DialogView exitDialog = new DialogView(this, R.string.dialog_title, msg, messageColor, imageId, buttonMap);
+        exitDialog.setOnDialogButtonClick(new OnDialogButtonClick() {
+
+            @Override
+            public void onDialogButtonClick(View view) {
+                if (type.equals("DATA_SEND")) {
+                    ProductRiseActivity.this.finish();
+                }
+
+            }
+        });
+        exitDialog.show();
+    }
+
+    private void readDataFromView() {
+        long timeMilisecond = Calendar.getInstance().getTimeInMillis();
+        soldMedicineList = new ArrayList<MedicineInfo>();
+        for (int i = 0; i < binding.llMedicineRowContainer.getChildCount(); i++) {
+
+            View view = binding.llMedicineRowContainer.getChildAt(i);
+            EditText etQty = view.findViewById(R.id.et_quantity);
+            String qtyStr = etQty.getText().toString().trim();
+
+            CardView plus = view.findViewById(R.id.increase);
+
+            if (Utility.parseLong(qtyStr) <= 0)
+                continue;
+
+            medicineList.get(i).setSoldQuantity(Utility.parseInt(qtyStr) + "");
+            medicineList.get(i).setUpdateTime(timeMilisecond);
+            soldMedicineList.add(medicineList.get(i));
+
+
+        }
+    }
+
+
+
+//    private void setUpRecyclerView() {
+//        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+//        recyclerView.setHasFixedSize(true);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+//        adapter = new ProductItemsAdapter_test(medicineList, this, this, this);
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setAdapter(adapter);
+//
+//    }
+
+//    @Override
+//    public void onPlusClick(int position, View v) {
+//        int count = medicineList.get(position).getCount() + 1;
+//        medicineList.get(position).setCount(count);
+//        int stock = Integer.parseInt(medicineList.get(position).getmMedicine_stock()) - 1;
+//        medicineList.get(position).setmMedicine_stock(String.valueOf(stock));
+//        float result = (medicineList.get(position).getCount() * Float.parseFloat(medicineList.get(position).getmMedicine_price()));
+//        medicineList.get(position).setResult(String.valueOf(result));
+//        adapter.notifyDataSetChanged();
+//        totalAmount();
+//
+//    }
+//
+//
+//    @Override
+//    public void onMinusClick(int position, View v) {
+//        int count = medicineList.get(position).getCount() - 1;
+//        medicineList.get(position).setCount(count);
+//        int stock = Integer.parseInt(medicineList.get(position).getmMedicine_stock()) + 1;
+//        medicineList.get(position).setmMedicine_stock(String.valueOf(stock));
+//        float result = (medicineList.get(position).getCount() * Float.parseFloat(medicineList.get(position).getmMedicine_price()));
+//        medicineList.get(position).setResult(String.valueOf(result));
+//        adapter.notifyDataSetChanged();
+//        totalAmount();
+//    }
+//
+//
+//    private void totalAmount() {
+//        int total = 0;
+//        for (MedicineInfo item : medicineList) {
+//            total += Float.parseFloat(item.getResult());
+//        }
+//        action_amount.setText(String.valueOf(total + ".00"));
+//
+//    }
+}

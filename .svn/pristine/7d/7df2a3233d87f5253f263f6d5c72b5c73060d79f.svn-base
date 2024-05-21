@@ -1,0 +1,22 @@
+package ngo.friendship.satellite.ui.product_management.Products_model;
+
+public class BeneficiaryNameModel {
+    int id;
+    String name;
+
+
+    public BeneficiaryNameModel(int id, String name) {
+        this.id = id;
+        this.name = name;
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+}

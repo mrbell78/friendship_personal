@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        tools:context=".ui.product_management.MyProductsActivity">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/custom_toolbarrturn" />
+
+        <include
+            android:id="@+id/layout_sync"
+            layout="@layout/layout_get_mydata" />
+
+
+        <LinearLayout
+            android:layout_below="@id/toolbar"
+            android:id="@+id/layout2"
+            android:background="#E8E8E8"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:background="#FFFFFF"
+                android:iconifiedByDefault="false"
+                android:padding="4dp"
+                android:queryBackground="@null"
+                android:queryHint="Search Product" />
+
+
+            <ngo.friendship.satellite.views.MdiTextView
+                android:id="@+id/mFilter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/mdi_filter"
+                android:textSize="@dimen/fontsize_large" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_below="@id/layout2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_below="@id/layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingRight="8dp">
+
+                <TextView
+                    android:id="@+id/medicine_name"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:paddingLeft="20dp"
+                    android:textAlignment="textStart"
+                    android:layout_height="match_parent"
+                    android:text="All Category"
+                    android:textColor="@color/black"
+                    android:textStyle="italic" />
+                <TextView
+
+                    android:id="@+id/mStock"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="16dp"
+                    android:layout_height="match_parent"
+                    android:text="Quantity"
+                    android:textStyle="italic"
+                    android:textColor="@color/black"
+                    />
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:gravity="end"
+                    android:layout_height="wrap_content"
+                    android:text="৳ "
+                    android:textColor="@color/black"
+                    android:textStyle="italic" />
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <ScrollView
+            android:layout_marginTop="40dp"
+            android:layout_below="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:id="@+id/ll_medicine_row_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recycler_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_below="@+id/layout2"-->
+<!--            android:layout_marginTop="2dp"-->
+<!--            android:divider="#BABABA"-->
+<!--            android:dividerHeight="2dp"-->
+<!--            android:paddingTop="40dp" />-->
+
+
+    </RelativeLayout>
+
+</layout>

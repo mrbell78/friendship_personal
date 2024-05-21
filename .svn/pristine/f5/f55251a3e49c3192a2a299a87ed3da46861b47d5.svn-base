@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="question_header"/>
+    <item type="id" name="question_body"/>
+    <item type="id" name="question_footer"/>
+    <item type="id" name="question_text_view"/>
+    <item type="id" name="question_number_view"/>
+    <item type="id" name="question_select_view"/>
+    <item type="id" name="question_multi_select_view"/>
+    <item type="id" name="question_list_view"/>
+    <item type="id" name="question_date_view"/>
+    <item type="id" name="question_media_audio_view"/>
+     <item type="id" name="question_media_camera_view"/>
+    <item type="id" name="question_time_view"/>
+    <item type="id" name="question_location_view"/>
+    <item type="id" name="question_prescription_view"/>
+    <item type="id" name="question_card_view"/>
+    <item type="id" name="question_referral_center_view"/>
+    <item type="id" name="from"/>
+    <item type="id" name="to"/>
+</resources>

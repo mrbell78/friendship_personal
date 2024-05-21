@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
+	<link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="jquery-ui.css">
+        <script src="jquery-1.10.2.js"></script>
+        <script src="jquery-ui.js"></script>
+        <script>
+            $(function() {
+                $("#accordion").accordion({
+                    collapsible: true
+                });
+            });
+        </script>
+  </head>
+  <body>
+  <div id="wrap" style="padding: 10px;">
+<div id="over" >
+<img src="images/mhealth_logo.png" style="display: block; margin: 0 auto;">
+<p style="margin: 0 auto; text-align:Center ; padding:10px;">
+<a href='version.html' style="margin:10px;font-size:20;" >Version: <span id="version">1.0.0</span></a></p>
+<p style="margin: 0 auto; text-align:Center">
+Release date:<span id="rdate">01/Sep/2023</span><br>
+Copyright © 2013 <a href='http://friendship-bd.org'>Friendship</a>. All rights reserved.
+</p>
+</div>
+		   <div class="page_content">
+		  
+		             <div id="accordion">
+                         <div>Version: 1.0.0<span style="float:right;" >Release Date: 01/Sep/2023</span></div>
+                         <div>
+                             <p> 1..</p>
+                         </div>
+                    </div>
+                </div>
+  </div>
+  </body>
+</html>

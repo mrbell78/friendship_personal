@@ -1,0 +1,52 @@
+package ngo.friendship.satellite.model;
+
+public class MedicineReceivedDetailModel {
+
+    private double price;
+    private  long medicine_received_dtl_id;
+
+    private long medicine_received_id;
+    private long medicine_id;
+
+    private double qty;
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public long getMedicine_received_dtl_id() {
+        return medicine_received_dtl_id;
+    }
+
+    public void setMedicine_received_dtl_id(long medicine_received_dtl_id) {
+        this.medicine_received_dtl_id = medicine_received_dtl_id;
+    }
+
+    public long getMedicine_received_id() {
+        return medicine_received_id;
+    }
+
+    public void setMedicine_received_id(long medicine_received_id) {
+        this.medicine_received_id = medicine_received_id;
+    }
+
+    public long getMedicine_id() {
+        return medicine_id;
+    }
+
+    public void setMedicine_id(long medicine_id) {
+        this.medicine_id = medicine_id;
+    }
+
+    public double getQty() {
+        return qty;
+    }
+
+    public void setQty(double qty) {
+        this.qty = qty;
+    }
+}

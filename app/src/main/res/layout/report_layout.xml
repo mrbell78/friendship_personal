@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mHealth="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/header_layout" />
+
+    <ListView
+        android:id="@+id/report_list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_margin="@dimen/square_distance"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/report_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/report_caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:textSize="@dimen/font_size_medium" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="2dp"
+            android:layout_height="wrap_content">
+
+            <ngo.friendship.satellite.views.AppButton
+                android:id="@+id/btn_pre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                mHealth:mdIcon="@string/mdi_arrow_left" />
+
+            <TextView
+                android:id="@+id/report_desc"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="2dp"
+                android:textSize="@dimen/font_size_small" />
+
+            <ngo.friendship.satellite.views.AppButton
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                mHealth:mdIcon="@string/mdi_arrow_right" />
+        </LinearLayout>
+
+
+
+        <TableLayout
+            android:id="@+id/report_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TableLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1">
+
+            <TableLayout
+                android:id="@+id/report_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></TableLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/app_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_color_mid"
+        android:orientation="horizontal"
+        android:padding="5dip">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ngo.friendship.satellite.views.AppButton
+                android:id="@+id/btn_back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                mHealth:mdIcon="@string/mdi_arrow_left"
+                mHealth:text="@string/btn_back" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,627 @@
+package ngo.friendship.satellite.ui.login;
+
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.Settings;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.databinding.DataBindingUtil;
+
+import org.json.JSONObject;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Calendar;
+import java.util.HashMap;
+
+import ngo.friendship.satellite.App;
+import ngo.friendship.satellite.LanguageContextWrapper;
+import ngo.friendship.satellite.MainActivity;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.asynctask.CommiunicationTask;
+import ngo.friendship.satellite.asynctask.DownloadFileTask;
+import ngo.friendship.satellite.asynctask.TaskKey;
+import ngo.friendship.satellite.communication.RequestData;
+import ngo.friendship.satellite.communication.ResponseData;
+import ngo.friendship.satellite.constants.ActivityDataKey;
+import ngo.friendship.satellite.constants.Constants;
+import ngo.friendship.satellite.constants.KEY;
+import ngo.friendship.satellite.constants.RequestName;
+import ngo.friendship.satellite.constants.RequestType;
+import ngo.friendship.satellite.databinding.LoginPinLayoutBinding;
+import ngo.friendship.satellite.interfaces.OnCompleteListener;
+import ngo.friendship.satellite.interfaces.OnDialogButtonClick;
+import ngo.friendship.satellite.interfaces.OnDownloadFileCompleteListener;
+import ngo.friendship.satellite.jsonoperation.JSONParser;
+import ngo.friendship.satellite.model.AppSettings;
+import ngo.friendship.satellite.model.AppVersionHistory;
+import ngo.friendship.satellite.model.UserInfo;
+import ngo.friendship.satellite.ui.LauncherActivity;
+import ngo.friendship.satellite.ui.LoginActivity;
+import ngo.friendship.satellite.ui.WebViewActivity;
+import ngo.friendship.satellite.utility.AppPreference;
+import ngo.friendship.satellite.utility.Base64;
+import ngo.friendship.satellite.utility.FileOperaion;
+import ngo.friendship.satellite.utility.SystemUtility;
+import ngo.friendship.satellite.utility.Utility;
+import ngo.friendship.satellite.views.DialogView;
+
+
+public class LoginPinActivity extends AppCompatActivity implements View.OnClickListener {
+
+    String inputUserCode;
+    String inputPass;
+    ProgressDialog dlog;
+    AppVersionHistory appVersionHistory = null;
+
+
+    public static boolean needServerAuthentication = false;
+    private String prevUserCode = "";
+    int time;
+
+    JSONObject notificaitonObj = new JSONObject();
+    LoginPinLayoutBinding binding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = LoginPinLayoutBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        setSupportActionBar(binding.toolbar);
+        setTitle("");
+        App.loadApplicationData(this);
+        // StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+//        StrictMode.setVmPolicy(builder.build());
+        Bundle b = getIntent().getExtras();
+        try {
+            String notifObject = b.getString("NOTIF_OBJECT");
+            notificaitonObj = new JSONObject(notifObject);
+            Log.e("SouceDes", notificaitonObj.toString());
+
+            // Toast.makeText(LoginPinActivity.this, "" + notificaitonObj, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        // TODO Auto-generated method stub
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+
+        LanguageContextWrapper.wrap(this, AppPreference.getString(this, KEY.LANGUAGE, AppSettings.DEFAULT_LANGUAGE));
+
+        String imgPath = App.getContext().getCommonDir(this) + File.separator + App.getContext().getUserInfo().getTitleLogoPathMobileDir();
+        if (FileOperaion.isExist(imgPath)) {
+            ((ImageView) findViewById(R.id.mhealth_logo)).setImageBitmap(FileOperaion.decodeImageFile(imgPath, 100));
+        }
+
+
+        if (!SystemUtility.isAutoTimeEnabled(this)) {
+            SystemUtility.openDateTimeSettingsActivity(this);
+        }
+
+
+        binding.tvOne.setOnClickListener(this);
+        binding.tvTwo.setOnClickListener(this);
+        binding.tvThree.setOnClickListener(this);
+        binding.tvFour.setOnClickListener(this);
+        binding.tvFive.setOnClickListener(this);
+        binding.tvSix.setOnClickListener(this);
+        binding.tvSeven.setOnClickListener(this);
+        binding.tvEight.setOnClickListener(this);
+        binding.tvNine.setOnClickListener(this);
+        binding.tvZero.setOnClickListener(this);
+        binding.btnBackspace.setOnClickListener(this);
+
+        binding.tvVersionName.setText(Utility.getVersionName(this));
+
+        readSavedDataAndShow();
+        showVersionNotification();
+
+
+        //spcialPermissionCheckOnAlarmManager(LoginPinActivity.this);
+
+    }
+
+    private void spcialPermissionCheckOnAlarmManager(Context ctx) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            AlarmManager alarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+            boolean hasPermission = alarmManager.canScheduleExactAlarms();
+            if (!hasPermission) {
+                try {
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                    Uri uri = Uri.fromParts("package", this.getPackageName(), null);
+                    intent.setData(uri);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    private void showVersionNotification() {
+        Log.e("LOGIN_ACTIVITY", "on resume call");
+        TextView txtNoticicatuion = findViewById(R.id.txt_notification);
+        txtNoticicatuion.setVisibility(View.GONE);
+
+        appVersionHistory = App.getContext().getDB().getVersionHistory(Utility.getAppVersionCode(this), App.getContext().getAppSettings().getLanguage());
+        if (appVersionHistory != null && appVersionHistory.getVersionNumber() > Utility.getAppVersionCode(this)) {
+            txtNoticicatuion.setVisibility(View.VISIBLE);
+            txtNoticicatuion.setTag(appVersionHistory);
+            txtNoticicatuion.setText(appVersionHistory.getUpdateNotification());
+            txtNoticicatuion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showInstallConfirmationPrompt(appVersionHistory);
+
+                }
+            });
+        } else if (appVersionHistory != null && appVersionHistory.getVersionNumber() == Utility.getAppVersionCode(this) && appVersionHistory.getInstallFlag().equalsIgnoreCase(AppVersionHistory.FLAG_OPENED)) {
+            appVersionHistory.setInstallFlag(AppVersionHistory.FLAG_INSTALLED);
+            appVersionHistory.setInstallDate(Calendar.getInstance().getTimeInMillis());
+            App.getContext().getDB().updateAppVersionHistory(appVersionHistory);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+
+    private void readSavedDataAndShow() {
+        UserInfo userInfo = App.getContext().getUserInfo();
+        if (userInfo.getUserId() > 0) {
+            binding.tvFcmCode.setText(App.getContext().getUserInfo().getUserCode());
+            binding.tvFcmName.setText(userInfo.getUserName());
+//            binding.tvAppTitle.setText(userInfo.getAppTitleMobile());
+            binding.tvCompanyName.setText(userInfo.getOrgName());
+            if (userInfo.getProfilePicInString() != null && !userInfo.getProfilePicInString().equals("") && userInfo.getProfilePicInString().length() > 7) {
+                InputStream stream;
+                try {
+                    stream = new ByteArrayInputStream(Base64.decode(userInfo.getProfilePicInString()));
+                    Bitmap bitmap = BitmapFactory.decodeStream(stream);
+
+                    binding.ivFcmPic.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+    }
+
+
+    /**
+     * Start the login process.
+     */
+    private void tryLogin() {
+        String password = binding.tvPin1.getText().toString() + binding.tvPin2.getText().toString() + binding.tvPin3.getText().toString() + binding.tvPin4.getText().toString();
+        if (password.equals(App.getContext().getUserInfo().getPassword())) {
+            AppPreference.putString(this, KEY.IS_USER_LOGINNED, "YES");
+            if (notificaitonObj.length() > 0) {
+                try {
+//                    Intent j = new Intent(this, MainActivity.class);
+//                    j.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                    startActivity(j);
+//                    startActivity(new Intent(LoginPinActivity.this, NotificationShowActivity.class));
+
+                } catch (Exception e) {
+                    Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    // startActivity(new Intent(LoginPinActivity.this, MainDashboardActivity.class));
+                    e.printStackTrace();
+                }
+
+            } else {
+                startActivity(new Intent(LoginPinActivity.this, MainActivity.class));
+            }
+
+            //finish();
+            clearPin();
+
+        } else {
+            clearPin();
+            HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+            buttonMap.put(1, R.string.btn_close);
+            DialogView exitDialog = new DialogView(this, R.string.dialog_title, R.string.login_failed, Color.RED, R.drawable.error, buttonMap);
+            exitDialog.setOnDialogButtonClick(new OnDialogButtonClick() {
+                @Override
+                public void onDialogButtonClick(View view) {
+                    clearPin();
+                }
+            });
+            exitDialog.show();
+        }
+    }
+
+    private void clearPin() {
+        binding.tvPin1.setText("");
+        binding.tvPin2.setText("");
+        binding.tvPin3.setText("");
+        binding.tvPin4.setText("");
+        binding.tvPin1.setBackgroundResource(R.drawable.circle_pin_normal);
+        binding.tvPin2.setBackgroundResource(R.drawable.circle_pin_normal);
+        binding.tvPin3.setBackgroundResource(R.drawable.circle_pin_normal);
+        binding.tvPin4.setBackgroundResource(R.drawable.circle_pin_normal);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+
+
+            case R.id.tv_one:
+            case R.id.tv_two:
+            case R.id.tv_three:
+            case R.id.tv_four:
+            case R.id.tv_five:
+            case R.id.tv_six:
+            case R.id.tv_seven:
+            case R.id.tv_eight:
+            case R.id.tv_nine:
+            case R.id.tv_zero:
+
+                String txt = ((TextView) view).getText().toString();
+
+                if (binding.tvPin1.getText().toString().equals("")) {
+                    binding.tvPin1.setText(txt);
+                    binding.tvPin1.setBackgroundResource(R.drawable.circle_pin_fill);
+
+                } else if (binding.tvPin2.getText().toString().equals("")) {
+                    binding.tvPin2.setText(txt);
+                    binding.tvPin2.setBackgroundResource(R.drawable.circle_pin_fill);
+
+                } else if (binding.tvPin3.getText().toString().equals("")) {
+                    binding.tvPin3.setText(txt);
+                    binding.tvPin3.setBackgroundResource(R.drawable.circle_pin_fill);
+
+                } else if (binding.tvPin4.getText().toString().equals("")) {
+                    binding.tvPin4.setText(txt);
+                    binding.tvPin4.setBackgroundResource(R.drawable.circle_pin_fill);
+
+
+                    Handler handler = new Handler();
+                    Runnable r = new Runnable() {
+                        public void run() {
+                            tryLogin();
+                        }
+                    };
+                    handler.postDelayed(r, 200); // 200 milliseconds
+
+
+                }
+
+                break;
+
+            case R.id.btn_backspace:
+                if (!binding.tvPin4.getText().toString().equals("")) {
+                    binding.tvPin4.setBackgroundResource(R.drawable.circle_pin_normal);
+                    binding.tvPin4.setText("");
+
+                } else if (!binding.tvPin3.getText().toString().equals("")) {
+                    binding.tvPin3.setBackgroundResource(R.drawable.circle_pin_normal);
+                    binding.tvPin3.setText("");
+
+                } else if (!binding.tvPin2.getText().toString().equals("")) {
+                    binding.tvPin2.setBackgroundResource(R.drawable.circle_pin_normal);
+                    binding.tvPin2.setText("");
+
+                } else if (!binding.tvPin1.getText().toString().equals("")) {
+                    binding.tvPin1.setBackgroundResource(R.drawable.circle_pin_normal);
+                    binding.tvPin1.setText("");
+
+                }
+
+                break;
+
+//            case R.id.ll_other_option:
+//                openOptionsMenu();
+//                break;
+
+            default:
+                break;
+        }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // TODO Auto-generated method stub
+        getMenuInflater().inflate(R.menu.menu_login_pin, menu);
+        MenuItem menuItem = menu.findItem(R.id.menu_app_mode_switch);
+        if (AppPreference.LIVE.equals(AppPreference.getAppMode(this))) {
+
+            menuItem.setTitle(R.string.switch_to_training);
+        } else {
+            menuItem.setTitle(R.string.switch_to_live);
+        }
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                DialogView.showAdminLoginDialog(this);
+                return true;
+
+            case R.id.menu_update:
+
+                if (SystemUtility.isConnectedToInternet(LoginPinActivity.this)) {
+
+                    try {
+                        RequestData request = new RequestData(RequestType.USER_GATE, RequestName.APP_VERSION_HISTORY, Constants.MODULE_DATA_GET);
+                        HashMap<String, String> refTable = new HashMap<String, String>();
+                        refTable.put(KEY.APP_VERSION_NUMBER, " ");
+                        request.setParam1(Utility.getTableRef(refTable, this));
+                        request.getParam1().put("TYPE", "FORCE");
+                        CommiunicationTask commiunicationTask = new CommiunicationTask(this, request, R.string.retrieving_data, R.string.please_wait);
+                        commiunicationTask.setCompleteListener(new OnCompleteListener() {
+
+                            @Override
+                            public void onComplete(Message msg) {
+                                if (msg.getData().containsKey(TaskKey.ERROR_MSG)) {
+                                    String errorMsg = (String) msg.getData().getSerializable(TaskKey.ERROR_MSG);
+                                    App.showMessageDisplayDialog(LoginPinActivity.this, getResources().getString(R.string.network_error), R.drawable.error, Color.RED);
+                                } else {
+                                    ResponseData response = (ResponseData) msg.getData().getSerializable(TaskKey.DATA0);
+                                    if (response.getResponseCode().equalsIgnoreCase("00")) {
+                                        App.showMessageDisplayDialog(LoginPinActivity.this, response.getErrorCode() + "-" + response.getErrorDesc(), R.drawable.error, Color.RED);
+                                    } else {
+                                        try {
+                                            AppVersionHistory avh = null;
+                                            if (response.getResponseCode().equalsIgnoreCase("01") && response.getDataJson().has("APP_VERSION_HISTORY")) {
+                                                avh = JSONParser.parseAppVersionHistoryJSON(response.getDataJson().getJSONObject("APP_VERSION_HISTORY"));
+                                            }
+                                            if (avh != null) {
+                                                App.getContext().getDB().saveAppVersionHistoryOnReceived(avh);
+                                                Log.e("AppVersionHistory save", avh.toString());
+                                                avh.setInstallFlag(AppVersionHistory.FLAG_RECEIVED);
+                                                showInstallConfirmationPrompt(avh);
+                                            } else {
+                                                App.showMessageDisplayDialog(LoginPinActivity.this, getResources().getString(R.string.no_app_update_available), R.drawable.information, Color.BLACK);
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+
+                            }
+                        });
+                        commiunicationTask.execute();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    SystemUtility.openInternetSettingsActivity(LoginPinActivity.this);
+                }
+
+                return true;
+            case R.id.menu_app_mode_switch:
+                if (!App.getContext().isDemo()) {
+                    changeAppMode(this);
+                } else {
+                    HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+                    buttonMap.put(1, R.string.btn_close);
+                    DialogView dialog = new DialogView(this, R.string.dialog_title, R.string.not_aplicable_for_demo, R.drawable.warning, buttonMap);
+                    dialog.show();
+
+                }
+
+                return true;
+            case R.id.menu_switch:
+                startActivity(new Intent(this, LoginActivity.class));
+                return true;
+            case R.id.menu_about:
+                startActivity(new Intent(this, WebViewActivity.class).putExtra(ActivityDataKey.WEB_URL, "file:///android_asset/html/about.html").putExtra(ActivityDataKey.TYPE, "ABOUT"));
+                return true;
+
+            case R.id.menu_my_device:
+                DialogView.showDeviceIDDialog(this);
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showInstallConfirmationPrompt(final AppVersionHistory appVersionHistory) {
+        HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_yes);
+        buttonMap.put(2, R.string.btn_no);
+        DialogView exitDialog = new DialogView(this, R.string.dialog_title, appVersionHistory.getUpdateDesc(), R.drawable.information, buttonMap);
+        exitDialog.setOnDialogButtonClick(new OnDialogButtonClick() {
+
+            @Override
+            public void onDialogButtonClick(View view) {
+                switch (view.getId()) {
+                    case 1:
+                        if (appVersionHistory.getInstallFlag() != null && appVersionHistory.getInstallFlag().equals(AppVersionHistory.FLAG_OPENED) && appVersionHistory.getAppPathLocal() != null && new File(appVersionHistory.getAppPathLocal()).exists()) {
+//						File apk = new File(appVersionHistory.getAppPathLocal());
+//						Intent i = new Intent();
+//						i.setAction(Intent.ACTION_VIEW);
+//						i.setDataAndType(Uri.fromFile(apk), "application/vnd.android.package-archive");
+//						startActivity(i);
+//						LoginPinActivity.this.finish();
+                            File apk = new File(appVersionHistory.getAppPathLocal());
+                            Intent i = new Intent();
+                            i.setAction(Intent.ACTION_VIEW);
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                Uri apkURI = FileProvider.getUriForFile(
+                                        getApplicationContext(),
+                                        getApplicationContext().getPackageName() + ".provider", apk);
+                                i = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                                i.setData(apkURI);
+                                i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                                // i.setDataAndType(Uri.fromFile(apk), "application/vnd.android.package-archive");
+
+                            } else {
+                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                Uri apkURI = FileProvider.getUriForFile(
+                                        getApplicationContext(),
+                                        getApplicationContext().getPackageName() + ".provider", apk);
+                                i.setDataAndType(apkURI, "application/vnd.android.package-archive");
+                                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            }
+                            startActivity(i);
+                            LoginPinActivity.this.finish();
+                        } else {
+                            if (SystemUtility.isConnectedToInternet(LoginPinActivity.this)) {
+                                //String outpath = App.getContext().getCommonDir(LoginPinActivity.this);
+                                String outpath = App.getContext().getApkDir(LoginPinActivity.this);
+                                DownloadFileTask downloadFileTask = new DownloadFileTask(LoginPinActivity.this, appVersionHistory.getAppPath(), outpath);
+                                downloadFileTask.setOnDownloadFileCompleteListener(new OnDownloadFileCompleteListener() {
+                                    @Override
+                                    public void OnDownloadFileCompleteListener(String filePath) {
+//							         if (filePath==null ) return ;
+//									appVersionHistory.setInstallFlag(AppVersionHistory.FLAG_OPENED);
+//									appVersionHistory.setAppPathLocal(filePath);
+//									appVersionHistory.setOpenDate(Calendar.getInstance().getTimeInMillis());
+//									App.getContext().getDB().updateAppVersionHistory(appVersionHistory);
+//
+//									File apk = new File(filePath);
+//									Intent i = new Intent();
+//									i.setAction(Intent.ACTION_VIEW);
+//									i.setDataAndType(Uri.fromFile(apk), "application/vnd.android.package-archive");
+//									startActivity(i);
+//									LoginPinActivity.this.finish();
+                                        if (filePath == null) return;
+                                        appVersionHistory.setInstallFlag(AppVersionHistory.FLAG_OPENED);
+                                        appVersionHistory.setAppPathLocal(filePath);
+                                        appVersionHistory.setOpenDate(Calendar.getInstance().getTimeInMillis());
+                                        App.getContext().getDB().updateAppVersionHistory(appVersionHistory);
+
+                                        File apk = new File(filePath);
+                                        Intent i = new Intent();
+                                        i.setAction(Intent.ACTION_VIEW);
+                                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+                                            i.setDataAndType(Uri.fromFile(apk), "application/vnd.android.package-archive");
+                                        } else {
+                                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            Uri apkURI = FileProvider.getUriForFile(
+                                                    getApplicationContext(),
+                                                    getApplicationContext().getPackageName() + ".provider", apk);
+                                            i.setDataAndType(apkURI, "application/vnd.android.package-archive");
+                                            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        }
+
+                                        startActivity(i);
+
+                                        // for next release remove database because of interview table has new data
+                                        //added on 6th May,2021
+//									removeLocalDatabase();
+//									App.loadApplicationData(LoginPinActivity.this);
+                                        // end
+
+                                        LoginPinActivity.this.finish();
+                                    }
+                                });
+                                downloadFileTask.execute();
+                            } else {
+                                SystemUtility.openInternetSettingsActivity(LoginPinActivity.this);
+                            }
+                        }
+                        break;
+                }
+            }
+        });
+        exitDialog.showWebView();
+    }
+
+    public void changeAppMode(final Activity context) {
+        final String appMode = AppPreference.getAppMode(context);
+        HashMap<Integer, Object> buttonMap = new HashMap<Integer, Object>();
+        buttonMap.put(1, R.string.btn_ok);
+        buttonMap.put(2, R.string.btn_close);
+        DialogView dialogView = new DialogView(context, R.string.dialog_title, appMode.equals(AppPreference.LIVE) ? R.string.switch_app_mode_traning : R.string.switch_app_mode_live, R.color.warning, R.drawable.warning, buttonMap);
+        dialogView.setOnDialogButtonClick(new OnDialogButtonClick() {
+            @Override
+            public void onDialogButtonClick(View view) {
+                switch (view.getId()) {
+                    case 1:
+                        AppPreference.changeAppMode(context, appMode);
+                        context.finish();
+                        startActivity(new Intent(context, LauncherActivity.class));
+                        break;
+                }
+            }
+        });
+        dialogView.show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        App.getContext().onStartActivity(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        App.getContext().onStartActivity(this);
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(LanguageContextWrapper.wrap(context, AppPreference.getString(context, KEY.LANGUAGE, AppSettings.DEFAULT_LANGUAGE)));
+    }
+
+    private void removeLocalDatabase() {
+        App.getContext().getDB().deleteDb();
+        App.getContext().deleteDir(new File(App.getContext().getQuestionnaireJSONDir(LoginPinActivity.this)));
+        App.getContext().deleteDir(new File(App.getContext().getBeneficiaryImageDir(LoginPinActivity.this)));
+        App.getContext().deleteDir(new File(App.getContext().getVoiceFileDir(LoginPinActivity.this)));
+
+        App.getContext().setDBManager(null);
+        App.getContext().setAppSettings(null);
+        App.getContext().loadApplicationData(LoginPinActivity.this);
+    }
+
+}
+
+
+

@@ -1,0 +1,146 @@
+package ngo.friendship.satellite.ui.product_management.activity.CommonBeneficiaryActivity;
+
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.content.Intent;
+import android.content.res.TypedArray;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+
+import com.softrunapps.paginatedrecyclerview.PaginatedAdapter;
+
+import java.util.ArrayList;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.adapter.BeneficiaryPageListAdapter;
+import ngo.friendship.satellite.base.BaseActivity;
+import ngo.friendship.satellite.databinding.ActivityCommonBeneficiaryBinding;
+import ngo.friendship.satellite.model.Beneficiary;
+import ngo.friendship.satellite.ui.earlier_services.EarlierServiceViewModel;
+import ngo.friendship.satellite.ui.product_management.activity.ProductRiseActivity;
+import ngo.friendship.satellite.ui.product_management.activity.StockRaiseConfirmActivity;
+import ngo.friendship.satellite.viewmodels.OfflineViewModel;
+import ngo.friendship.satellite.views.AppToast;
+
+@AndroidEntryPoint
+public class CommonBeneficiaryActivity extends BaseActivity  {
+
+    ActivityCommonBeneficiaryBinding binding;
+    ArrayList<Beneficiary> beneficiaryList = new ArrayList<>();
+    ArrayList<Beneficiary> filterBeneficiaryList = new ArrayList<>();
+    OfflineViewModel mainViewModel;
+
+   // EarlierServiceViewModel CommonViewModel;
+   CommonServiceViewModel commonViewModel;
+    BeneficiaryPageListAdapter adapter;
+
+    int pageSize = 15;
+    private int currentPage = 0;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityCommonBeneficiaryBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        mainViewModel = new ViewModelProvider(this).get(OfflineViewModel.class);
+        commonViewModel = new ViewModelProvider(this).get(CommonServiceViewModel.class);
+
+        mainViewModel.getBeneficiaryList("").observe(this, beneficiariesList -> {
+            beneficiaryList = beneficiariesList;
+            getbenefListAdapter();
+        });
+
+        this.setFinishOnTouchOutside(false);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.x =-20;
+        params.height = displayMetrics.heightPixels-200;
+        params.width = displayMetrics.widthPixels-100;
+        params.y =-10;
+
+
+        this.getWindow().setAttributes(params);
+    }
+
+    private void getbenefListAdapter() {
+
+        adapter = new BeneficiaryPageListAdapter(CommonBeneficiaryActivity.this);
+        adapter.setDefaultRecyclerView(this, R.id.rvCommonBenefList);
+        adapter.setStartPage(1); //set first page of data. default value is 1.
+        adapter.setPageSize(pageSize); //set page data size. default value is 10.
+
+        adapter.setOnSelectBenfClickListener(new BeneficiaryPageListAdapter.OnSelectBenfClickListener() {
+            @Override
+            public void onSelectBenfClick(Beneficiary item) {
+                AppToast.showToast(CommonBeneficiaryActivity.this, item.getBenefName());
+                commonViewModel.selectedItem(item);
+                onBackPressed();
+            }
+        });
+
+        adapter.setOnPaginationListener(new PaginatedAdapter.OnPaginationListener() {
+            @Override
+            public void onCurrentPage(int page) {
+                //Toast.makeText(MainActivity.this, "Page " + page + " loaded!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNextPage(int page) {
+                getNewItems(page);
+            }
+
+            @Override
+            public void onFinish() {
+                // Toast.makeText(MainActivity.this, "finish", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//        onGetDate(beneficiaryList);
+        binding.rvCommonBenefList.setAdapter(adapter);
+        getNewItems(adapter.getStartPage());
+
+        int[] ATTRS = new int[]{android.R.attr.listDivider};
+        TypedArray a = obtainStyledAttributes(ATTRS);
+
+//        Drawable divider = a.getDrawable(0);
+//        InsetDrawable insetDivider = new InsetDrawable(divider, 0, 16, 0, 4);
+//        a.recycle();
+//        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+//        itemDecoration.setDrawable(insetDivider);
+//        binding.rvCommonBenefList.addItemDecoration(itemDecoration);
+        binding.rvCommonBenefList.setHasFixedSize(true);
+        binding.rvCommonBenefList.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvCommonBenefList.setItemAnimator(new DefaultItemAnimator());
+//        adapter.setItems(beneficiaryList);
+    }
+
+    private void getNewItems(final int page) {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<Beneficiary> users = new ArrayList<>();
+                int start = page * pageSize - pageSize;
+                int end = page * pageSize;
+                for (int i = start; i < end; i++) {
+                    if (i < beneficiaryList.size()) {
+                        users.add(beneficiaryList.get(i));
+                    }
+                }
+                onGetDate(users);
+            }
+        }, 500);
+    }
+
+    public void onGetDate(ArrayList<Beneficiary> users) {
+        adapter.submitItems(users);
+
+    }
+}

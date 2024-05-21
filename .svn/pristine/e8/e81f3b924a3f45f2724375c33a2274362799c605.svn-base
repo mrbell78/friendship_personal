@@ -1,0 +1,637 @@
+package ngo.friendship.satellite.ui
+
+import android.app.AlertDialog
+import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
+import android.os.Message
+import android.preference.CheckBoxPreference
+import android.preference.ListPreference
+import android.preference.Preference
+import android.preference.Preference.OnPreferenceChangeListener
+import android.preference.Preference.OnPreferenceClickListener
+import android.preference.PreferenceActivity
+import android.preference.PreferenceScreen
+import android.util.Log
+import android.util.TypedValue
+import android.view.View
+import android.webkit.URLUtil
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import ngo.friendship.satellite.App
+import ngo.friendship.satellite.LanguageContextWrapper
+import ngo.friendship.satellite.R
+import ngo.friendship.satellite.asynctask.CommiunicationTask
+import ngo.friendship.satellite.asynctask.TaskKey
+import ngo.friendship.satellite.asynctask.async.AsyncTask
+import ngo.friendship.satellite.communication.RequestData
+import ngo.friendship.satellite.communication.ResponseData
+import ngo.friendship.satellite.constants.ActivityDataKey
+import ngo.friendship.satellite.constants.Constants
+import ngo.friendship.satellite.constants.KEY
+import ngo.friendship.satellite.constants.RequestName
+import ngo.friendship.satellite.constants.RequestType
+import ngo.friendship.satellite.interfaces.OnCompleteListener
+import ngo.friendship.satellite.interfaces.OnDialogButtonClick
+import ngo.friendship.satellite.model.AppSettings
+import ngo.friendship.satellite.model.MyPreferenceCategory
+import ngo.friendship.satellite.utility.AppPreference
+import ngo.friendship.satellite.utility.SystemUtility
+import ngo.friendship.satellite.utility.TextUtility
+import ngo.friendship.satellite.utility.WebServerCommunication
+import ngo.friendship.satellite.views.DialogView
+import org.apache.http.conn.ConnectTimeoutException
+import org.apache.http.conn.HttpHostConnectException
+import org.json.JSONArray
+import org.json.JSONException
+import java.io.File
+import java.net.SocketTimeoutException
+
+class SettingsPreferenceActivity() : PreferenceActivity(), OnPreferenceChangeListener {
+    private val VOID_DATA_VERSION = 1
+    private val REMOVE_LOCAL_DATA = 2
+    private val UPLOAD_LOCAL_DATABASE = 3
+    var dlog: ProgressDialog? = null
+    var prevLangCode: String? = null
+
+    /** The prev host.  */
+    var prevHost: String? = null
+
+    /** The prev alter host.  */
+    var prevAlterHost: String? = null
+
+    /** The cur host.  */
+    var curHost: String? = null
+
+    /** The cur alter host.  */
+    var curAlterHost: String? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        App.loadApplicationData(this)
+        setContentView(R.layout.preference_layout)
+        preferenceScreen = createPreferenceHierarchy()
+        listView.cacheColorHint = Color.TRANSPARENT
+        title = "" + resources.getString(R.string.upcoming_schedule)
+
+
+        /*
+		 * Change the preference screen color to white background and black text
+		 */setTheme(R.style.BlackText)
+        listView.setBackgroundColor(Color.WHITE)
+        prevLangCode = App.getContext().appSettings.language
+        prevHost = App.getContext().appSettings.hostAddress
+        prevAlterHost = App.getContext().appSettings.alternateHostAddress
+        curHost = App.getContext().appSettings.hostAddress
+        curAlterHost = App.getContext().appSettings.alternateHostAddress
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (App.getContext().appSettings == null) App.getContext().readAppSettings(this)
+        if (!SystemUtility.isAutoTimeEnabled(this)) {
+            SystemUtility.openDateTimeSettingsActivity(this)
+        }
+    }
+
+    /**
+     * Show Gate way dialog.
+     */
+    private fun showMHealthGateWayDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setCancelable(false)
+        val view = View.inflate(this, R.layout.mhealth_gateway_dialog_layout, null)
+        builder.setView(view)
+        val dialog = builder.create()
+        val etUrl1 = view.findViewById<EditText>(R.id.et_url_1)
+        val etUrl2 = view.findViewById<EditText>(R.id.et_url_2)
+        App.loadApplicationData(this)
+        etUrl1.setText(App.getContext().appSettings.hostAddress)
+        etUrl2.setText(App.getContext().appSettings.alternateHostAddress)
+        val btnCancel = view.findViewById<Button>(R.id.btn_cancel)
+        btnCancel.setOnClickListener(View.OnClickListener { dialog.dismiss() })
+        val btnSave = view.findViewById<Button>(R.id.btn_save)
+        btnSave.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(arg0: View) {
+
+                /*
+				 * Save user input
+				 */
+                val hostAddr = etUrl1.text.toString().trim { it <= ' ' }
+                val alternateAddr = etUrl2.text.toString().trim { it <= ' ' }
+                App.getContext().appSettings.hostAddress = hostAddr
+                App.getContext().appSettings.alternateHostAddress = alternateAddr
+                AppPreference.putString(
+                    this@SettingsPreferenceActivity,
+                    KEY.MHEALTH_SERVER,
+                    hostAddr
+                )
+                AppPreference.putString(
+                    this@SettingsPreferenceActivity,
+                    KEY.ALTERNATIVE_SERVER,
+                    alternateAddr
+                )
+                curHost = hostAddr
+                curAlterHost = alternateAddr
+                dialog.dismiss()
+            }
+        })
+        val btnCheckUrl1 = view.findViewById<Button>(R.id.btn_check_url_1)
+        btnCheckUrl1.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(arg0: View) {
+                checkURL(etUrl1.text.toString().trim { it <= ' ' })
+            }
+        })
+        val btnCheckUrl2 = view.findViewById<Button>(R.id.btn_check_url_2)
+        btnCheckUrl2.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                checkURL(etUrl2.text.toString().trim { it <= ' ' })
+            }
+        })
+        dialog.setCancelable(false)
+        dialog.show()
+    }
+
+    /**
+     * Check the gate way if it is working.
+     *
+     * @param url
+     * is the gate way URL
+     */
+    private fun checkURL(url: String) {
+        if (SystemUtility
+                .isConnectedToInternet(this@SettingsPreferenceActivity)
+        ) {
+            if (url.equals("", ignoreCase = true)) {
+                showOneButtonDialog(
+                    R.string.dialog_title, "Empty URL field",
+                    Color.RED, R.string.btn_close, R.drawable.error
+                )
+            } else if (!URLUtil.isValidUrl(url)) {
+                showOneButtonDialog(
+                    R.string.dialog_title, "Invalid URL",
+                    Color.RED, R.string.btn_close, R.drawable.error
+                )
+            } else {
+                dlog = ProgressDialog.show(
+                    this@SettingsPreferenceActivity,
+                    "Checking server", "Please wait..."
+                )
+                CheckUrlTask(url).execute()
+            }
+        } else {
+            SystemUtility
+                .openInternetSettingsActivity(this@SettingsPreferenceActivity)
+        }
+    }
+
+    internal inner class CheckUrlTask(var url: String) : AsyncTask<Void, Void, String>() {
+        var colorId = 0
+        var imageId = 0
+        protected override fun doInBackground(params: Void): String {
+            var statusCode = -1
+            try {
+                statusCode = WebServerCommunication.checkGateway(url)
+            } catch (e: HttpHostConnectException) {
+                val sb = StringBuilder()
+                sb.append("Application unavailable.")
+                sb.append("\n")
+                sb.append(e.message)
+                colorId = Color.RED
+                imageId = R.drawable.error
+                e.printStackTrace()
+                return sb.toString()
+            } catch (e: ConnectTimeoutException) {
+                val sb = StringBuilder()
+                sb.append("Server unreachable.")
+                sb.append("\n")
+                sb.append(e.message)
+                colorId = Color.RED
+                imageId = R.drawable.error
+                e.printStackTrace()
+                return sb.toString()
+            } catch (e: SocketTimeoutException) {
+                val sb = StringBuilder()
+                sb.append("Server unreachable.")
+                sb.append("\n")
+                sb.append(e.message)
+                colorId = Color.RED
+                imageId = R.drawable.error
+                e.printStackTrace()
+                return sb.toString()
+            } catch (e: Exception) {
+                val sb = StringBuilder()
+                sb.append("Uncategorize exception")
+                sb.append("\n")
+                sb.append(e.message)
+                colorId = Color.RED
+                imageId = R.drawable.error
+                e.printStackTrace()
+                return sb.toString()
+            }
+            if (statusCode > 0) {
+                if (statusCode == 200) {
+                    colorId = Color.BLACK
+                    imageId = R.drawable.information
+                    return "200 - Server is working"
+                } else {
+                    colorId = Color.RED
+                    imageId = R.drawable.error
+                    return "$statusCode - Something is wrong at the server"
+                }
+            } else {
+                colorId = Color.RED
+                imageId = R.drawable.error
+                return "Server not found"
+            }
+        }
+
+        protected override fun onPostExecute(result: String) {
+            super.onPostExecute(result)
+            dlog!!.dismiss()
+            showOneButtonDialog(
+                R.string.dialog_title, result, colorId,
+                R.string.btn_close, imageId
+            )
+        }
+
+        override fun onBackgroundError(e: Exception) {}
+    }
+
+    private fun showOneButtonDialog(
+        titleId: Int, msg: String, msgColorId: Int,
+        buttonTextId: Int, imageId: Int
+    ) {
+        val buttonMap = HashMap<Int, Any>()
+        buttonMap[1] = buttonTextId
+        val dialog = DialogView(
+            this, titleId, msg,
+            msgColorId, imageId, buttonMap
+        )
+        dialog.show()
+    }
+
+    /**
+     * Create preference screen.
+     *
+     * @return the preference screen
+     */
+    private fun createPreferenceHierarchy(): PreferenceScreen {
+        val root = preferenceManager.createPreferenceScreen(this)
+        val generalCat = MyPreferenceCategory(this)
+        generalCat.title = "General"
+        root.addPreference(generalCat)
+
+        /*
+		 * Mhealth server
+		 */
+        val mHealthServer = preferenceManager.createPreferenceScreen(this)
+        mHealthServer.title = "Satellite Care Server"
+        mHealthServer.summary = "FCM Gateway URL"
+        mHealthServer.onPreferenceClickListener = object : OnPreferenceClickListener {
+            override fun onPreferenceClick(arg0: Preference): Boolean {
+                showMHealthGateWayDialog()
+                return false
+            }
+        }
+        generalCat.addPreference(mHealthServer)
+
+        /*
+		 * FCM code
+		 */
+        val fcmCode = preferenceManager.createPreferenceScreen(this)
+        fcmCode.title = "FCM Code"
+        if (App.getContext().userInfo.userCode.isEmpty()) fcmCode.summary =
+            "Unknown" else fcmCode.summary = App.getContext().userInfo.userCode
+        generalCat.addPreference(fcmCode)
+
+
+        /*
+		 * Household data collection
+		 */
+
+
+        /*
+		 * Household data collection
+		 */
+        val useNetworkprovidedTimePref: CheckBoxPreference = CheckBoxPreferenceMultiLineTitle(this)
+        useNetworkprovidedTimePref.title = "Use network provided time"
+        useNetworkprovidedTimePref.summary = "Automatic date time and time zone must be enable."
+        useNetworkprovidedTimePref.setDefaultValue(App.getContext().appSettings.isUseNetworkProvidedTime)
+        useNetworkprovidedTimePref.isChecked =
+            false //App.getContext().getAppSettings().isUseNetworkProvidedTime());
+        useNetworkprovidedTimePref.key = KEY.USE_NETWORK_PROVIDED_TIME
+        useNetworkprovidedTimePref.onPreferenceChangeListener = this
+        generalCat.addPreference(useNetworkprovidedTimePref)
+
+
+        /*
+		 * language
+		 */
+        val lngCat = MyPreferenceCategory(this)
+        lngCat.title = "Language & Data"
+        root.addPreference(lngCat)
+
+        /*
+		 * Language preference
+		 */
+        val languagePref = ListPreference(this)
+        languagePref.title = "Application Language"
+        languagePref.setEntries(R.array.entries_language)
+        languagePref.setEntryValues(R.array.entrievalues_language)
+        languagePref.setDefaultValue(AppSettings.DEFAULT_LANGUAGE)
+        val langIndex = languagePref.findIndexOfValue(App.getContext().appSettings.language)
+        val langentry = languagePref.entries[langIndex] as String
+        languagePref.summary = "Changing language voids data version \n$langentry"
+        languagePref.dialogTitle = "Application Language"
+        languagePref.key = KEY.LANGUAGE
+        languagePref.onPreferenceChangeListener = this
+        lngCat.addPreference(languagePref)
+        val clearversion = preferenceManager.createPreferenceScreen(this)
+        clearversion.title = "Void data version"
+        clearversion.summary = "Press here for remove data version."
+        clearversion.onPreferenceClickListener = object : OnPreferenceClickListener {
+            override fun onPreferenceClick(preference: Preference): Boolean {
+                showConfermationAndExecute(
+                    "Make sure you want to void data version ?",
+                    VOID_DATA_VERSION
+                )
+                return false
+            }
+        }
+        lngCat.addPreference(clearversion)
+        val removeLocalData = preferenceManager.createPreferenceScreen(this)
+        removeLocalData.title = "Remove local data"
+        removeLocalData.summary = "Press here for remove local data."
+        removeLocalData.onPreferenceClickListener = object : OnPreferenceClickListener {
+            override fun onPreferenceClick(preference: Preference): Boolean {
+                showConfermationAndExecute(
+                    "Make sure you want to remove local data ?",
+                    REMOVE_LOCAL_DATA
+                )
+                return false
+            }
+        }
+        lngCat.addPreference(removeLocalData)
+        val uploadLocalDatabase = preferenceManager.createPreferenceScreen(this)
+        uploadLocalDatabase.title = "Upload local database"
+        uploadLocalDatabase.summary = "Press here for upload local database."
+        uploadLocalDatabase.onPreferenceClickListener = object : OnPreferenceClickListener {
+            override fun onPreferenceClick(preference: Preference): Boolean {
+                showConfermationAndExecute(
+                    "Make sure you want to upload local database ?",
+                    UPLOAD_LOCAL_DATABASE
+                )
+                return false
+            }
+        }
+        lngCat.addPreference(uploadLocalDatabase)
+
+
+        /*
+		 * Doctor's feedback
+		 */
+        val dfCat = MyPreferenceCategory(this)
+        dfCat.title = "Doctor's feedback"
+        root.addPreference(dfCat)
+        val vodf = AppPreference.getBoolean(this, KEY.VIBRATE_ON_DOCROT_FEEDBACK, true)
+        val vibrateOnDocFeedbackPref: CheckBoxPreference = CheckBoxPreferenceMultiLineTitle(this)
+        vibrateOnDocFeedbackPref.title = "Vibrate on feedback"
+        vibrateOnDocFeedbackPref.summary = "Vibrate device when doctor's feedback arrived"
+        vibrateOnDocFeedbackPref.setDefaultValue(vodf)
+        vibrateOnDocFeedbackPref.isChecked = vodf
+        vibrateOnDocFeedbackPref.key = KEY.VIBRATE_ON_DOCROT_FEEDBACK
+        vibrateOnDocFeedbackPref.onPreferenceChangeListener = this
+        dfCat.addPreference(vibrateOnDocFeedbackPref)
+        if (App.getContext().appSettings.fcmConfigration != null && App.getContext().appSettings.fcmConfigration != "") {
+            try {
+                val jconfigArr = JSONArray(App.getContext().appSettings.fcmConfigration)
+                for (index in 0 until jconfigArr.length()) {
+                    val jConfigObj = jconfigArr.getJSONObject(index)
+                    if (jConfigObj.has("name")) {
+                        val cat = MyPreferenceCategory(this)
+                        cat.title =
+                            TextUtility.toCamelCase(jConfigObj.getString("name").replace("_", " "))
+                        root.addPreference(cat)
+                        val jItemArr = jConfigObj.getJSONArray("items")
+                        for (i in 0 until jItemArr.length()) {
+                            val jItemObj = jItemArr.getJSONObject(i)
+                            if (jItemObj.has("caption") && jItemObj.has("value")) {
+                                val ps: Preference = PreferenceScreenMultiLineTitle(this)
+                                ps.title = jItemObj.getString("caption")
+                                ps.summary = jItemObj.getString("value")
+                                cat.addPreference(ps)
+                            }
+                        }
+                    }
+                }
+            } catch (exception: JSONException) {
+            }
+        }
+        return root
+    }
+
+    private fun showConfermationAndExecute(message: String, type: Int) {
+        val buttonMap = HashMap<Int, Any>()
+        buttonMap[1] = R.string.btn_ok
+        buttonMap[2] = R.string.btn_close
+        val dialogView = DialogView(
+            this,
+            R.string.dialog_title,
+            message,
+            R.color.warning,
+            R.drawable.information,
+            buttonMap
+        )
+        dialogView.setOnDialogButtonClick(object : OnDialogButtonClick {
+            override fun onDialogButtonClick(view: View?) {
+                when (view!!.id) {
+                    1 -> if (type == REMOVE_LOCAL_DATA) {
+                        removeLocalDatabase()
+                    } else if (type == VOID_DATA_VERSION) {
+                        App.getContext().db.voidDataVersion(App.getContext().appSettings.language)
+                    } else if (type == UPLOAD_LOCAL_DATABASE) {
+                        uploadLocalDatabase()
+                    }
+                }
+            }
+        })
+        dialogView.show()
+    }
+
+    private fun uploadLocalDatabase() {
+        val dbFile = App.getContext().db.dump ?: return
+        val request =
+            RequestData(RequestType.USER_GATE, RequestName.FILE_UPLOAD, Constants.MODULE_BUNCH_PUSH)
+        request.addFile(dbFile)
+        val commiunicationTask = CommiunicationTask(
+            this@SettingsPreferenceActivity,
+            request,
+            R.string.retrieving_data,
+            R.string.please_wait
+        )
+        commiunicationTask.setCompleteListener(object : OnCompleteListener {
+            override fun onComplete(msg: Message) {
+                if (msg.data.containsKey(TaskKey.ERROR_MSG)) {
+                    val errorMsg = msg.data.getSerializable(TaskKey.ERROR_MSG) as String?
+                    App.showMessageDisplayDialog(
+                        this@SettingsPreferenceActivity,
+                        resources.getString(R.string.network_error),
+                        R.drawable.error,
+                        Color.RED
+                    )
+                } else {
+                    val response = msg.data.getSerializable(TaskKey.DATA0) as ResponseData?
+                    if (response!!.responseCode.equals("00", ignoreCase = true)) {
+                        App.showMessageDisplayDialog(
+                            this@SettingsPreferenceActivity,
+                            response.errorCode + "-" + response.errorDesc,
+                            R.drawable.error,
+                            Color.RED
+                        )
+                    } else {
+                        App.showMessageDisplayDialog(
+                            this@SettingsPreferenceActivity,
+                            "Successfully Upload",
+                            R.drawable.success,
+                            Color.GREEN
+                        )
+                    }
+                }
+            }
+        })
+        commiunicationTask.execute()
+    }
+
+    private fun removeLocalDatabase() {
+        App.getContext().db.deleteDb()
+        App.getContext().deleteDir(
+            File(
+                App.getContext().getQuestionnaireJSONDir(this@SettingsPreferenceActivity)
+            )
+        )
+        App.getContext().deleteDir(
+            File(
+                App.getContext().getBeneficiaryImageDir(this@SettingsPreferenceActivity)
+            )
+        )
+        App.getContext()
+            .deleteDir(File(App.getContext().getVoiceFileDir(this@SettingsPreferenceActivity)))
+        App.getContext().setDBManager(null)
+        App.getContext().appSettings = null
+        App.loadApplicationData(this@SettingsPreferenceActivity)
+    }
+
+    override fun onPreferenceChange(pref: Preference, newValue: Any): Boolean {
+        if (pref is ListPreference) {
+            val value = newValue.toString()
+            val listPref = pref
+            val title = listPref.entries[listPref.findIndexOfValue(value)] as String
+            if ((pref.getKey() == KEY.LANGUAGE) && prevLangCode != value) {
+                Log.e("LANGUAGE CHANGE", value)
+                listPref.summary = "Changing language voids data version \n$title"
+                AppPreference.putString(this, KEY.LANGUAGE, value)
+                App.getContext().appSettings.language = value
+                LanguageContextWrapper.wrap(
+                    this,
+                    AppPreference.getString(this, KEY.LANGUAGE, AppSettings.DEFAULT_LANGUAGE)
+                )
+                //	App.getContext().setLocal(this,App.getContext().getAppSettings().getLanguage());
+                App.getContext().db.voidDataVersion(App.getContext().appSettings.language)
+            }
+        }
+        if (pref is CheckBoxPreference) {
+            val cbPref = pref
+            val isChecked = newValue as Boolean
+            if (cbPref.key.equals(KEY.GPS_START, ignoreCase = true)) {
+                AppPreference.putBoolean(this, KEY.GPS_START, isChecked)
+                App.getContext().appSettings.isGPSStartOnAppStart = isChecked
+            }
+            if (cbPref.key.equals(KEY.USE_NETWORK_PROVIDED_TIME, ignoreCase = true)) {
+                AppPreference.putBoolean(this, KEY.USE_NETWORK_PROVIDED_TIME, isChecked)
+                App.getContext().appSettings.isUseNetworkProvidedTime = isChecked
+            }
+            if (cbPref.key.equals(KEY.VIBRATE_ON_DOCROT_FEEDBACK, ignoreCase = true)) {
+                AppPreference.putBoolean(this, KEY.VIBRATE_ON_DOCROT_FEEDBACK, isChecked)
+            }
+        }
+        return true
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onBackPressed()
+	 */
+    override fun onBackPressed() {
+        // TODO Auto-generated method stub
+        super.onBackPressed()
+        if ((((prevHost != null) && !prevHost.equals("", ignoreCase = true) && !prevHost
+                .equals(curHost, ignoreCase = true))
+                    || ((prevAlterHost != null) && !prevHost.equals(
+                "",
+                ignoreCase = true
+            ) && !prevAlterHost
+                .equals(curAlterHost, ignoreCase = true)))
+        ) {
+            Log.e("Password", "reset")
+            AppPreference.putString(this, KEY.PASSWORD, "")
+        }
+        if (intent.extras!!.containsKey(ActivityDataKey.ACTIVITY)) {
+            intent.extras!!.getString(ActivityDataKey.ACTIVITY)
+            try {
+                val intent = Intent(
+                    this, Class.forName(
+                        intent.extras!!.getString(ActivityDataKey.ACTIVITY)
+                    )
+                )
+                startActivity(intent)
+            } catch (e: ClassNotFoundException) {
+                e.printStackTrace()
+            }
+        }
+        finish()
+    }
+
+    inner class PreferenceScreenMultiLineTitle(ctx: Context?) : Preference(ctx) {
+        override fun onBindView(view: View) {
+            super.onBindView(view)
+            val textView = view.findViewById<TextView>(android.R.id.title)
+            if (textView != null) {
+                textView.isSingleLine = false
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+            }
+        }
+    }
+
+    inner class CheckBoxPreferenceMultiLineTitle(ctx: Context?) : CheckBoxPreference(ctx) {
+        override fun onBindView(view: View) {
+            super.onBindView(view)
+            val textView = view.findViewById<TextView>(android.R.id.title)
+            if (textView != null) {
+                textView.isSingleLine = false
+            }
+        }
+    }
+
+    public override fun onStart() {
+        super.onStart()
+        App.getContext().onStartActivity(this)
+    }
+
+    public override fun onStop() {
+        super.onStop()
+        App.getContext().onStartActivity(this)
+    }
+
+    override fun attachBaseContext(context: Context) {
+        super.attachBaseContext(
+            LanguageContextWrapper.wrap(
+                context,
+                AppPreference.getString(context, KEY.LANGUAGE, AppSettings.DEFAULT_LANGUAGE)
+            )
+        )
+    }
+}

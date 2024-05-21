@@ -1,0 +1,43 @@
+{
+	"service": [
+		{
+			"id": "1",
+			"diseases1": "Diabetes Identification",
+			"diseases2": "Oral Ulcer",
+			"diseases3": "Oral Ulcer",
+			"category": {
+				"diseases_category": "Danger Signs in Young Infant"
+
+			}
+		},
+		{
+			"id": "2",
+			"diseases1": "abc Identification",
+			"diseases2": "Oral Problem",
+			"diseases3": "Oral Problem",
+			"category": {
+				"diseases_category": "Signs in Young Infant"
+
+			}
+		},
+		{
+			"id": "3",
+			"diseases1": "Loose Stool",
+			"diseases2": "Fever",
+			"diseases3": "Fever",
+			"category": {
+				"diseases_category": "Tract Infection of Children"
+			}
+		},
+
+		{
+			"id": "4",
+			"diseases1": "Stool",
+			"diseases2": "Kashi",
+			"diseases3": "Thanda",
+			"category": {
+				"diseases_category": "Tract help others"
+			}
+		}
+	]
+}

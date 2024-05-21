@@ -1,0 +1,152 @@
+package ngo.friendship.satellite.ui.reports;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+
+import ngo.friendship.satellite.App;
+import ngo.friendship.satellite.R;
+import ngo.friendship.satellite.adapter.BasemHealthAdapter;
+import ngo.friendship.satellite.constants.ActivityDataKey;
+import ngo.friendship.satellite.constants.Column;
+import ngo.friendship.satellite.databinding.ActivityMyReportBinding;
+import ngo.friendship.satellite.databinding.ReportCategoryItemRowBinding;
+import ngo.friendship.satellite.model.Report;
+import ngo.friendship.satellite.utility.AppPreference;
+import ngo.friendship.satellite.utility.ItemDecorationAlbumColums;
+
+public class ReportListActivity extends AppCompatActivity {
+
+    ActivityMyReportBinding binding;
+    private ArrayList<Report> reportList;
+    private Report currentReport;
+    BasemHealthAdapter<Report, ReportCategoryItemRowBinding> mAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityMyReportBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        setTitle(getResources().getString(R.string.all_report));
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        currentReport = new Report();
+        currentReport.setRepId(0);
+        currentReport.setType(Report.MENU);
+        reportList = App.getContext().getDB().getReportAssts(null, currentReport.getRepId());
+        //getItemAdapter();
+try {
+    Report singleReferelCenter = reportList.get(0);
+
+    binding.tvSingleReferralReport.setText(singleReferelCenter.getRepCaption());
+}catch (Exception e){e.printStackTrace();}
+
+
+        binding.llTodaysSale.setOnClickListener(v -> {
+            openActivity(TodaysMedicineSalesReportActivity.class, getResources().getString(R.string.today_sale));
+        });
+
+        binding.llLast30DaysSale.setOnClickListener(v -> {
+            openActivity(Last30DaysSalesReportActivity.class, getResources().getString(R.string.last_30_days_sale));
+        });
+        binding.llLast30DaysReceiveSale.setOnClickListener(v -> {
+            openActivity(Last30DaysRcvSalesReportActivity.class, getResources().getString(R.string.last_30_days_receive_and_sales));
+        });
+        binding.llBeneficiaryHealthCareReport.setOnClickListener(v -> {
+            openActivity(HealthCareReportActivity.class, getResources().getString(R.string.beneficiary_health_care_report));
+        });
+        binding.llBeneficiaryRegistrationReport.setOnClickListener(v -> {
+            openActivity(BeneficiaryRegistrationReportActivity.class, getResources().getString(R.string.beneficiary_registration_report));
+        });
+        binding.llReferralCenter.setOnClickListener(v -> {
+            Gson gson = new Gson();
+            Intent intent = new Intent(ReportListActivity.this, ReportviewActivity.class);
+       //     intent.putExtra("REPORT_DATA_PASS", gson.toJson(singleReferelCenter).toString());
+            startActivity(intent);
+           // openActivity(UpcomingTimeScheduleActivity.class, getResources().getString(R.string.upcoming_schedule));
+           // openActivity(TodaysMedicineSalesReportActivity.class, getResources().getString(R.string.today_sale));
+        });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.common_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void getItemAdapter() {
+        mAdapter = new BasemHealthAdapter<>() {
+            @Override
+            public void onItemLongClick(@NonNull View view, Report model, int position) {
+                Toast.makeText(ReportListActivity.this, "Click-Data", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onItemClick(@NonNull View view, Report report, int position, ReportCategoryItemRowBinding dataBinding) {
+
+
+            }
+
+            @Override
+            public void onBindData(Report model, int position, ReportCategoryItemRowBinding dataBinding) {
+                dataBinding.tvReportName.setText("" + model.getRepCaption());
+                dataBinding.llReporItem.setOnClickListener(v -> {
+                    Gson gson = new Gson();
+                    Intent intent = new Intent(ReportListActivity.this, ReportviewActivity.class);
+                    intent.putExtra("REPORT_DATA_PASS", gson.toJson(model).toString());
+                    startActivity(intent);
+                });
+
+            }
+
+            @Override
+            public int getLayoutResId() {
+                return R.layout.report_category_item_row;
+            }
+        };
+
+        mAdapter.addItems(reportList);
+        binding.rvReports.setHasFixedSize(true);
+        binding.rvReports.setItemAnimator(new DefaultItemAnimator());
+        binding.rvReports.setAdapter(mAdapter);
+        binding.rvReports.setNestedScrollingEnabled(false);
+        binding.rvReports.addItemDecoration(new ItemDecorationAlbumColums(ReportListActivity.this, LinearLayoutManager.HORIZONTAL));
+        binding.rvReports.addItemDecoration(new ItemDecorationAlbumColums(ReportListActivity.this, LinearLayoutManager.VERTICAL));
+
+    }
+
+    private void openActivity(Class<?> cls, String activityPath) {
+        Intent intent = new Intent(this, cls);
+        intent.putExtra(ActivityDataKey.ACTIVITY_PATH, activityPath);
+        startActivity(intent);
+    }
+}

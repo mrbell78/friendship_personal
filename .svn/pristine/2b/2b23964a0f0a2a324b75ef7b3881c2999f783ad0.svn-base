@@ -1,0 +1,14 @@
+package ngo.friendship.satellite.constants;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ScheduleStatus.
+ */
+public class ScheduleStatus {
+	
+	/** The Constant NEW. */
+	public static final int NEW = 0;
+	
+	/** The Constant ATTENDED. */
+	public static final int ATTENDED = 1;
+}
